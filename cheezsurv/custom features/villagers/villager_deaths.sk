@@ -15,7 +15,7 @@ on script load:
 
 on death of villager:
     set {_murder_variations::*} to "murdered", "assassinated", "brutally slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", and "deleted"
-    set {_died_variations::*} to "died", "removed from existence", and "had their existence suspended"
+    set {_died_variations::*} to "died", "removed from existence", "cancelled their free trial of life", and "had their existence suspended"
     set {_villager_name} to display name of victim otherwise "Villager"
     set {_id} to {entityid.%victim's entity uuid%} otherwise "[unassigned]"
 
