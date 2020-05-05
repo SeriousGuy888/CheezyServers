@@ -160,6 +160,10 @@ command /buystock [<text>] <number=1>:
             send "§cYou may not invest in stocks that have negative prices; please wait for the stock's price to return to the positives to invest."
             stop
         
+        if {stocks.owners.%{_ticker}%::*} contains player:
+            send "§cInsider trading is not permitted. You a registered owner of this stock."
+            stop
+        
         add {_amount} to {stocks.ownership.%player%.%{_ticker}%}
         remove {_total_price} from {bank.balance.%player%}
         add {_total_price} to {stocks.balance.%{_ticker}%}
