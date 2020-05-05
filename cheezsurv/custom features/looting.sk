@@ -4,15 +4,3 @@ on death:
     set {_lvl} to level of looting of attacker's tool
     set {_xp_multiplier} to (random number between 5 and 50) / 10 # multiplies the xp dropped from anywhere between 0.5x and 5x
     spawn ({_lvl} * {_xp_multiplier}) of xp at victim
-
-
-# global.addEventListener(death, (attacker, victim) => {
-#     if(victim.type != entity.player) {
-#         if(attacker.tool.enchantments.looting > 0) {
-#             const lvl = attacker.tool.enchantments.looting
-#             const xpMultiplier = randomInt(5, 10) / 10
-
-#             spawn(xp, {experienceAmount: lvl * xpMultiplier}, victim.location)
-#         }
-#     }
-# })
