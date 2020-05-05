@@ -14,7 +14,7 @@ on script load:
         remove {recently_attacked::%loop-index%} from {recently_attacked::*}
 
 on death of villager:
-    set {_murder_variations::*} to "murdered", "assassinated", "brutally slaughtered", "nuked", "killified", "terminated", "deprecated", and "deleted"
+    set {_murder_variations::*} to "murdered", "assassinated", "brutally slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", and "deleted"
     set {_villager_name} to display name of victim otherwise "Villager"
     set {_id} to {entityid.%victim's entity uuid%} otherwise "[unassigned]"
 
