@@ -1,0 +1,29 @@
+function setNick(p: player, n: text):
+    set {%{_p}%.nick} to {_n}
+    make console execute command "tab player %{_p}% customtabname %{_p}% (%{_n}%)"
+    make console execute command "tab player %{_p}% customtagname %{_p}% (%{_n}%)"
+
+command /nickname [<Text>] [<OfflinePlayer>]:
+    aliases: /nick
+    trigger:
+        if arg-1 is not set:
+            send "§4Correct Usage: §c/nick <Nickname>" if player is not op
+            send "§4Correct Usage: §c/nick <Nickname> [Player]" if player is op
+        if arg-1 is set:
+            if length of arg-1 is more than 24:
+                send "§cNickname can be no more than 24 characters."
+            else:
+                if arg-2 is not set:
+                    executor is player
+                    setNick(player, arg-1)
+                    send "§aNickname updated!"
+                if arg-2 is set:
+                    if executor is player:
+                        if player is op:
+                            setNick(arg-2, arg-1)
+                            send "§aNickname updated!"
+                        if player is not op:
+                            send "§cInsufficient permissions!"
+                    if executor is console:
+                        setNick(arg-2, arg-1)
+                        send "Nickname updated!"

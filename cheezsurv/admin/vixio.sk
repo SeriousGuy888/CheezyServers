@@ -1,0 +1,67 @@
+on skript load:
+    login to "NTU0ODMxMzk0OTYzMTkzODY2.XkMBWA.Q-yFxLrKCt0fEf3Laz6hZ1VddVQ" with the name "Cheezy"
+
+discord command help:
+    prefixes: "s2!", "%mention tag of event-bot% "
+    aliases: ?
+    trigger:
+        set {_msg} to a message builder
+        append line "**CheezSurv2 Bot Commands**"
+        append line "Prefix: `s2!` or mention the bot"
+        append line ""
+        append line "`list` - See online players"
+        append line "`stats <Player>` - See the stats of a specified player"
+
+        reply with {_msg}
+
+
+discord command list:
+    prefixes: "s2!", "%mention tag of event-bot% "
+    aliases: online
+    trigger:
+        set {_is.are} to "are"
+        set {_is.are} to "is" if number of all players is 1
+
+        set {_player.players} to "players"
+        set {_player.players} to "player" if number of all players is 1
+
+        set {_msg} to a message builder
+        append line "**CHEEZSURV2 ONLINE MEMBERS**"
+        append line "There %{_is.are}% `%number of all players%/%max players count%` %{_player.players}% online."
+        append line "----------"
+        append line "The members online are:"
+        loop all players:
+            set {_curr.player} to "%loop-player%"
+            set {_curr.player} to "%{_curr.player}% (%{%loop-player%.nick}%)" if {%loop-player%.nick} is set
+            set {_curr.player} to "%{_curr.player}% [AFK]" if {%loop-player%.afk} is true
+            append line "`%{_curr.player}%`"
+        reply with {_msg}
+        
+discord command stats [<OfflinePlayer>]:
+    prefixes: "s2!", "%mention tag of event-bot% "
+    aliases: stat
+    trigger:
+        if arg-1 is not set:
+            reply with "Syntax: s2!stats <Player>"
+            stop
+        if {stats.%arg-1%.deaths} is not set:
+            reply with "no player found by that name. try spelling it right next time. im not helping you search for someone with similar usernames. it wont work because billzo already tried to add that feature and it didnt work. spell the username correctly, idot."
+            stop
+        set {_msg} to a message builder
+        append line "**Stats of %arg-1%**"
+        append line "💀 Deaths: %{stats.%arg-1%.deaths}%"
+        append line "🔪 Murders: %{stats.%arg-1%.murders}%"
+        append line "➗ K/D: %{stats.%arg-1%.murders}/{stats.%arg-1%.deaths}%"
+
+        reply with {_msg}
+
+discord command topstats [<text>]:
+    prefixes: "s2!", "%mention tag of event-bot% "
+    trigger:
+        reply with "no not allowed billzo doesnt want to make this command anymore"
+        stop
+        if arg-1 is not set:
+            reply with "s2!topstats <stat>"
+            stop
+        
+        loop all offline players:

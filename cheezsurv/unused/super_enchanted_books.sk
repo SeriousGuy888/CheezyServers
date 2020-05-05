@@ -1,0 +1,13 @@
+command /enchantedbook [<text>] [<number>]:
+    executable by: players
+    trigger:
+        if player is not op:
+            send "§cInsufficient permissions!"
+            stop
+        if arg-1 is not set:
+            send "§c/enchantedbook <id> <level>"
+            stop
+        if arg-2 is not set:
+            send "§c/enchantedbook <id> <level>"
+            stop
+        give enchanted book with nbt "{StoredEnchantments:[{id:""minecraft:%arg-1%"",lvl:%arg-2%s}]}" to player

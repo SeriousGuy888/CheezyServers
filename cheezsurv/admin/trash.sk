@@ -1,0 +1,7 @@
+command /trash:
+    trigger:
+        if player is not op:
+            send "§cInsufficient permissions!"
+            stop
+        open chest with 6 rows named "Trash" to player
+        

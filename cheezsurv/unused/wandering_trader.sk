@@ -1,0 +1,3 @@
+on spawn of wandering trader:
+    # set {_trade} to a new trade of emerald and air for 5 emeralds
+    # add trade {_trade} to trader event-entity

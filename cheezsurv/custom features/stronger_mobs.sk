@@ -1,0 +1,65 @@
+options:
+    skeletonWeaponChance: 75%
+    skeletonArmourChance: 50%
+    skeletonCritChance: 35%
+    zombieWeaponChance: 95%
+    zombieArmourChance: 60%
+    zombieCritChance: 25%
+
+on spawn:
+    wait 1 tick
+    event-entity does not have scoreboard tag "raid_skeleton"
+    if event-entity is skeleton:
+        if chance of {@skeletonWeaponChance}:
+            if chance of 50%:
+                enchant tool of event-entity with punch
+            if chance of 20%:
+                enchant tool of event-entity with power 2
+            if chance of 15%:
+                enchant tool of event-entity with flame
+        if chance of {@skeletonArmourChance}:
+            if chance of 25%:
+                equip event-entity with golden chestplate of thorns 1
+            if chance of 10%:
+                equip event-entity with iron helmet of protection 2
+    if event-entity is zombie:
+        if chance of {@zombieWeaponChance}:
+            if chance of 50%:
+                equip event-entity with iron sword
+                if chance of 20%:
+                    enchant tool of event-entity with sharpness 2
+                if chance of 15%:
+                    enchant tool of event-entity with knockback 1
+                if chance of 5%:
+                    enchant tool of event-entity with fire aspect
+                
+                if chance of 15%: 
+                    equip event-entity with diamond sword
+                    if chance of 20%:
+                        enchant tool of event-entity with sharpness 3
+                        enchant tool of event-entity with knockback 1
+                    if chance of 15%:
+                        enchant tool of event-entity with fire aspect 2
+        if chance of {@zombieArmourChance}:
+            if chance of 35%:
+                equip event-entity with chainmail helmet of protection 3
+            if chance of 25%:
+                equip event-entity with iron chestplate of thorns 1
+                if chance of 75%:
+                    enchant chestplate of event-entity with protection 2
+            if chance of 10%:
+                equip event-entity with diamond chestplate of thorns 2
+                if chance of 15%:
+                    enchant chestplate of event-entity with protection 4
+            if chance of 10%:
+                equip event-entity with diamond leggings of protection 3
+                if chance of 15%:
+                    enchant chestplate of event-entity with thorns 1
+
+on damage:
+    if attacker is a skeleton:
+        if chance of {@skeletonCritChance}:
+            add 1.5 to damage
+    if attacker is zombie:
+        if chance of {@zombieCritChance}:
+            add 2 to damage

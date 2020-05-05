@@ -1,0 +1,39 @@
+command /mobraid [<player>] [<number>]:
+    trigger:
+        if executor is not op:
+            send "§cInsufficient permissions!"
+            stop
+        if arg-2 is not set:
+            send "§c/mobraid <target player> <loop count (350 recommended)>"
+        
+        if arg-2 is more than 1250:
+            send "§cPlease do not loop more than 1250 times. You will crash the server if you do."
+            stop
+        
+        # if gamemode of arg-1 is not survival or adventure:
+        #     send "§cPlayer is not in survival!"
+        #     stop
+
+        loop arg-2 times:
+            set {_block} to a random element out of blocks in radius 24 of player
+
+            block below {_block} is not air
+            {_block} is air
+            block above {_block} is air
+            # sun light level at {_block} is less than or equal to 7
+            block light level at {_block} is less than or equal to 7
+
+            size of all players within 8 blocks of {_block} is 0
+
+            spawn skeleton at {_block}
+
+            set name of last spawned entity to "Skeleton Raider"
+            add "raid_skeleton" to scoreboard tags of last spawned entity
+            equip the last spawned entity with chainmail helmet of protection 1
+            if chance of 10%:
+                equip the last spawned entity with leather chestplate of thorns 1
+                equip the last spawned entity with leather leggings of protection 1
+            if chance of 15%:
+                enchant tool of last spawned entity with flame
+                enchant tool of last spawned entity with punch 1
+                enchant tool of last spawned entity with power 2

@@ -1,0 +1,34 @@
+options:
+    discordChannelId: 695751303586119700
+
+command /afk:
+    trigger:
+        set {%player%.afk} to false if {%player%.afk} is not set
+        if {%player%.afk} is false:
+            set {%player%.afk} to true
+            set {afk_msg} to "§e%player% (%{%player%.nick}%) is now AFK" if {%player%.nick} is set
+            set {afk_msg} to "§e%player% is now AFK" if {%player%.nick} is not set
+
+            broadcast "%{afk_msg}%"
+            send ":keyboard: **%uncoloured {afk_msg}%**" to channel with id "{@discordChannelId}" with "Cheezy"
+
+            make console execute command "/tab player %player% tabsuffix &b [AFK]"
+        else if {%player%.afk} is true:
+            set {%player%.afk} to false
+            set {afk_msg} to "§e%player% (%{%player%.nick}%) is no longer AFK" if {%player%.nick} is set
+            set {afk_msg} to "§e%player% is no longer AFK" if {%player%.nick} is not set
+
+            broadcast "%{afk_msg}%"
+            send ":keyboard: **%uncoloured {afk_msg}%**" to channel with id "{@discordChannelId}" with "Cheezy"
+
+            make console execute command "/tab player %player% tabsuffix"
+
+on quit:
+    if {%player%.afk} is true:
+        set {%player%.afk} to false
+        make console execute command "/tab player %player% tabsuffix"
+
+on any movement:
+    if {%player%.afk} is true:
+        cancel event
+        send "§cYou cannot move while you are marked as AFK. §b§o/afk"

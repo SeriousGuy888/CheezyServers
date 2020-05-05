@@ -1,0 +1,46 @@
+options:
+    moolahName: §6Fool's Gold Coin
+    moolahLore: §eDO NOT RENAME
+
+command /getmoolah <number>:
+    trigger:
+        player has permission "*"
+        give arg-1 of sunflower named "{@moolahName}" with lore "{@moolahLore}" to player
+
+on right click:
+    name of player's tool is "{@moolahName}"
+    cancel event
+    add 1 to {bank.balance.%player%}
+    remove 1 of player's tool from player
+    send action bar "§3Deposited coin. §b/bal" to player
+    play sound "block.note_block.pling" at volume 0.25 to player
+
+
+every 10 seconds:
+    loop all players:
+        set {bank.balance.%loop-player%} to 0 if {bank.balance.%loop-player%} is not set
+
+command /balance <OfflinePlayer=%player%>:
+    aliases: /bal
+    trigger:
+        send "§3Bank balance of §b%arg-1%§3 is §b%{bank.balance.%arg-1%}% §3coins."
+
+command /withdraw [<integer>]:
+    aliases: /with
+    trigger:
+        if arg-1 is not set:
+            send "§c/with <amount>"
+            stop
+        if {bank.balance.%player%} is greater than or equal to arg-1:
+            give arg-1 of sunflower named "{@moolahName}" with lore "{@moolahLore}" to player
+            remove arg-1 from {bank.balance.%player%}
+        else:
+            send "§cInsufficient funds! /bal"
+
+
+command /circulation:
+    trigger:
+        set {_amount} to 0
+        loop all offline players:
+            add {bank.balance.%loop-offlineplayer%} to {_amount}
+        send "§3There are §b%{_amount}%§3 coins in circulation in people's bank balances."

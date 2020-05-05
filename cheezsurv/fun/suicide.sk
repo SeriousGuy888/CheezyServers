@@ -1,0 +1,9 @@
+command /suicide:
+    trigger:
+        set {%player%.suiciding} to true
+        kill player
+
+on death:
+    {%player%.suiciding} is true
+    set death message to "%player% commited die"
+    set {%player%.suiciding} to false

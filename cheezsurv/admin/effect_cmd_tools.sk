@@ -1,0 +1,4 @@
+command /selplayer <player>:
+    permission: *
+    trigger:
+        set {sel.player} to arg-1

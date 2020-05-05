@@ -1,0 +1,17 @@
+command /coords:
+  trigger:
+    if {%player%.coords} is not set:
+      set {%player%.coords} to true
+      send "§aNow showing coordinates."
+    if {%player%.coords} is false:
+      set {%player%.coords} to true
+      send "§aNow showing coordinates."
+    else if {%player%.coords} is true:
+      set {%player%.coords} to false
+      send "§cNo longer showing coordinates."
+      send action bar " " to player
+
+every 3 ticks:
+  loop all players:
+    {%loop-player%.coords} is true
+    send action bar "§b%loop-player's x-coordinate%§3, §b%loop-player's y-coordinate%§3, §b%loop-player's z-coordinate%" to loop-player

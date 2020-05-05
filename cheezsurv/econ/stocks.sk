@@ -1,0 +1,420 @@
+options:
+    discordChannelId: 706700752814473258
+
+    shareLimit: 500
+
+    stockBalEffect: 10000
+    stockGrowthEffect: 250000
+
+    maxStockCirculation: 2500
+
+    negativeBalancePenalty: 500
+    negativeValueRecovery: 600
+
+# calculate new stock prices
+function calculateStockPrices():
+    set {_amount} to 0
+    set {_stock_amount} to 0
+
+    loop all offline players:
+        add {bank.balance.%loop-offlineplayer%} to {_amount}
+        loop {stocks.registered::*}:
+            set {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} to 0 if {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} is not set
+            add {stocks.value.%{stocks.registered::%loop-index%}%} * {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} to {_stock_amount}
+    
+    set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{_amount}% coins is in circulation in bank accounts and %{_stock_amount}% coins are in circulation in stocks"
+
+    if {_stock_amount} is more than {@maxStockCirculation}:
+        make console execute command "/recession %({_amount} / 15) + ({_stock_amount} / 2)%"
+
+    loop {stocks.registered::*}:
+        # when companies dont have money, lower the stock price
+        if {stocks.balance.%{stocks.registered::%loop-index%}%} is less than 0:
+            remove {@negativeBalancePenalty} from {stocks.growth.%{stocks.registered::%loop-index%}%}
+        
+        if {stocks.value.%{stocks.registered::%loop-index%}%} is less than 0:
+            add {@negativeValueRecovery} to {stocks.growth.%{stocks.registered::%loop-index%}%}
+
+        set {_change_multiplier} to random number between 1 and 10
+        set {_net_change} to ({stocks.growth.%{stocks.registered::%loop-index%}%} / {@stockGrowthEffect}) * {_change_multiplier}
+        if chance of 50%:
+            add 0.01 to {_net_change}
+        else:
+            {stocks.value.%{stocks.registered::%loop-index%}%} is greater than 0.01
+            remove 0.01 from {_net_change}
+
+        set {_change_factor} to ({stocks.value.%{stocks.registered::%loop-index%}%} + {_net_change}) / {stocks.value.%{stocks.registered::%loop-index%}%}
+        add {_net_change} to {stocks.value.%{stocks.registered::%loop-index%}%}
+        
+        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{stocks.registered::%loop-index%}% is now worth %{stocks.value.%{stocks.registered::%loop-index%}%}% coins with a net change of %{_net_change}% coins or %{_change_factor} * 100%%%"
+
+        # set stock balance
+        set {stocks.balance.%{stocks.registered::%loop-index%}%} to {stocks.balance.%{stocks.registered::%loop-index%}%} * {_change_factor}
+
+        # reset growth variable
+        set {stocks.growth.%{stocks.registered::%loop-index%}%} to 0
+
+every 5 seconds:
+    send {stocks.publiclog} to channel with id "{@discordChannelId}" with "Cheezy"
+    set {stocks.publiclog} to ""
+
+every 1 minute:
+    calculateStockPrices()
+
+
+command /stockcirculation:
+    trigger:
+        set {_stock_amount} to 0
+        loop all offline players:
+            loop {stocks.registered::*}:
+                set {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} to 0 if {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} is not set
+                add {stocks.value.%{stocks.registered::%loop-index%}%} * {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} to {_stock_amount}
+        send "§3There are currently §b%{_stock_amount}%§3 coins invested in the stock market."
+
+command /stocklookup [<text>]:
+    trigger:
+        if arg-1 is not set:
+            send "§c/stocklookup <Ticker Symbol>"
+        else:
+            if {stocks.ticker.%arg-1 in upper case%} is set:
+                send "§3%arg-1 in upper case%§7: §b%{stocks.ticker.%arg-1 in upper case%}% §7| §a%{stocks.value.%arg-1 in upper case%}% §acoins%nl%§3Registered owners: §b%{stocks.owners.%arg-1 in upper case%::*} otherwise ""[NONE]""%"
+            else:
+                send "§c%arg-1 in upper case% §cis not a registered ticker symbol."
+
+command /stocklist <OfflinePlayer=%player%>:
+    trigger:
+        set {_m} to "§6§lStocks of %arg-1%"
+        set {_net_worth} to 0
+        loop {stocks.registered::*}:
+            set {stocks.ownership.%arg-1%.%{stocks.registered::%loop-index%}%} to 0 if {stocks.ownership.%arg-1%.%{stocks.registered::%loop-index%}%} is not set
+            set {_m} to "%{_m}%%nl%§3- §e%{stocks.registered::%loop-index%}%§7: §a%{stocks.value.%{stocks.registered::%loop-index%}%}% §acoins%nl%  §3Owned: §b%{stocks.ownership.%arg-1%.%{stocks.registered::%loop-index%}%}%§3 shares."
+            add {stocks.value.%{stocks.registered::%loop-index%}%} * {stocks.ownership.%arg-1%.%{stocks.registered::%loop-index%}%} to {_net_worth}
+        set {_m} to "%{_m}%%nl%%nl%%nl%§3§lNET WORTH IN STOCKS%nl%§b%{_net_worth}% §bcoins"
+        send {_m}
+
+command /registerstock [<text>] [<text>]:
+    trigger:
+        if player is not op:
+            send "§cInsufficient permissions!"
+            stop
+        if arg-2 is not set:
+            send "§c/registerstock <Ticker> <Company Name>"
+            stop
+        
+        add arg-1 in upper case to {stocks.registered::*}
+        set {stocks.ticker.%arg-1 in upper case%} to arg-2
+        set {stocks.value.%arg-1 in upper case%} to 2
+        send "§3Registered ticker §b%arg-1%§3 to company §b%arg-2%§3. Make sure to register owners of the stock with /registerstockowner."
+        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] Stock for %arg-2% registered with ticker symbol %arg-1 in upper case%"
+
+command /deregisterstock [<text>]:
+    trigger:
+        if player is not op:
+            send "§cInsufficient permissions!"
+            stop
+        if arg-1 is not set:
+            send "§c/deregisterstock <Ticker>"
+            stop
+        
+        if {stocks.registered::*} does not contain arg-1:
+            send "§cThis ticker is not registered!"
+            stop
+        
+        loop all offline players:
+            delete {stocks.ownership.%loop-offlineplayer%.%arg-1 in upper case%}
+        remove arg-1 in upper case from {stocks.registered::*}
+        delete {stocks.ticker.%arg-1 in upper case%}
+        delete {stocks.value.%arg-1 in upper case%}
+        delete {stocks.owners.%arg-1 in upper case%::*}
+        send "§3Deregistered ticker §b%arg-1 in upper case%§3."
+        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] Ticker symbol %arg-1 in upper case% deregistered"
+
+command /buystock [<text>] <number=1>:
+    aliases: /stockbuy
+    trigger:
+        if arg-1 is not set:
+            send "§c/buystock <ticker> [amount]"
+            stop
+
+        set {_ticker} to arg-1 in upper case
+        set {_amount} to arg-2
+        set {_share_price} to {stocks.value.%{_ticker}%}
+        set {_total_price} to {_share_price} * {_amount}
+
+        if {stocks.registered::*} does not contain {_ticker}:
+            send "§cThis ticker is not registered!"
+            stop
+
+        if {_amount} is less than 1:
+            send "§cNegative numbers are not allowed! Use /sellstock to sell instead."
+
+        if {bank.balance.%player%} is less than {_total_price}:
+            send "§4Insufficient funds! Share price is §c%{_share_price}%§4 coins and §c%{_total_price}%§4 coins for §c%{_amount}%§4 shares. Deposit by right clicking with coins and see your balance with §c/bal§4."
+            stop
+        
+        if {stocks.ownership.%player%.%{_ticker}%} + {_amount} is more than {@shareLimit}:
+            send "§4No player may own more than §c{@shareLimit}§4 shares of any stock. This was put in place after Quinn, Jakob, and Jasper, but mainly Quinn, broke the economy with negative stock prices."
+            stop
+        
+        if {stocks.value.%{_ticker}%} is less than 0:
+            send "§cYou may not invest in stocks that have negative prices; please wait for the stock's price to return to the positives to invest."
+            stop
+        
+        add {_amount} to {stocks.ownership.%player%.%{_ticker}%}
+        remove {_total_price} from {bank.balance.%player%}
+        add {_total_price} to {stocks.balance.%{_ticker}%}
+
+        add {_amount} to {stocks.growth.%{_ticker}%}
+        send "§3Purchased §b%{_amount}% §3of §b%{_ticker}% §3stock at §b%{_share_price}% §3coins per share for §b%{_total_price}% §3coins in total."
+        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %player% purchased %arg-2% of %{_ticker}% at %{_share_price}% coins per share for %{_total_price}% coins in total"
+
+command /sellstock [<text>] <number=1>:
+    aliases: /stocksell
+    trigger:
+        if arg-1 is not set:
+            send "§c/sellstock <ticker> [amount]"
+            stop
+
+        set {_ticker} to arg-1 in upper case
+        set {_amount} to arg-2
+        set {_share_price} to {stocks.value.%{_ticker}%}
+        set {_total_price} to {_share_price} * {_amount}
+
+        if {stocks.registered::*} does not contain {_ticker}:
+            send "§cThis ticker is not registered!"
+            stop
+
+        if {_amount} is less than 1:
+            send "§cNegative numbers are not allowed! Use /buystock to buy instead."
+
+        if {stocks.ownership.%player%.%{_ticker}%} is less than {_amount}:
+            send "§4Insufficient stocks! Share price is §c%{_share_price}%§4 coins and §c%{_total_price}%§4 coins for §c%{_amount}%§4 shares. You own §c%{stocks.ownership.%player%.%{_ticker}%}%§4 shares in §c%{_ticker}%§4."
+            stop
+        remove {_amount} from {stocks.ownership.%player%.%{_ticker}%}
+        add {_total_price} to {bank.balance.%player%}
+        remove {_total_price} from {stocks.balance.%{_ticker}%}
+
+        remove {_amount} from {stocks.growth.%{_ticker}%}
+        send "§3Sold §b%{_amount}% §3of §b%{_ticker}% §3stock at §b%{_share_price}% §3coins per share for §b%{_total_price}% §3coins in total."
+        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %player% sold %arg-2% of %{_ticker}% at %{_share_price}% coins per share for %{_total_price}% coins in total"
+
+command /growth <number> [<text>]:
+    trigger:
+        player is op
+
+        if arg-2 is not set:
+            loop {stocks.registered::*}:
+                add arg-1 to {stocks.growth.%{stocks.registered::%loop-index%}%}
+            set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] Growth of strength %arg-1% has been activated on all stocks."
+        if arg-2 is set:
+            if {stocks.registered::*} does not contain arg-2 in upper case:
+                send "§cStock not registered!"
+                stop
+            add arg-1 to {stocks.growth.%arg-2 in upper case%}
+            set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] Growth of strength %arg-1% has been activated on %arg-2 in upper case%."
+
+        send "§aSuccess."
+
+command /recession <number> [<text>]:
+    trigger:
+        if player is set:
+            if player is not op:
+                stop
+
+        if arg-2 is not set:
+            loop {stocks.registered::*}:
+                remove arg-1 from {stocks.growth.%{stocks.registered::%loop-index%}%}
+            set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] Recession of strength %arg-1% has been activated on all stocks."
+        if arg-2 is set:
+            if {stocks.registered::*} does not contain arg-2 in upper case:
+                send "§cStock not registered!"
+                stop
+            remove arg-1 from {stocks.growth.%arg-2 in upper case%}
+            set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] Recession of strength %arg-1% has been activated on %arg-2 in upper case%."
+        
+        send "§aSuccess."
+
+command /setstockprice [<text>] [<number>]:
+    trigger:
+        if player is set:
+            if player is not op:
+                stop
+
+        if arg-2 is not set:
+            send "§c/setstockprice <ticker> <value per share>"
+            stop
+        
+        if {stocks.registered::*} does not contain arg-1 in upper case:
+            send "§cStock not registered!"
+            stop
+
+        set {stocks.value.%arg-1 in upper case%} to arg-2
+        send "§aSet stock price of %arg-1 in upper case%§a to %arg-2%§a coins."
+
+command /setstockbalance [<text>] [<number>]:
+    aliases: /setstockbal
+    trigger:
+        player is op
+        if arg-2 is not set:
+            send "§c/setstockbal <ticker> <amount>"
+        
+        if {stocks.registered::*} does not contain arg-1 in upper case:
+            send "§cStock not registered!"
+            stop
+
+        set {stocks.balance.%arg-1 in upper case%} to arg-2
+        send "§aSet stock balance of %arg-1 in upper case%§a to %arg-2%§a coins."
+
+
+command /calcstockprices:
+    trigger:
+        executor is op
+        calculateStockPrices()
+        send "§aRecalculated all stock prices!"
+
+command /stockbalance [<text>]:
+    aliases: /stockbal
+    trigger:
+        if arg-1 is not set:
+            send "§c/stockbalance <ticker>"
+            stop
+        
+        if {stocks.registered::*} does not contain arg-1 in upper case:
+            send "§cStock not registered!"
+        
+        send "§2%arg-1 in upper case%§2: §a%{stocks.balance.%arg-1 in upper case%}%§ac%nl%§7§oIf you are a registered owner of this stock, you can withdraw from this with /stockwith."
+
+command /registerstockowner [<text>] [<offlineplayer>]:
+    trigger:
+        player is op
+        if arg-2 is not set:
+            send "§c/setstockowner <ticker> <player>"
+            stop
+        if {stocks.owners.%arg-1 in upper case%::*} does not contain arg-2:
+            add arg-2 to {stocks.owners.%arg-1 in upper case%::*}
+            send "§aSuccess! %arg-2%§a is now a registered owner of %arg-1%§a."
+            set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %arg-2% is now a registered owner of %arg-1%"
+        else if {stocks.owners.%arg-1 in upper case%::*} contains arg-2:
+            remove arg-2 from {stocks.owners.%arg-1 in upper case%::*}
+            send "§aSuccess! %arg-2%§a is no longer a registered owner of %arg-1%§a."
+            set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %arg-2% is no longer a registered owner of %arg-1%"
+
+command /stockwithdraw [<text>] [<number>]:
+    aliases: /stockwith
+    trigger:
+        if arg-2 is not set:
+            send "§c/stockwith <Ticker> <Amount>"
+
+        if {stocks.registered::*} does not contain arg-1:
+            send "§cStock not registered."
+            stop
+        
+        if {stocks.owners.%arg-1 in upper case%::*} does not contain player:
+            send "§cYou are not a registered owner of this stock."
+            stop
+
+        if {stocks.balance.%arg-1 in upper case%} is less than arg-2:
+            send "§cInsufficient funds."
+            stop
+        
+        remove arg-2 from {stocks.balance.%arg-1 in upper case%}
+        add arg-2 to {bank.balance.%player%}
+        send "§aMoved %arg-2%§a coins from the stock balance to your bank account. /bal"
+        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %player% withdrew %arg-2% coins from %arg-1%"
+        remove (arg-2 / {@stockBalEffect}) from {stocks.growth.%arg-1 in upper case%}
+
+command /stockdeposit [<text>] [<number>]:
+    aliases: /stockdep
+    trigger:
+        if arg-2 is not set:
+            send "§c/stockdep <Ticker> <Amount>"
+
+        if {stocks.registered::*} does not contain arg-1:
+            send "§cStock not registered."
+            stop
+        
+        if {stocks.owners.%arg-1 in upper case%::*} does not contain player:
+            send "§cYou are not a registered owner of this stock."
+            stop
+
+        if {bank.balance.%player%} is less than arg-2:
+            send "§cInsufficient funds."
+            stop
+        
+        add arg-2 to {stocks.balance.%arg-1 in upper case%}
+        remove arg-2 from {bank.balance.%player%}
+        send "§aMoved %arg-2%§a coins from your bank account to the stock balance. /bal"
+        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %player% deposited %arg-2% coins to %arg-1%"
+        add (arg-2 / {@stockBalEffect}) to {stocks.growth.%arg-1 in upper case%}
+
+on sign change:
+    player is op
+    line 1 is "[Stock]"
+
+    set line 1 to "§1[Stock]"
+    set line 3 to line 3 in upper case
+
+    if {stocks.registered::*} does not contain line 3:
+        set line 1 to "§4[Stock]"
+        set line 3 to "§cInvalid Ticker"
+    
+    if line 4 parsed as integer is not integer:
+        set line 1 to "§4[Stock]"
+        set line 4 to "§cMust be Integer"
+    if line 4 parsed as integer is less than 1:
+        set line 1 to "§4[Stock]"
+        set line 4 to "§cZero or Negative"
+
+    if line 2 starts with "b":
+        set line 2 to "Buy"
+    else if line 2 starts with "s":
+        set line 2 to "Sell"
+    else:
+        set line 1 to "§4[Stock]"
+        set line 2 to "§cInvalid Sign [B|S]"
+
+on sign change:
+    # player is op
+    line 1 is "[StockPrice]"
+
+    set line 1 to "§1[StockPrice]"
+    set line 2 to line 2 in upper case
+
+    if {stocks.registered::*} does not contain line 2:
+        set line 1 to "§4[StockPrice]"
+        set line 2 to "§cInvalid Ticker"
+        stop
+    
+    set line 4 to "§7[RMB to Update]"
+
+on sign change:
+    player is op
+    line 1 is "[Delisted]"
+    set line 1 to "§4[Delisted]"
+    set line 2 to "§c%line 2%"
+
+on right click on sign:
+    line 1 is "§1[Stock]"
+
+    if {stocks.registered::*} does not contain line 3:
+        set line 1 to "§4[Delisted]"
+        set line 2 to "§c%line 3%"
+        set line 3 to ""
+        set line 4 to ""
+
+    if line 2 in lower case starts with "b":
+        make player execute command "/buystock %line 3% %line 4%"
+    if line 2 in lower case starts with "s":
+        make player execute command "/sellstock %line 3% %line 4%"
+
+on right click on sign:
+    line 1 is "§1[StockPrice]"
+
+    if {stocks.registered::*} does not contain line 2:
+        set line 1 to "§4[Delisted]"
+        set line 2 to "§c%line 2%"
+        set line 3 to ""
+        set line 4 to ""
+    
+    set line 3 to "§c%{stocks.value.%line 2%}% §cCoins" if {stocks.value.%line 2%} is less than 0
+    set line 3 to "§a%{stocks.value.%line 2%}% §aCoins" if {stocks.value.%line 2%} is more than or equal to 0

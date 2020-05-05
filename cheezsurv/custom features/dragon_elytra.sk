@@ -1,0 +1,2 @@
+on death of ender dragon:
+    drop 1 elytra with lore "§bObtained from Ender Dragon" and "§bDragon killed by %attacker%" at location of victim

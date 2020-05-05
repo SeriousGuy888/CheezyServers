@@ -1,0 +1,3 @@
+command /nb:
+    trigger:
+        send "%target block of player%"

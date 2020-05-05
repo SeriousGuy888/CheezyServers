@@ -1,0 +1,18 @@
+command /spec:
+    trigger:
+        if player's gamemode is survival:
+            set {%player%.spec.loc} to player's location
+            set player's gamemode to spectator
+        else if player's gamemode is spectator:
+            if {%player%.spec.loc} is not set:
+                send "§cYou are not in /spec spectator mode."
+            if {%player%.spec.loc} is set:
+                set player's gamemode to survival
+                teleport player to {%player%.spec.loc}
+                delete {%player%.spec.loc}
+
+on join:
+    {%player%.spec.loc} is set
+    wait 10 ticks
+    set player's gamemode to spectator
+    send "You have been placed in spectator mode. /spec to exit"

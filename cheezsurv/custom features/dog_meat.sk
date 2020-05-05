@@ -1,0 +1,3 @@
+on death of wolf:
+    set {_drop_amount} to random number between 1 and 3
+    drop {_drop_amount} of steak named "§rDog Meat" with lore "§7§oExtremely nutricious." and "§7§oHoang's favourite food." at victim

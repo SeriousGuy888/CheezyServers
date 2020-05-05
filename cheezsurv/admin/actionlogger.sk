@@ -1,0 +1,66 @@
+options:
+    pre: [Billzo's Action Logger]
+
+    discordChannelId: 699344873580396575
+
+    placeLog: true
+    breakLog: true
+    damageLog: true
+    damageLogPlayerless: false
+    villagerDeathLog: true
+    vehicleLog: true
+    rightClickBlockLog: true
+
+    publicActionLogger: true
+
+every 3 seconds:
+    send {actionlogger.publiclog} to channel with id "{@discordChannelId}" with "Cheezy"
+    set {actionlogger.publiclog} to ""
+
+on place:
+    {@placeLog} is true
+    send "{@pre} %player% placed %event-block% at %event-location% in %event-world%" to the console
+
+    {@publicActionLogger} is true
+    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] %player% placed %event-block% at %event-location% in %event-world%"
+
+on break:
+    {@breakLog} is true
+    send "{@pre} %player% removed block at %event-location% in %event-world%" to the console
+
+    {@publicActionLogger} is true
+    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] %player% removed block at %event-location% in %event-world%"
+
+on damage:
+    {@damageLog} is true
+    if attacker is set:
+        if attacker is player:
+            send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage" to the console
+
+            {@publicActionLogger} is true
+            set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage"
+        if attacker is not player:
+            {@damageLogPlayerless} is true
+            send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage" to the console
+    else if attacker is not set:
+        {@damageLogPlayerless} is true
+        send "{@pre} %victim% at %victim's location% in %victim's world% was damaged via %event-damagecause% dealing %damage% damage" to the console
+
+on death of villager:
+    {@villagerDeathLog} is true
+    set {_villagerId} to {entityid.%victim%} otherwise "unset"
+    set {_villagerName} to display name of victim otherwise ""
+    send "Villager %{_villagerName}% with ID %{_villagerId}% was killed by %attacker% at %victim's location% in %victim's world% via %event-damagecause%." to console if attacker is set
+    send "Villager %{_villagerName}% with ID %{_villagerId}% died at %victim's location% in %victim's world% via %event-damagecause%." to console if attacker is not set
+
+on vehicle create:
+    {@vehicleLog} is true
+    send "{@pre} %event-entity% created at %location of event-entity% in %event-world%" to the console
+
+on right click:
+    {@rightClickBlockLog} is true
+    clicked block is set
+    send "{@pre} %player% used %clicked block% at %location of clicked block% in %world of clicked block%" to the console
+
+    {@publicActionLogger} is true
+    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] %player% used %clicked block% at %location of clicked block% in %world of clicked block%"

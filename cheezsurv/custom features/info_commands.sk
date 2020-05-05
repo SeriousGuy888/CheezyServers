@@ -1,0 +1,9 @@
+command /tps:
+    trigger:
+        set {_tps} to tps from last minute
+        send "§3Server TPS: §b%{_tps}%"
+
+command /ping <Player=%player%>:
+    trigger:
+        set {_ping} to arg-1's ping
+        send "§3§lPing of %arg-1%§3§l: §b%{_ping}%§bms%nl%§7§o/ping [player]"

@@ -1,0 +1,23 @@
+command /lockdown [<text>]:
+    permission: *
+    permission message: §cInsufficient permission!
+    trigger:
+        set {lockdown.on} to false if {lockdown.on} is not set
+        if {lockdown.on} is true:
+            set {lockdown.on} to false
+            send "§aLockdown lifted."
+            broadcast "§a%executor% §ahas lifted the lockdown."
+        else if {lockdown.on} is false:
+            send "§cLockdown imposed."
+            set {_reason} to arg-1 otherwise "§cNo reason provided."
+            set {lockdown.on} to true
+            set {lockdown.reason} to {_reason}
+            loop all players:
+                loop-player does not have permission "*"
+                kick loop-player due to "§4§lServer is on lockdown.%nl%%{lockdown.reason}%"
+            broadcast "§c%executor% §chas imposed a lockdown due to %{_reason}%"
+
+on join:
+    {lockdown.on} is true
+    player does not have permission "lockdown.bypass"
+    kick player due to "§4§lServer is on lockdown.%nl%%{lockdown.reason}%"
