@@ -4,7 +4,7 @@ options:
     shareLimit: 500
 
     stockBalEffect: 10000
-    stockGrowthEffect: 250000
+    stockGrowthEffect: 500000
 
     maxStockCirculation: 2500
 
