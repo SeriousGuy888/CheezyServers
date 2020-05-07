@@ -4,10 +4,16 @@ options:
     shareLimit: 500
 
     stockBalEffect: 10000 # 1 / 10000
-    stockGrowthEffect: 750000 # 1 / 750000
+    stockGrowthEffect: 1000000 # 1 / 1,000,000
 
     negativeBalancePenalty: 500
     negativeValueRecovery: 600
+
+    randomChangeGrowthAmount: 1000
+    passiveRandomPriceChange: 0.01
+
+    changeMultiplierMin: 1
+    changeMultiplierMax: 10
 
     maxStockCirculation: 5000
 
@@ -24,6 +30,12 @@ function calculateStockPrices():
     
     set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{_amount}% coins is in circulation in bank accounts and %{_stock_amount}% coins are in circulation in stocks"
 
+    if chance of 100 / ({_amount} + {_stock_amount}):
+        if chance of 50%:
+            make console execute command "/growth {@randomChangeGrowthAmount} %random element out of {stocks.registered::*}%"
+        else:
+            make console execute command "/recession {@randomChangeGrowthAmount} %random element out of {stocks.registered::*}%"
+    
     if {_stock_amount} is more than {@maxStockCirculation}:
         make console execute command "/recession %({_amount} / 15) + ({_stock_amount} / 2)%"
 
@@ -35,14 +47,16 @@ function calculateStockPrices():
         if {stocks.value.%{stocks.registered::%loop-index%}%} is less than 0:
             add {@negativeValueRecovery} to {stocks.growth.%{stocks.registered::%loop-index%}%}
 
-        # this block randomly changes the stock up or down by 1 cent
-        set {_change_multiplier} to random number between 1 and 10
+        set {_change_multiplier} to random number between {@changeMultiplierMin} and {@changeMultiplierMax}
         set {_net_change} to ({stocks.growth.%{stocks.registered::%loop-index%}%} / {@stockGrowthEffect}) * {_change_multiplier}
+
+        
+        # this block randomly changes the stock up or down by 1 cent
         if chance of 50%:
-            add 0.01 to {_net_change}
+            add {@passiveRandomPriceChange} to {_net_change}
         else:
             {stocks.value.%{stocks.registered::%loop-index%}%} is greater than 0.01
-            remove 0.01 from {_net_change}
+            remove {@passiveRandomPriceChange} from {_net_change}
 
         set {_change_factor} to ({stocks.value.%{stocks.registered::%loop-index%}%} + {_net_change}) / {stocks.value.%{stocks.registered::%loop-index%}%}
         add {_net_change} to {stocks.value.%{stocks.registered::%loop-index%}%}
