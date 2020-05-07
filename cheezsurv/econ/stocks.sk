@@ -52,11 +52,12 @@ function calculateStockPrices():
 
 
         # this block randomly changes the stock up or down by 1 cent
-        if chance of 15%:
-            add {@passiveRandomPriceChange} to {_net_change}
-        else:
-            {stocks.value.%{stocks.registered::%loop-index%}%} is greater than 0.01
-            remove {@passiveRandomPriceChange} from {_net_change}
+        if chance of 50%:
+            if chance of 65%:
+                add {@passiveRandomPriceChange} to {_net_change}
+            else:
+                {stocks.value.%{stocks.registered::%loop-index%}%} is greater than 0.01
+                remove {@passiveRandomPriceChange} from {_net_change}
 
         set {_change_factor} to ({stocks.value.%{stocks.registered::%loop-index%}%} + {_net_change}) / {stocks.value.%{stocks.registered::%loop-index%}%}
         add {_net_change} to {stocks.value.%{stocks.registered::%loop-index%}%}
