@@ -50,7 +50,7 @@ function calculateStockPrices():
         set {_change_multiplier} to random number between {@changeMultiplierMin} and {@changeMultiplierMax}
         set {_net_change} to ({stocks.growth.%{stocks.registered::%loop-index%}%} / {@stockGrowthEffect}) * {_change_multiplier}
 
-        
+
         # this block randomly changes the stock up or down by 1 cent
         if chance of 50%:
             add {@passiveRandomPriceChange} to {_net_change}
@@ -73,7 +73,7 @@ every 5 seconds:
     send {stocks.publiclog} to channel with id "{@discordChannelId}" with "Cheezy"
     set {stocks.publiclog} to ""
 
-every 1 minute:
+every 30 seconds:
     calculateStockPrices()
 
 
