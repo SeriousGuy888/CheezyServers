@@ -6,7 +6,7 @@ options:
     placeLog: true
     breakLog: true
     damageLog: true
-    damageLogPlayerless: false
+    damageLogPlayerless: true
     villagerDeathLog: true
     vehicleLog: true
     rightClickBlockLog: true
