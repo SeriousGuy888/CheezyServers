@@ -35,6 +35,7 @@ function calculateStockPrices():
         if {stocks.value.%{stocks.registered::%loop-index%}%} is less than 0:
             add {@negativeValueRecovery} to {stocks.growth.%{stocks.registered::%loop-index%}%}
 
+        # this block randomly changes the stock up or down by 1 cent
         set {_change_multiplier} to random number between 1 and 10
         set {_net_change} to ({stocks.growth.%{stocks.registered::%loop-index%}%} / {@stockGrowthEffect}) * {_change_multiplier}
         if chance of 50%:
@@ -46,11 +47,11 @@ function calculateStockPrices():
         set {_change_factor} to ({stocks.value.%{stocks.registered::%loop-index%}%} + {_net_change}) / {stocks.value.%{stocks.registered::%loop-index%}%}
         add {_net_change} to {stocks.value.%{stocks.registered::%loop-index%}%}
         
-        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{stocks.registered::%loop-index%}% is now worth %{stocks.value.%{stocks.registered::%loop-index%}%}% coins with a net change of %{_net_change}% coins or %{_change_factor} * 100%%%"
 
+        # log
+        set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{stocks.registered::%loop-index%}% is now worth %{stocks.value.%{stocks.registered::%loop-index%}%}% coins with a net change of %{_net_change}% coins or %{_change_factor} * 100%%%"
         # set stock balance
         set {stocks.balance.%{stocks.registered::%loop-index%}%} to {stocks.balance.%{stocks.registered::%loop-index%}%} * {_change_factor}
-
         # reset growth variable
         set {stocks.growth.%{stocks.registered::%loop-index%}%} to 0
 
