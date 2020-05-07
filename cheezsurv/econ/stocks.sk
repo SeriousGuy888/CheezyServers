@@ -6,7 +6,7 @@ options:
     stockBalEffect: 10000
     stockGrowthEffect: 500000
 
-    maxStockCirculation: 2500
+    maxStockCirculation: 5000
 
     negativeBalancePenalty: 500
     negativeValueRecovery: 600
