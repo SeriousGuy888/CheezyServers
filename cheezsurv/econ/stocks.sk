@@ -3,13 +3,13 @@ options:
 
     shareLimit: 500
 
-    stockBalEffect: 10000
-    stockGrowthEffect: 500000
-
-    maxStockCirculation: 5000
+    stockBalEffect: 10000 # 1 / 10000
+    stockGrowthEffect: 750000 # 1 / 750000
 
     negativeBalancePenalty: 500
     negativeValueRecovery: 600
+
+    maxStockCirculation: 5000
 
 # calculate new stock prices
 function calculateStockPrices():
