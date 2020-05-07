@@ -15,7 +15,7 @@ options:
     changeMultiplierMin: 1
     changeMultiplierMax: 10
 
-    maxStockCirculation: 5000
+    maxStockCirculation: 15000
 
 # calculate new stock prices
 function calculateStockPrices():
