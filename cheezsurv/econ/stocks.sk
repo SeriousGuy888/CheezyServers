@@ -30,7 +30,7 @@ function calculateStockPrices():
     
     set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{_amount}% coins is in circulation in bank accounts and %{_stock_amount}% coins are in circulation in stocks"
 
-    if chance of 100 / ({_amount} + {_stock_amount}):
+    if chance of 10 / ({_amount} + {_stock_amount}):
         if chance of 50%:
             make console execute command "/growth {@randomChangeGrowthAmount} %random element out of {stocks.registered::*}%"
         else:
@@ -52,7 +52,7 @@ function calculateStockPrices():
 
 
         # this block randomly changes the stock up or down by 1 cent
-        if chance of 50%:
+        if chance of 15%:
             add {@passiveRandomPriceChange} to {_net_change}
         else:
             {stocks.value.%{stocks.registered::%loop-index%}%} is greater than 0.01
