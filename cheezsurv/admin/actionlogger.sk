@@ -22,14 +22,14 @@ on place:
     send "{@pre} %player% placed %event-block% at %event-location% in %event-world%" to the console
 
     {@publicActionLogger} is true
-    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] %player% placed %event-block% at %event-location% in %event-world%"
+    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%player% placed %event-block% at %event-location% in %event-world%`"
 
 on break:
     {@breakLog} is true
     send "{@pre} %player% removed block at %event-location% in %event-world%" to the console
 
     {@publicActionLogger} is true
-    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] %player% removed block at %event-location% in %event-world%"
+    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%player% removed block at %event-location% in %event-world%`"
 
 on damage:
     {@damageLog} is true
@@ -38,7 +38,7 @@ on damage:
             send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage" to the console
 
             {@publicActionLogger} is true
-            set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage"
+            set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage`"
         if attacker is not player:
             {@damageLogPlayerless} is true
             send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage" to the console
@@ -63,4 +63,4 @@ on right click:
     send "{@pre} %player% used %clicked block% at %location of clicked block% in %world of clicked block%" to the console
 
     {@publicActionLogger} is true
-    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] %player% used %clicked block% at %location of clicked block% in %world of clicked block%"
+    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%player% used %clicked block% at %location of clicked block% in %world of clicked block%`"
