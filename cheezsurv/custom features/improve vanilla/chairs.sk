@@ -1,0 +1,27 @@
+on right click on stair:
+  if player is not sneaking:
+    if player's vehicle is not set:
+      if data value of clicked block is between 0 and 3:
+        cancel the event
+        set {_o} to type of clicked block
+        spawn 1 armor stand at location 1.7 below and 0.2 in front of event-block
+        set {_s} to last spawned entity
+        add "{NoGravity:1}" to nbt of {_s}
+        add "{Invisible:1}" to nbt of {_s}
+        set {_l} to location of player
+        make player ride {_s}
+        wait 1 tick
+        set metadata value "chair" of {_s} to true
+        while check [player's vehicle is {_s}]->[{_o} is type of clicked block]:
+          wait 1 tick
+        set {_k} to method "remove" from {_s}
+        set pitch of {_l} to player's pitch
+        set yaw of {_l} to player's yaw
+        teleport player to {_l}
+ 
+on packet:
+  if event-string is "PacketPlayInSteerVehicle":
+    if metadata value "chair" of player's vehicle is true:
+      if packet field "d" is true:
+        cancel the event
+        delete player's vehicle
