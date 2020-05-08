@@ -91,6 +91,7 @@ command /stocklookup [<text>]:
     trigger:
         if arg-1 is not set:
             send "§c/stocklookup <Ticker Symbol>"
+            stop
         else:
             if {stocks.ticker.%arg-1 in upper case%} is set:
                 send "§3%arg-1 in upper case%§7: §b%{stocks.ticker.%arg-1 in upper case%}% §7| §a%{stocks.value.%arg-1 in upper case%}% §acoins%nl%§3Registered owners: §b%{stocks.owners.%arg-1 in upper case%::*} otherwise ""[NONE]""%"
