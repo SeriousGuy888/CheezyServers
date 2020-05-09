@@ -9,7 +9,7 @@ Consistency is very important to me. If you want to write scripts, please
 use **two space indent**.
 
 We are currently in the process of converting all scripts to two space
-indent as we have inconsitencies everywhere. 
+indent as we have inconsistencies everywhere. 
 
 ### Writing Skript Scripts
 
