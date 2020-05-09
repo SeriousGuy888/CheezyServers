@@ -25,3 +25,10 @@ on damage:
     set {_health_str} to "§c%{_health} * 2%§7/§4%{_max_health} * 2% §7HP" 
 
   send action bar "%{_health_str}%" to attacker
+
+command /health [<player>]:
+  trigger:
+    if arg-1 is not set:
+      send "§c/health <online player>"
+      stop
+    send "§b%arg-1%§3 has §b%health of arg-1%§3 hearts or §b%(health of arg-1) * 2%§3 HP."
