@@ -1,4 +1,5 @@
 on right click on stair:
+  set {chairs.%player%} to true if {chairs.%player%} is not set
   if player is not sneaking:
     if player's vehicle is not set:
       if data value of clicked block is between 0 and 3:
@@ -25,3 +26,13 @@ on packet:
       if packet field "d" is true:
         cancel the event
         delete player's vehicle
+
+command /chair:
+  trigger:
+    set {chairs.%player%} to true if {chairs.%player%} is not set
+    if {chairs.%player%} is true:
+      set {chairs.%player%} to false
+      send "§dToggled chairs §coff§d."
+    else if {chairs.%player%} is false:
+      set {chairs.%player%} to true
+      send "§dToggled chairs §aon§d."
