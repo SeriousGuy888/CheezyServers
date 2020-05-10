@@ -1,5 +1,7 @@
 on right click on stair:
   set {chairs.%player%} to true if {chairs.%player%} is not set
+  {chairs.%player%} is true
+  
   if player is not sneaking:
     if player's vehicle is not set:
       if data value of clicked block is between 0 and 3:
