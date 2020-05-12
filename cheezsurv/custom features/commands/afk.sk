@@ -1,18 +1,19 @@
 options:
     discordChannelId: 695751303586119700
 
-command /afk:
+command /afk <text="[No Reason Provided]">:
     trigger:
         set {%player%.afk} to false if {%player%.afk} is not set
+        set {%player%.afk.reason} to arg-1
         if {%player%.afk} is false:
             set {%player%.afk} to true
             set {afk_msg} to "§e%player% (%{%player%.nick}%) is now AFK" if {%player%.nick} is set
             set {afk_msg} to "§e%player% is now AFK" if {%player%.nick} is not set
 
-            broadcast "%{afk_msg}%"
-            send ":keyboard: **%uncoloured {afk_msg}%**" to channel with id "{@discordChannelId}" with "Cheezy"
+            broadcast "%{afk_msg}% §efor reason §7§o%{%player%.afk.reason}%"
+            send ":keyboard: **%uncoloured {afk_msg}%** for reason `%{%player%.afk.reason}%`" to channel with id "{@discordChannelId}" with "Cheezy"
 
-            make console execute command "/tab player %player% tabsuffix &b [AFK]"
+            # make console execute command "/tab player %player% tabsuffix &b [AFK]"
         else if {%player%.afk} is true:
             set {%player%.afk} to false
             set {afk_msg} to "§e%player% (%{%player%.nick}%) is no longer AFK" if {%player%.nick} is set
@@ -21,12 +22,20 @@ command /afk:
             broadcast "%{afk_msg}%"
             send ":keyboard: **%uncoloured {afk_msg}%**" to channel with id "{@discordChannelId}" with "Cheezy"
 
-            make console execute command "/tab player %player% tabsuffix"
+            # make console execute command "/tab player %player% tabsuffix"
+
+command /checkafk <Player>:
+    trigger:
+        if {%arg-1%.afk} is false:
+            send "§7%arg-1%§7 is not AFK!"
+            stop
+        
+        send "§7%arg-1%§7 is AFK for reason %{%arg-1%.afk.reason}%"
 
 on quit:
     if {%player%.afk} is true:
         set {%player%.afk} to false
-        make console execute command "/tab player %player% tabsuffix"
+        # make console execute command "/tab player %player% tabsuffix"
 
 on any movement:
     if {%player%.afk} is true:
