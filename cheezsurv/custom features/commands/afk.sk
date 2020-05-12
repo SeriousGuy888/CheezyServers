@@ -11,7 +11,7 @@ command /afk <text="[No Reason Provided]">:
             set {afk_msg} to "§e%player% is now AFK" if {%player%.nick} is not set
 
             broadcast "%{afk_msg}% §efor reason §7§o%{%player%.afk.reason}%"
-            send ":keyboard: **%uncoloured {afk_msg}%** for reason `%{%player%.afk.reason}%`" to channel with id "{@discordChannelId}" with "Cheezy"
+            send ":keyboard: **%uncoloured {afk_msg}% for reason** `%{%player%.afk.reason}%`" to channel with id "{@discordChannelId}" with "Cheezy"
 
             # make console execute command "/tab player %player% tabsuffix &b [AFK]"
         else if {%player%.afk} is true:
