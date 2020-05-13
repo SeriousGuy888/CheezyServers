@@ -1,0 +1,45 @@
+{
+    "display": {
+        "title": {
+            "text": "Mass Dog Executions"
+        },
+        "description": {
+            "text": "Kill three dogs at once using a crossbow with the piercing enchantment."
+        },
+        "icon": {
+            "item": "minecraft:crossbow",
+            "nbt": "{Enchantments:[{id:\"minecraft:piercing\",lvl:4s}]}"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "killDog": {
+            "trigger": "minecraft:killed_by_crossbow",
+            "conditions": {
+                "unique_entity_types": {
+                    "min": 1,
+                    "max": 500
+                },
+                "victims": [
+                    {
+                        "type": "minecraft:wolf"
+                    },
+                    {
+                        "type": "minecraft:wolf"
+                    },
+                    {
+                        "type": "minecraft:wolf"
+                    }
+                ]
+            }
+        }
+    },
+    "rewards": {
+        "experience": 20,
+        "function": "500"
+    },
+    "parent": "dogmeat:revenge_against_dogs"
+}
