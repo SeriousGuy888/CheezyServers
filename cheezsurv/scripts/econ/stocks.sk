@@ -52,12 +52,26 @@ function calculateStockPrices():
 
 
     # this block randomly changes the stock up or down by 1 cent
-    if chance of 25%:
-      if chance of 50%:
-        add {@passiveRandomPriceChange} to {_net_change}
-      else:
-        {stocks.value.%{stocks.registered::%loop-index%}%} is greater than 0.01
-        remove {@passiveRandomPriceChange} from {_net_change}
+    # if chance of 25%:
+
+    
+
+    set {stocks.growthchance.%{stocks.registered::%loop-index%}%} to 0.5 if {stocks.growthchance.%{stocks.registered::%loop-index%}%} is not set # default 50%
+    if chance of {stocks.growthchance.%{stocks.registered::%loop-index%}%}: # based on the growth chance...
+      add {@passiveRandomPriceChange} to {_net_change}
+    else:
+      {stocks.value.%{stocks.registered::%loop-index%}%} is greater than 0.01
+      remove {@passiveRandomPriceChange} from {_net_change}
+    
+    remove 1 from {stocks.growthchancecycles.%{stocks.registered::%loop-index%}%}
+    if {stocks.growthchancecycles.%{stocks.registered::%loop-index%}%} is less than 1:
+      set {stocks.growthchancecycles.%{stocks.registered::%loop-index%}%} to 1
+      set {stocks.growthchance.%{stocks.registered::%loop-index%}%} to 0.5
+
+
+
+
+
 
     set {_change_factor} to ({stocks.value.%{stocks.registered::%loop-index%}%} + {_net_change}) / {stocks.value.%{stocks.registered::%loop-index%}%}
     add {_net_change} to {stocks.value.%{stocks.registered::%loop-index%}%}
@@ -243,6 +257,7 @@ command /recession <number> [<text>]:
   trigger:
     if player is set:
       if player is not op:
+        send "§cInsufficient permissions!"
         stop
 
     if arg-2 is not set:
@@ -257,6 +272,63 @@ command /recession <number> [<text>]:
       set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] Recession of strength %arg-1% has been activated on %arg-2 in upper case%."
     
     send "§aSuccess."
+
+command /growthchance:
+  trigger:
+    send "/setgrowthchance, /getgrowthchance"
+
+command /setgrowthchance [<number>] [<number>] [<text>]:
+  trigger:
+    if player is set:
+      if player is not op:
+        send "§cInsufficient permissions!"
+        stop
+      
+    if arg-2 is not set:
+      send "§c/setgrowthchance <0-1> <Cycles> [Stock Ticker]"
+      stop
+    
+    if arg-1 is less than 0:
+      send "Growth chance must be between 0 and 1."
+      stop
+    if arg-1 is more than 1:
+      send "Growth chance must be between 0 and 1."
+      stop
+    
+    if arg-3 is not set:
+      # set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] The growth chance of all stocks has been set to %arg-1% for a duration of %arg-2% cycles."
+      loop {stocks.registered::*}:
+        set {stocks.growthchance.%{stocks.registered::%loop-index%}%} to arg-1
+        set {stocks.growthchancecycles.%{stocks.registered::%loop-index%}%} to arg-2
+    else:
+      set {_ticker} to arg-3 in upper case
+      if {stocks.registered::*} does not contain {_ticker}:
+        send "§cInvalid ticker."
+        stop
+      # set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] The growth chance of %{_ticker}% has been set to %arg-1% for a duration of %arg-2% cycles."
+      set {stocks.growthchance.%{_ticker}%} to arg-1
+      set {stocks.growthchancecycles.%{_ticker}%} to arg-2
+    
+    send "§aSuccess"
+
+command /getgrowthchance [<text>]:
+  trigger:
+    if player is set:
+      if player is not op:
+        send "§cInsufficient permissions! This command could be used for predicting the stock market movements!"
+        stop
+    
+    if arg-1 is not set:
+      send "§c/getgrowthchance <ticker>"
+      stop
+
+    set {_ticker} to arg-1 in upper case
+
+    if {stocks.registered::*} does not contain {_ticker}:
+      send "§cInvalid ticker."
+      stop
+
+    send "§a%{_ticker}% §2has growth chance §a%{stocks.growthchance.%{_ticker}%}% §2and resets to 0.5 in §a%{stocks.growthchancecycles.%{_ticker}%}% §2cycles."
 
 command /setstockprice [<text>] [<number>]:
   trigger:
