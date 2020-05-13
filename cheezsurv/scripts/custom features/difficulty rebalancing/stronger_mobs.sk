@@ -66,6 +66,8 @@ on damage:
       add 1.5 to damage
     if chance of {@skeletonHealthLeechChance}:
       add 1 to attacker's health
+  
+  
   if attacker is zombie:
     if chance of {@zombieCritChance}:
       add 2 to damage
