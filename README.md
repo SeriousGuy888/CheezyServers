@@ -1,12 +1,12 @@
-# All the Scripts!
+# All the Things
 
-This a lot of the scripts used by CheezSurv and CheezyServers to make the
-server not suck or something.
+This a lot of the scripts and datapacks and stuff used by CheezSurv and CheezyServers
+to make the servers not suck or something.
 
 ### Style Guide
 
-Consistency is very important to me. If you want to write scripts, please
-use **two space indent**.
+If you want to write scripts, please use **two space indent**.
+I honestly couldn't care less about the styling format.
 
 We are currently in the process of converting all scripts to two space
 indent as we have inconsistencies everywhere. 
