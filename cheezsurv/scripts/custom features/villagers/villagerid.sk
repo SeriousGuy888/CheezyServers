@@ -43,7 +43,7 @@ every {@legacyCodeUpdateInterval}:
 command /villagerid:
     aliases: /villid, /vid
     trigger:
-        if "%targeted entity%" is not "merchant":
+        if "%targeted entity%" is not "villager":
             send "§cYou must be looking at a villager!"
             stop
         set {_villagerId} to {entityid.%targeted entity's entity uuid%} otherwise "[unassigned]"
