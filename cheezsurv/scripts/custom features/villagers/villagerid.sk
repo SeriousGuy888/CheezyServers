@@ -1,51 +1,51 @@
 options:
-    idLength: 16
-    idAssignmentInterval: 5 seconds
-    legacyCodeUpdateInterval: 30 seconds
-    idPrefix: vil-v4-
-    idVersion: 4
-    idAssignedParticleEffect: show 15 happy villager above location of loop-entity
+	idLength: 16
+	idAssignmentInterval: 5 seconds
+	legacyCodeUpdateInterval: 30 seconds
+	idPrefix: vil-v4-
+	idVersion: 4
+	idAssignedParticleEffect: show 15 happy villager above location of loop-entity
 
 function genId(l: number) :: text:
-    set {_r} to ""
-    loop {_l} times:
-        set {_r} to "%{_r}%%random integer between 0 and 9%"
-    return {_r}
+	set {_r} to ""
+	loop {_l} times:
+		set {_r} to "%{_r}%%random integer between 0 and 9%"
+	return {_r}
 
 on script load:
-    set {_old_id_formats::*} to "villager_", "2-v-", and "3-villager-"
+	set {_old_id_formats::*} to "villager_", "2-v-", and "3-villager-"
 
 every {@idAssignmentInterval}:
-    loop all entities:
-        loop-entity is villager
-        if {entityid.%loop-entity's entity uuid%} is not set:
-            set {_id} to "{@idPrefix}%genId({@idLength})%"
+	loop all entities:
+		loop-entity is villager
+		if {entityid.%loop-entity's entity uuid%} is not set:
+			set {_id} to "{@idPrefix}%genId({@idLength})%"
 
-            if {entityid.all::*} contains {_id}: # dont allow the same id to be used twice.
-                send "Villager with UUID %loop-entity's uuid% could not be given an entity ID this cycle as the generated ID, %{_id}%, is already taken." to console
-                stop # if an id is already used, generate a new one in the next cycle
-            
-            set {entityid.%loop-entity's entity uuid%} to {_id}
-            add {_id} to {entityid.all::*}
-            {@idAssignedParticleEffect}
+			if {entityid.all::*} contains {_id}: # dont allow the same id to be used twice.
+				send "[WARN] Villager with UUID %loop-entity's uuid% could not be given an entity ID this cycle as the generated ID, %{_id}%, is already taken. Will attempt to assign an ID next cycle." to console
+				stop # if an id is already used, generate a new one in the next cycle
+			
+			set {entityid.%loop-entity's entity uuid%} to {_id}
+			add {_id} to {entityid.all::*}
+			{@idAssignedParticleEffect}
 
 every {@legacyCodeUpdateInterval}:
-    loop all entities:
-        loop-entity is villager
-        if {entityid.%loop-entity%} is set:
-            loop {_old_id_formats::*}:
-                if {entityid.%loop-entity%} starts with {_old_id_formats::%loop-index%}: # convert all old id formats to the newest format
-                    remove {entityid.%loop-entity's entity uuid%} from {entityid.all::*}
-                    set {entityid.%loop-entity's entity uuid%} to "{@idPrefix}%genId({@idLength})%"
-                    add {entityid.%loop-entity's entity uuid%} to {entityid.all::*}
-                    {@idAssignedParticleEffect}
+	loop all entities:
+		loop-entity is villager
+		if {entityid.%loop-entity%} is set:
+			loop {_old_id_formats::*}:
+				if {entityid.%loop-entity%} starts with {_old_id_formats::%loop-index%}: # convert all old id formats to the newest format
+					remove {entityid.%loop-entity's entity uuid%} from {entityid.all::*}
+					set {entityid.%loop-entity's entity uuid%} to "{@idPrefix}%genId({@idLength})%"
+					add {entityid.%loop-entity's entity uuid%} to {entityid.all::*}
+					{@idAssignedParticleEffect}
 
 command /villagerid:
-    aliases: /villid, /vid
-    trigger:
-        if "%targeted entity%" is not "villager":
-            send "§cYou must be looking at a villager!"
-            stop
-        set {_villagerId} to {entityid.%targeted entity's entity uuid%} otherwise "[unassigned]"
-        set {_villagerName} to display name of targeted entity otherwise "§2this villager"
-        send "%nl%§2The entity ID number of §a%{_villagerName}% §2is%nl%§a%{_villagerId}%%nl%%nl%§2The current ID number iteration is §av{@idVersion}§2. Do not record this villager's ID unless it is prefixed with §a{@idPrefix}§2. If it is not prefixed properly, please wait up to {@legacyCodeUpdateInterval} for it to be automatically converted to the current ID iteration.%nl%"
+	aliases: /villid, /vid
+	trigger:
+		if "%targeted entity%" is not "villager":
+			send "§cYou must be looking at a villager!"
+			stop
+		set {_villagerId} to {entityid.%targeted entity's entity uuid%} otherwise "[unassigned]"
+		set {_villagerName} to display name of targeted entity otherwise "§2this villager"
+		send "%nl%§2The entity ID number of §a%{_villagerName}% §2is%nl%§a%{_villagerId}%%nl%%nl%§2The current ID number iteration is §av{@idVersion}§2. Do not record this villager's ID unless it is prefixed with §a{@idPrefix}§2. If it is not prefixed properly, please wait up to {@legacyCodeUpdateInterval} for it to be automatically converted to the current ID iteration.%nl%"
