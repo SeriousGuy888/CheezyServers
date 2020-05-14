@@ -1,34 +1,34 @@
 options:
-    discordChannelId: 695751303586119700
-    recentAttackTime: 15 seconds
+  discordChannelId: 695751303586119700
+  recentAttackTime: 15 seconds
 
 function capitalize(t: text) :: text:
-    set {_first_char} to first character of {_t}
-    set {_remaining_chars} to last (length of {_t} - 1) characters of {_t}
-    set {_output} to "%{_first_char} in upper case%%{_remaining_chars}%"
-    return {_output}
+  set {_first_char} to first character of {_t}
+  set {_remaining_chars} to last (length of {_t} - 1) characters of {_t}
+  set {_output} to "%{_first_char} in upper case%%{_remaining_chars}%"
+  return {_output}
 
 on script load:
-    loop {recently_attacked::*}:
-        delete {recently_attacked.%{recently_attacked::%loop-index%}%}
-        remove {recently_attacked::%loop-index%} from {recently_attacked::*}
+  loop {recently_attacked::*}:
+    delete {recently_attacked.%{recently_attacked::%loop-index%}%}
+    remove {recently_attacked::%loop-index%} from {recently_attacked::*}
 
 on death of villager:
-    set {_murder_variations::*} to "murdered", "assassinated", "brutally slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", and "deleted"
-    set {_died_variations::*} to "died", "removed from existence", "cancelled their free trial of life", and "had their existence suspended"
-    set {_villager_name} to display name of victim otherwise "Villager"
-    set {_id} to {entityid.%victim's entity uuid%} otherwise "[unassigned]"
+  set {_murder_variations::*} to "murdered", "assassinated", "slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", "killed to death", "put down", "euthanized", "butchered", and "deleted"
+  set {_died_variations::*} to "died", "removed from existence", "cancelled their free trial of life", and "had their existence suspended"
+  set {_villager_name} to display name of victim otherwise "Villager"
+  set {_id} to {entityid.%victim's entity uuid%} otherwise "[unassigned]"
 
-    if attacker is set:
-        set {_attacker_name} to display name of attacker otherwise capitalize("%attacker%")
-        set {death_msg} to "%{_villager_name}% was %random element out of {_murder_variations::*}% by %{_attacker_name}% (%{_id}%)"
-    else:
-        set {death_msg} to "%{_villager_name}% %random element out of {_died_variations::*}% from %damage cause% (%{_id}%)"
+  if attacker is set:
+    set {_attacker_name} to display name of attacker otherwise capitalize("%attacker%")
+    set {death_msg} to "%{_villager_name}% was %random element out of {_murder_variations::*}% by %{_attacker_name}% (%{_id}%)"
+  else:
+    set {death_msg} to "%{_villager_name}% %random element out of {_died_variations::*}% from %damage cause% (%{_id}%)"
 
 
-    send ":skull: **%{death_msg}%  |  [COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | WORLD: %world of victim%]**" to channel with id "{@discordChannelId}" with "Cheezy"
-    broadcast "%{death_msg}% %nl%§7§o[COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | WORLD: %world of victim%]"
-    
+  send ":skull: **%{death_msg}%  |  [COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | WORLD: %world of victim%]**" to channel with id "{@discordChannelId}" with "Cheezy"
+  broadcast "%{death_msg}% %nl%§7§o[COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | WORLD: %world of victim%]"
+  
 
 # on damage:
 #     victim is villager
