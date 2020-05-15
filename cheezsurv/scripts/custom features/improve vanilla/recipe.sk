@@ -27,8 +27,6 @@ on skript load:
 
     register new shaped recipe for ender chest using obsidian, obsidian, obsidian, obsidian, ender pearl, obsidian, obsidian, obsidian, and obsidian with id "ender_chest"
 
-    register new shaped recipe for soul sand using rotten flesh, rotten flesh, rotten flesh, rotten flesh, sand, rotten flesh, rotten flesh, rotten flesh, and rotten flesh with id "soul_sand"
-
     register new shaped recipe for enchanted golden apple using gold block, gold block, gold block, gold block, apple, gold block, gold block, gold block, and gold block with id "notch_apple"
 
 on first join:
@@ -52,5 +50,4 @@ on join:
     unlock recipe "quartzless_daylight_sensor_dark_oak" for player
     unlock recipe "quartzless_daylight_sensor_acacia" for player
     unlock recipe "ender_chest" for player
-    unlock recipe "soul_sand" for player
     unlock recipe "notch_apple" for player
