@@ -1,2 +1,5 @@
 on portal enter:
-  send "Warning: This is a temporary nether and it will be reset come the release of 1.16. Do not build anything permanent; the CheezSurv administration will not reimburse you for any lost resources or wasted time following the nether reset."
+  if difference between {nether_warning.%player%} and now is less than 10 seconds:
+    stop
+  send "%nl%§c§nWarning%nl%§rThis is a temporary nether and it will be reset come the release of 1.16. Do not build anything permanent; the CheezSurv administration will not reimburse you for any lost resources or wasted time following the nether reset.%nl%"
+  set {nether_warning.%player%} to now
