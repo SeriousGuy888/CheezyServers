@@ -1,18 +1,36 @@
 command /spec:
-    trigger:
-        if player's gamemode is survival:
-            set {%player%.spec.loc} to player's location
-            set player's gamemode to spectator
-        else if player's gamemode is spectator:
-            if {%player%.spec.loc} is not set:
-                send "§cYou are not in /spec spectator mode."
-            if {%player%.spec.loc} is set:
-                set player's gamemode to survival
-                teleport player to {%player%.spec.loc}
-                delete {%player%.spec.loc}
+  aliases: /sp
+  trigger:
+    if player's gamemode is survival:
+      set {%player%.spec.loc} to player's location
+      set player's gamemode to spectator
+    else if player's gamemode is spectator:
+      if {%player%.spec.loc} is not set:
+        send "§cYou are not in /spec spectator mode."
+      if {%player%.spec.loc} is set:
+        set player's gamemode to survival
+        teleport player to {%player%.spec.loc}
+        delete {%player%.spec.loc}
+
+command /dimension [<text>]:
+  aliases: /dim
+  trigger:
+    if gamemode of player is not spectator:
+      send "§cYou are not in spectator mode!"
+      stop
+    
+    if arg-1 is not set:
+      send "/dim <o|n|e>%nl%/dim e §7to go to the end"
+      stop
+    if arg-1 is "o" or "n" or "e":
+      teleport player to spawn point of "world" if arg-1 is "o"
+      teleport player to spawn point of "world_nether" if arg-1 is "n"
+      teleport player to spawn point of "world_the_end" if arg-1 is "e"
+    else:
+      send "/dim <o|n|e>%nl%/dim e §7to go to the end"
 
 on join:
-    {%player%.spec.loc} is set
-    wait 10 ticks
-    set player's gamemode to spectator
-    send "You have been placed in spectator mode. /spec to exit"
+  {%player%.spec.loc} is set
+  wait 10 ticks
+  set player's gamemode to spectator
+  send "You have been placed in spectator mode. /spec to exit"
