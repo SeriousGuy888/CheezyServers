@@ -27,8 +27,22 @@ on death of villager:
 
 
   send ":skull: **%{death_msg}%  |  [COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | WORLD: %world of victim%]**" to channel with id "{@discordChannelId}" with "Cheezy"
-  broadcast "%{death_msg}% %nl%§7§o[COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | WORLD: %world of victim%]"
+  loop all players:
+    set {villager_death_messages.%loop-player%} to true if {villager_death_messages.%loop-player%} is not set
+    {villager_death_messages.%loop-player%} is true
+    send "%{death_msg}% %nl%§7§o[COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | WORLD: %world of victim%]" to loop-player
   
+command /villagerdeathmessages:
+  aliases: /villdeathmsgs, /vdm
+  trigger:
+    set {villager_death_messages.%player%} to true if {villager_death_messages.%player%} is not set
+    if {villager_death_messages.%player%} is true:
+      set {villager_death_messages.%player%} to false
+      send "§aUnsubscribed from villager death messages."
+    else if {villager_death_messages.%player%} is false:
+      set {villager_death_messages.%player%} to true
+      send "§aSubscribed to villager death messages."
+
 
 # on damage:
 #     victim is villager
