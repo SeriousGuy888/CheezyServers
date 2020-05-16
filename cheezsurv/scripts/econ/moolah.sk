@@ -2,6 +2,22 @@ options:
   moolahName: §6Fool's Gold Coin
   moolahLore: §eDO NOT RENAME
 
+  discordChannelId: 711284320890781757 # economy logs channel
+
+
+
+every 3 seconds:
+    send {economy.logs.pending} to channel with id "{@discordChannelId}" with "Cheezy"
+    set {economy.logs.pending} to ""
+
+every 10 seconds:
+  loop all players:
+    set {bank.balance.%loop-player%} to 0 if {bank.balance.%loop-player%} is not set
+
+function logAction(a: text):
+  set {economy.logs.pending} to "%{economy.logs.pending}%%nl%[%now% UTC] %{_a}%"
+
+
 command /getmoolah <number>:
   trigger:
     player has permission "*"
@@ -15,10 +31,7 @@ on right click:
   send action bar "§3Deposited coin. §b/bal" to player
   play sound "block.note_block.pling" at volume 0.25 to player
 
-
-every 10 seconds:
-  loop all players:
-    set {bank.balance.%loop-player%} to 0 if {bank.balance.%loop-player%} is not set
+  logAction("`%player%` deposited `1` coins")
 
 command /balance <OfflinePlayer=%player%>:
   aliases: /bal
@@ -34,11 +47,14 @@ command /withdraw [<integer>]:
     if {bank.balance.%player%} is greater than or equal to arg-1:
       if player's inventory cannot hold arg-1 of sunflower:
         send "§cInsufficient inventory space!"
+        logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins - Insufficient inventory space")
         stop
       give arg-1 of sunflower named "{@moolahName}" with lore "{@moolahLore}" to player
       remove arg-1 from {bank.balance.%player%}
+      logAction("`%player%` withdrew `%arg-1%` coins")
     else:
       send "§cInsufficient funds! /bal"
+      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins - Insufficient funds")
 
 
 command /circulation:
