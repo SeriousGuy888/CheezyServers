@@ -15,6 +15,7 @@ on spawn:
   event-entity does not have scoreboard tag "raid_skeleton"
 
   if event-entity is skeleton:
+    event-entity is not wither skeleton
     if chance of {@skeletonWeaponChance}:
       if chance of 50%:
         enchant tool of event-entity with punch
