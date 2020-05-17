@@ -1,0 +1,28 @@
+{
+    "display": {
+        "title": {
+            "text": "Murdered by Dog"
+        },
+        "description": {
+            "text": "Get bitten to death by a dog."
+        },
+        "icon": {
+            "item": "minecraft:skeleton_skull"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "murderedByDog": {
+            "trigger": "minecraft:entity_killed_player",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:wolf"
+                }
+            }
+        }
+    },
+    "parent": "dogmeat:root"
+}

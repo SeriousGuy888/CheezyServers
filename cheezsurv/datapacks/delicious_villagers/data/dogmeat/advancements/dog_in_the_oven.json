@@ -1,0 +1,34 @@
+{
+    "display": {
+        "title": {
+            "text": "Dog in the Oven"
+        },
+        "description": {
+            "text": "Murder a dog in the nether."
+        },
+        "icon": {
+            "item": "minecraft:netherrack"
+        },
+        "frame": "goal",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "killDog": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:wolf",
+                    "location": {
+                        "dimension": "the_nether"
+                    }
+                }
+            }
+        }
+    },
+    "rewards": {
+        "experience": 50
+    },
+    "parent": "dogmeat:root"
+}

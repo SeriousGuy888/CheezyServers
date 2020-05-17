@@ -1,0 +1,37 @@
+{
+  "display": {
+      "title": {
+          "text": "Two Hit Dog Death"
+      },
+      "description": {
+          "text": "Deal 10 HP or 5 hearts or more of damage at once to a dog."
+      },
+      "icon": {
+          "item": "minecraft:diamond_sword"
+      },
+      "frame": "goal",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+  },
+  "criteria": {
+    "killify": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+          "entity": {
+              "type": "minecraft:wolf"
+          },
+          "damage": {
+              "taken": {
+                  "min": 10,
+                  "max": 10
+              }
+          }
+      }
+  }
+  },
+  "rewards": {
+      "experience": 5
+  },
+  "parent": "dogmeat:dog_meat_factory"
+}
