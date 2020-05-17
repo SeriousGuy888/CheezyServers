@@ -1,0 +1,7 @@
+command /fireball:
+  trigger:
+    if player is not op:
+      send "§cyou are not an admin"
+      stop
+    
+    shoot fireball from player
