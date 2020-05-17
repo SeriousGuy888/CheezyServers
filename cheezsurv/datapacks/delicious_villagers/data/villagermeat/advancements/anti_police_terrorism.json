@@ -1,22 +1,22 @@
 {
     "display": {
         "title": {
-            "text": "Enemy of the People"
+            "text": "Anti-Police Terrorism"
         },
         "description": {
-            "text": "Be murdered by a village's iron golem."
+            "text": "Get revenge on the iron golems and kill one of them."
         },
         "icon": {
-            "item": "minecraft:carved_pumpkin"
+            "item": "minecraft:poppy"
         },
-        "frame": "task",
+        "frame": "goal",
         "show_toast": true,
         "announce_to_chat": true,
         "hidden": false
     },
     "criteria": {
-        "dead": {
-            "trigger": "minecraft:entity_killed_player",
+        "murder": {
+            "trigger": "minecraft:player_killed_entity",
             "conditions": {
                 "entity": {
                     "type": "minecraft:iron_golem"
@@ -24,5 +24,8 @@
             }
         }
     },
-    "parent": "villagermeat:root"
+    "rewards": {
+        "experience": 500
+    },
+    "parent": "villagermeat:enemy_of_the_people"
 }

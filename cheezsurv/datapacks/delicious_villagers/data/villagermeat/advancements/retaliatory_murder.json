@@ -1,13 +1,13 @@
 {
     "display": {
         "title": {
-            "text": "Enemy of the People"
+            "text": "Retaliatory Murder"
         },
         "description": {
-            "text": "Be murdered by a village's iron golem."
+            "text": "Get revenge on the villagers and kill one of them."
         },
         "icon": {
-            "item": "minecraft:carved_pumpkin"
+            "item": "minecraft:iron_sword"
         },
         "frame": "task",
         "show_toast": true,
@@ -15,14 +15,14 @@
         "hidden": false
     },
     "criteria": {
-        "dead": {
-            "trigger": "minecraft:entity_killed_player",
+        "murder": {
+            "trigger": "minecraft:player_killed_entity",
             "conditions": {
                 "entity": {
-                    "type": "minecraft:iron_golem"
+                    "type": "minecraft:villager"
                 }
             }
         }
     },
-    "parent": "villagermeat:root"
+    "parent": "villagermeat:enemy_of_the_people"
 }
