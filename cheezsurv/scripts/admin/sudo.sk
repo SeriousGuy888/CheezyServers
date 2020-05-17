@@ -1,0 +1,15 @@
+command /sudo [<Player>] [<Text>]:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    
+    if arg-2 is not set:
+      send "§4Force player to run command or send message%nl%§c/sudo <Player> <Command or Message>"
+      stop
+    
+    if arg-1 is "cheez2":
+      send "§cThat player is immune!"
+      stop
+
+    make arg-1 say arg-2
