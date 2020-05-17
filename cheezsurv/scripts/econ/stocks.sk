@@ -3,7 +3,7 @@ options:
 
   shareLimit: 500
 
-  stockBalEffect: 25000 # 1 / 25000
+  stockBalEffect: 10000 # 1 / 10000
   stockGrowthEffect: 1000000 # 1 / 1,000,000
 
   negativeBalancePenalty: 500
