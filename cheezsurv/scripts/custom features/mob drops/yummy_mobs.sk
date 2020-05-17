@@ -11,3 +11,7 @@ on death of wolf:
 on death of villager:
   set {_drop_amount} to random number between 2 and 4
   drop {_drop_amount} of steak named "§rVillager Meat" with lore "§7§oIt's technically not cannibalism." and "§7§oStill though, why?" at victim
+
+on death of wandering trader:
+  set {_drop_amount} to random number between 2 and 4
+  drop {_drop_amount} of steak named "§rWandering Trader Meat" with lore "§7§oIt's technically not cannibalism." and "§7§o(Different from villager meat)" at victim
