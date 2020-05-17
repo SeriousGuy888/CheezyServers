@@ -1,18 +1,17 @@
 {
     "display": {
         "title": {
-            "text": "Dog Meat"
+            "text": "Villager Meat"
         },
         "description": {
-            "text": "Extremely nutricious. Hoang's favourite food."
+            "text": "It's technically not cannibalism!"
         },
         "icon": {
-            "item": "minecraft:cooked_beef"
+            "item": "emerald"
         },
         "show_toast": false,
         "announce_to_chat": false,
-        "hidden": false,
-        "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+        "hidden": false
     },
     "criteria": {
         "tick": {
