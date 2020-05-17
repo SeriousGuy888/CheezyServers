@@ -2,5 +2,5 @@ on death:
     victim is not player
     attacker's tool is enchanted with looting
     set {_lvl} to level of looting of attacker's tool
-    set {_xp_multiplier} to (random number between 10 and 75) / 10 # multiplies the xp dropped from anywhere between 0.5x and 5x
+    set {_xp_multiplier} to (random number between 15 and 75) / 10 # multiplies the xp dropped from anywhere between 1.5x and 7.5x
     spawn ({_lvl} * {_xp_multiplier}) of xp at victim
