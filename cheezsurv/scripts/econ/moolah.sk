@@ -1,16 +1,25 @@
 options:
-  moolahName: §6Fool's Gold Coin
-  moolahLore: §eDO NOT RENAME
+  coinName: §6Fool's Gold Coin
+  coinLore: §eDO NOT RENAME
+
+  banknoteName: §6Banknote
 
   discordChannelId: 711284320890781757 # economy logs channel
 
 
+on script load:
+  delete {banknote_denominations::*}
 
-every 3 seconds:
-    send {economy.logs.pending} to channel with id "{@discordChannelId}" with "Cheezy"
-    set {economy.logs.pending} to ""
+  add 5 to {banknote_denominations::*}
+  add 10 to {banknote_denominations::*}
+  add 20 to {banknote_denominations::*}
+  add 50 to {banknote_denominations::*}
+  add 100 to {banknote_denominations::*}
 
-every 10 seconds:
+every 5 seconds:
+  send {economy.logs.pending} to channel with id "{@discordChannelId}" with "Cheezy"
+  set {economy.logs.pending} to ""
+
   loop all players:
     set {bank.balance.%loop-player%} to 0 if {bank.balance.%loop-player%} is not set
 
@@ -21,58 +30,115 @@ function logAction(a: text):
 command /getmoolah <number>:
   trigger:
     player has permission "*"
-    give arg-1 of sunflower named "{@moolahName}" with lore "{@moolahLore}" to player
-
-on right click:
-  name of player's tool is "{@moolahName}"
-  cancel event
-
-  set {_deposited} to 0
-
-  # if player is not sneaking:
-  remove 1 from item amount of player's tool
-  add 1 to {_deposited}
-  # else if player is sneaking:
-  #   set {_coins} to amount of player's held item in player's inventory
-
-  #   loop all items in player's inventory:
-  #     loop-item is sunflower
-  #     if name of loop-item is "{@moolahName}":
-  #       add item amount of loop-item to {_deposited}
-  #       remove loop-item from player
-  #     else:
-  #       send "b"
-
-
-  
-  add {_deposited} to {bank.balance.%player%}
-  send action bar "§3Deposited §b%{_deposited}%§3 coins. §b/bal" to player
-  play sound "block.note_block.pling" at volume 0.25 to player
-
-  logAction("`%player%` deposited `%{_deposited}%` coins")
+    give arg-1 of sunflower named "{@coinName}" with lore "{@coinLore}" to player
 
 command /balance <OfflinePlayer=%player%>:
   aliases: /bal
   trigger:
     send "§3Bank balance of §b%arg-1%§3 is §b%{bank.balance.%arg-1%}% §3coins."
 
-command /withdraw [<integer>]:
+
+
+
+
+command /withdraw [<text>]:
+  executable by: players
   aliases: /with
   trigger:
+    send "§bThe /withdraw command has been split into the /coin and /banknote commands."
+
+
+command /coin [<integer>]:
+  executable by: players
+  aliases: /coins
+  trigger:
     if arg-1 is not set:
-      send "§c/with <amount>"
+      send "§c§lWithdraw in coins:%nl%§c/coin <amount>"
       stop
-    if {bank.balance.%player%} is greater than or equal to arg-1:
-      if player's inventory cannot hold arg-1 of sunflower:
-        send "§cInsufficient inventory space!"
-        logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins - Insufficient inventory space")
-        stop
-      give arg-1 of sunflower named "{@moolahName}" with lore "{@moolahLore}" to player
-      remove arg-1 from {bank.balance.%player%}
-      logAction("`%player%` withdrew `%arg-1%` coins")
-    else:
+
+    if arg-1 is less than 1:
+      send "§cYou may not withdraw a negative or zero amount!"
+      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Negative or zero amount")
+      stop
+    
+    if {bank.balance.%player%} is less than arg-1:
       send "§cInsufficient funds! /bal"
-      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins - Insufficient funds")
+      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient funds")
+      stop
+
+    if player's inventory cannot hold arg-1 of sunflower:
+      send "§cInsufficient inventory space!"
+      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient inventory space")
+      stop
+
+    give arg-1 of sunflower named "{@coinName}" with lore "{@coinLore}" to player
+    remove arg-1 from {bank.balance.%player%}
+    logAction("`%player%` withdrew `%arg-1%` coins in coins")
+
+command /banknote [<number>] [<integer>]:
+  executable by: players
+  trigger:
+    if arg-1 is not set:
+      send "§c§lWithdraw moolah in banknotes.%nl%§c/banknote <Denomination> [Amount]"
+      stop
+
+    set {_denom} to arg-1
+    set {_amount} to arg-2 otherwise 1
+
+    if {banknote_denominations::*} does not contain {_denom}:
+      send "§4Invalid denomination! The valid ones are: §c%{banknote_denominations::*}%"
+      stop
+
+    set {_total} to {_denom} * {_amount}
+
+    if {_total} is less than 1:
+      send "§cYou may not withdraw a negative or zero amount!"
+      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Negative or zero amount")
+      stop
+
+    if {bank.balance.%player%} is less than {_total}:
+      send "§cInsufficient funds! /bal"
+      logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient funds")
+      stop
+    
+    if player's inventory cannot hold {_amount} of paper:
+      send "§cInsufficient inventory space!"
+      logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient inventory space")
+      stop
+    
+    give {_amount} of shiny paper named "{@banknoteName}" with lore "§e%{_denom}%§ec" to player
+    remove {_total} from {bank.balance.%player%}
+    logAction("`%player%` withdrew `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%`")
+
+
+
+on right click:
+  if name of player's tool is not "{@coinName}":
+    if name of player's tool is not "{@banknoteName}":
+      stop
+  
+  cancel event
+  set {_deposited} to 0
+
+  if name of player's tool is "{@coinName}":
+    add 1 to {_deposited}
+    remove 1 from item amount of player's tool
+  else if name of player's tool is "{@banknoteName}":
+    set {_lore} to uncoloured lore of player's tool
+    replace all "c" in {_lore} with ""
+    add {_lore} parsed as number to {_deposited}
+    remove 1 from item amount of player's tool
+
+  add {_deposited} to {bank.balance.%player%}
+  send action bar "§3Deposited §b%{_deposited}%§3 coins. §b/bal" to player
+  play sound "block.note_block.pling" at volume 0.25 to player
+
+  logAction("`%player%` deposited `%{_deposited}%` coins")
+
+
+  
+
+
 
 
 command /circulation:
