@@ -1,8 +1,10 @@
 options:
-  coinName: §6Fool's Gold Coin
-  coinLore: §eDO NOT RENAME
+  legacyCoinName: §6Fool's Gold Coin
+  coinName: §6Coin
+  coinLore: §eFool's Gold Standard
 
   banknoteName: §6Banknote
+  banknoteLore: §eFool's Gold Standard
 
   discordChannelId: 711284320890781757 # economy logs channel
 
@@ -84,12 +86,12 @@ command /banknote [<number>] [<integer>]:
 
     set {_denom} to arg-1
     set {_amount} to arg-2 otherwise 1
+    set {_total} to {_denom} * {_amount}
 
     if {banknote_denominations::*} does not contain {_denom}:
       send "§4Invalid denomination! The valid ones are: §c%{banknote_denominations::*}%"
+      logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Invalid denomination")
       stop
-
-    set {_total} to {_denom} * {_amount}
 
     if {_total} is less than 1:
       send "§cYou may not withdraw a negative or zero amount!"
@@ -106,7 +108,7 @@ command /banknote [<number>] [<integer>]:
       logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient inventory space")
       stop
     
-    give {_amount} of shiny paper named "{@banknoteName}" with lore "§e%{_denom}%§ec" to player
+    give {_amount} of shiny paper named "{@banknoteName}" with lore "{@banknoteLore}" and "§7%{_denom}%§7c" to player
     remove {_total} from {bank.balance.%player%}
     logAction("`%player%` withdrew `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%`")
 
@@ -114,17 +116,18 @@ command /banknote [<number>] [<integer>]:
 
 on right click:
   if name of player's tool is not "{@coinName}":
-    if name of player's tool is not "{@banknoteName}":
-      stop
+    if name of player's tool is not "{@legacyCoinName}":
+      if name of player's tool is not "{@banknoteName}":
+        stop
   
   cancel event
   set {_deposited} to 0
 
-  if name of player's tool is "{@coinName}":
+  if name of player's tool is "{@coinName}" or "{@legacyCoinName}":
     add 1 to {_deposited}
     remove 1 from item amount of player's tool
   else if name of player's tool is "{@banknoteName}":
-    set {_lore} to uncoloured lore of player's tool
+    set {_lore} to uncoloured line 2 of lore of player's tool
     replace all "c" in {_lore} with ""
     add {_lore} parsed as number to {_deposited}
     remove 1 from item amount of player's tool
