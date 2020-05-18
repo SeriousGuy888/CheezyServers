@@ -1,0 +1,71 @@
+{
+  "display": {
+    "title": {
+      "text": "Diamond Armour"
+    },
+    "description": {
+      "text": "Get any of the diamond armour pieces in your inventory."
+    },
+    "icon": {
+      "item": "minecraft:diamond_chestplate"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "diamondHelm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+            {
+              "item": "minecraft:diamond_helmet"
+            }
+          ]
+        }
+      },
+    "diamondChest": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:diamond_chestplate"
+          }
+        ]
+      }
+    },
+    "diamondLegs": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "minecraft:diamond_leggings"
+            }
+          ]
+        }
+    },
+    "diamondBoots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:diamond_boots"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+      [
+          "diamondHelm",
+          "diamondChest",
+          "diamondLegs",
+          "diamondBoots"
+      ]
+  ],
+  "rewards": {
+      "experience": 5
+  },
+  "parent": "cheezsurv:root"
+}

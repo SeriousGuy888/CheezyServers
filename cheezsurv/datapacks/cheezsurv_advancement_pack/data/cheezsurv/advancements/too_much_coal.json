@@ -1,0 +1,37 @@
+{
+  "display": {
+    "title": {
+      "text": "Too Much Coal"
+    },
+    "description": {
+      "text": "Have a stack or more of coal in your inventory."
+    },
+    "icon": {
+      "item": "minecraft:coal"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "gapple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:coal",
+            "count": {
+              "min": 64,
+              "max": 32767
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+      "experience": 20
+  },
+  "parent": "cheezsurv:diamond_tools"
+}

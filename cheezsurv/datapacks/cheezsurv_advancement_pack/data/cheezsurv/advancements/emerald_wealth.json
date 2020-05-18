@@ -1,0 +1,29 @@
+{
+  "display": {
+    "title": {
+      "text": "More Shiny Emeralds"
+    },
+    "description": {
+      "text": "Show off your wealth and place down an emerald block."
+    },
+    "icon": {
+      "item": "minecraft:emerald_block"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "wealth": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "minecraft:emerald_block"
+    }
+  }
+  },
+  "rewards": {
+      "experience": 15
+  },
+  "parent": "cheezsurv:sell_to_villager"
+}

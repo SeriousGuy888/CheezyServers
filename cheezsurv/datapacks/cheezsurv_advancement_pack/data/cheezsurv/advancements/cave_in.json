@@ -1,0 +1,29 @@
+{
+  "display": {
+    "title": {
+      "text": "Cave In"
+    },
+    "description": {
+      "text": "Suffocate in gravel."
+    },
+    "icon": {
+      "item": "minecraft:gravel"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "caveIn": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:gravel"
+      }
+    }
+  },
+  "rewards": {
+      "experience": 25
+  },
+  "parent": "cheezsurv:diamond_tools"
+}
