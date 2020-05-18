@@ -26,12 +26,30 @@ command /getmoolah <number>:
 on right click:
   name of player's tool is "{@moolahName}"
   cancel event
-  add 1 to {bank.balance.%player%}
-  remove 1 of player's tool from player
-  send action bar "§3Deposited coin. §b/bal" to player
+
+  set {_deposited} to 0
+
+  # if player is not sneaking:
+  remove 1 from item amount of player's tool
+  add 1 to {_deposited}
+  # else if player is sneaking:
+  #   set {_coins} to amount of player's held item in player's inventory
+
+  #   loop all items in player's inventory:
+  #     loop-item is sunflower
+  #     if name of loop-item is "{@moolahName}":
+  #       add item amount of loop-item to {_deposited}
+  #       remove loop-item from player
+  #     else:
+  #       send "b"
+
+
+  
+  add {_deposited} to {bank.balance.%player%}
+  send action bar "§3Deposited §b%{_deposited}%§3 coins. §b/bal" to player
   play sound "block.note_block.pling" at volume 0.25 to player
 
-  logAction("`%player%` deposited `1` coins")
+  logAction("`%player%` deposited `%{_deposited}%` coins")
 
 command /balance <OfflinePlayer=%player%>:
   aliases: /bal
