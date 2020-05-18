@@ -50,13 +50,13 @@ command /withdraw [<text>]:
     send "§bThe /withdraw command has been split into the /coin and /banknote commands."
 
 
-command /coin [<integer>]:
+command /coin <integer=1>:
   executable by: players
   aliases: /coins
   trigger:
-    if arg-1 is not set:
-      send "§c§lWithdraw in coins:%nl%§c/coin <amount>"
-      stop
+    # if arg-1 is not set:
+    #   send "§c§lWithdraw in coins:%nl%§c/coin <amount>"
+    #   stop
 
     if arg-1 is less than 1:
       send "§cYou may not withdraw a negative or zero amount!"
@@ -75,6 +75,7 @@ command /coin [<integer>]:
 
     give arg-1 of sunflower named "{@coinName}" with lore "{@coinLore}" to player
     remove arg-1 from {bank.balance.%player%}
+    send "§2Withdrew §a%arg-1% §2coins from your bank balance."
     logAction("`%player%` withdrew `%arg-1%` coins in coins")
 
 command /banknote [<number>] [<integer>]:
@@ -110,6 +111,7 @@ command /banknote [<number>] [<integer>]:
     
     give {_amount} of shiny paper named "{@banknoteName}" with lore "{@banknoteLore}" and "§7%{_denom}%§7c" to player
     remove {_total} from {bank.balance.%player%}
+    send "§2Withdrew §a%{_total}% §2coins from your bank balance."
     logAction("`%player%` withdrew `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%`")
 
 
