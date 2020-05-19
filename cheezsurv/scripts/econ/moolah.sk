@@ -42,7 +42,7 @@ command /getcoin <number>:
   executable by: players
   trigger:
     player has permission "*"
-    giveMoolah(player, arg-1)
+    giveCoin(player, arg-1)
 
 command /getbanknote <number> <number>:
   executable by: players
