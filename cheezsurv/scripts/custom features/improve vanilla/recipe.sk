@@ -29,25 +29,25 @@ on skript load:
 
     register new shaped recipe for enchanted golden apple using gold block, gold block, gold block, gold block, apple, gold block, gold block, gold block, and gold block with id "notch_apple"
 
-on first join:
+on join:
     make console execute command "/execute run recipe give %player% *"
 
-on join:
-    unlock recipe "dirt" for player
-    unlock recipe "gravel" for player
-    unlock recipe "uncraft_sandstone" for player
-    unlock recipe "iron_tip_arrow_left" for player
-    unlock recipe "iron_tip_arrow_center" for player
-    unlock recipe "iron_tip_arrow_right" for player
-    unlock recipe "uncraft_wool" for player
-    unlock recipe "uncraft_quartz" for player
-    unlock recipe "quartzless_comparator" for player
-    unlock recipe "quartzless_observer" for player
-    unlock recipe "quartzless_daylight_sensor_oak" for player
-    unlock recipe "quartzless_daylight_sensor_spruce" for player
-    unlock recipe "quartzless_daylight_sensor_birch" for player
-    unlock recipe "quartzless_daylight_sensor_jungle" for player
-    unlock recipe "quartzless_daylight_sensor_dark_oak" for player
-    unlock recipe "quartzless_daylight_sensor_acacia" for player
-    unlock recipe "ender_chest" for player
-    unlock recipe "notch_apple" for player
+# on join:
+#     unlock recipe "dirt" for player
+#     unlock recipe "gravel" for player
+#     unlock recipe "uncraft_sandstone" for player
+#     unlock recipe "iron_tip_arrow_left" for player
+#     unlock recipe "iron_tip_arrow_center" for player
+#     unlock recipe "iron_tip_arrow_right" for player
+#     unlock recipe "uncraft_wool" for player
+#     unlock recipe "uncraft_quartz" for player
+#     unlock recipe "quartzless_comparator" for player
+#     unlock recipe "quartzless_observer" for player
+#     unlock recipe "quartzless_daylight_sensor_oak" for player
+#     unlock recipe "quartzless_daylight_sensor_spruce" for player
+#     unlock recipe "quartzless_daylight_sensor_birch" for player
+#     unlock recipe "quartzless_daylight_sensor_jungle" for player
+#     unlock recipe "quartzless_daylight_sensor_dark_oak" for player
+#     unlock recipe "quartzless_daylight_sensor_acacia" for player
+#     unlock recipe "ender_chest" for player
+#     unlock recipe "notch_apple" for player
