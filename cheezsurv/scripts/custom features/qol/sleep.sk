@@ -7,5 +7,5 @@ on bed enter:
     set time in player's world to {@time}
     set weather in player's world to sun
 
-at 6am in world "world":
-    broadcast "§bThe time is now 6am. Good morning!"
+# at 6am in world "world":
+#     broadcast "§bThe time is now 6am. Good morning!"
