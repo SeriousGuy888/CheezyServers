@@ -18,21 +18,37 @@ on script load:
   add 50 to {banknote_denominations::*}
   add 100 to {banknote_denominations::*}
 
+
+function giveCoin(p: player, a: number):
+  give {_p} {_a} of sunflower named "{@coinName}" with lore "{@coinLore}"
+
+function giveBanknote(p: player, d: number, a: number):
+  give {_p} {_a} of shiny paper named "{@banknoteName}" with lore "{@banknoteLore}" and "§7%{_d}%§7c"
+
+
 every 5 seconds:
   send {economy.logs.pending} to channel with id "{@discordChannelId}" with "Cheezy"
   set {economy.logs.pending} to ""
 
   loop all players:
     set {bank.balance.%loop-player%} to 0 if {bank.balance.%loop-player%} is not set
-
 function logAction(a: text):
   set {economy.logs.pending} to "%{economy.logs.pending}%%nl%[%now% UTC] %{_a}%"
 
 
-command /getmoolah <number>:
+
+
+command /getcoin <number>:
+  executable by: players
   trigger:
     player has permission "*"
-    give arg-1 of sunflower named "{@coinName}" with lore "{@coinLore}" to player
+    giveMoolah(player, arg-1)
+
+command /getbanknote <number> <number>:
+  executable by: players
+  trigger:
+    player has permission "*"
+    giveBanknote(player, arg-1, arg-2)
 
 command /balance <OfflinePlayer=%player%>:
   aliases: /bal
@@ -50,13 +66,13 @@ command /withdraw [<text>]:
     send "§bThe /withdraw command has been split into the /coin and /banknote commands."
 
 
-command /coin <integer=1>:
+command /coin <integer>:
   executable by: players
   aliases: /coins
   trigger:
-    # if arg-1 is not set:
-    #   send "§c§lWithdraw in coins:%nl%§c/coin <amount>"
-    #   stop
+    if arg-1 is not set:
+      send "§c§lWithdraw in coins:%nl%§c/coin <amount>"
+      stop
 
     if arg-1 is less than 1:
       send "§cYou may not withdraw a negative or zero amount!"
@@ -73,10 +89,10 @@ command /coin <integer=1>:
       logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient inventory space")
       stop
 
-    give arg-1 of sunflower named "{@coinName}" with lore "{@coinLore}" to player
     remove arg-1 from {bank.balance.%player%}
-    send "§2Withdrew §a%arg-1% §2coins from your bank balance."
+    giveCoin(player, arg-1)
     logAction("`%player%` withdrew `%arg-1%` coins in coins")
+    send "§2Withdrew §a%arg-1% §2coins from your bank balance."
 
 command /banknote [<number>] [<integer>]:
   executable by: players
@@ -109,10 +125,10 @@ command /banknote [<number>] [<integer>]:
       logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient inventory space")
       stop
     
-    give {_amount} of shiny paper named "{@banknoteName}" with lore "{@banknoteLore}" and "§7%{_denom}%§7c" to player
     remove {_total} from {bank.balance.%player%}
-    send "§2Withdrew §a%{_total}% §2coins from your bank balance."
+    giveBanknote(player, {_denom}, {_amount})
     logAction("`%player%` withdrew `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%`")
+    send "§2Withdrew §a%{_total}% §2coins from your bank balance."
 
 
 
