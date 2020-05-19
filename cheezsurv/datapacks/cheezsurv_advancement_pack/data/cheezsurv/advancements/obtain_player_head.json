@@ -1,13 +1,14 @@
 {
   "display": {
     "title": {
-      "text": "Too Much Coal"
+      "text": "Decapitation"
     },
     "description": {
-      "text": "Have a stack or more of coal in your inventory."
+      "text": "Obtain a player head."
     },
     "icon": {
-      "item": "minecraft:coal"
+      "item": "minecraft:player_head",
+      "nbt": "{SkullOwner:{Name:\"Notch\"}}"
     },
     "frame": "task",
     "show_toast": true,
@@ -15,14 +16,14 @@
     "hidden": false
   },
   "criteria": {
-    "coal": {
+    "gapple": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:coal",
+            "item": "minecraft:player_head",
             "count": {
-              "min": 64,
+              "min": 1,
               "max": 32767
             }
           }
@@ -31,7 +32,7 @@
     }
   },
   "rewards": {
-      "experience": 20
+      "experience": 10
   },
-  "parent": "cheezsurv:diamond_tools"
+  "parent": "cheezsurv:murder"
 }
