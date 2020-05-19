@@ -1,0 +1,31 @@
+{
+  "display": {
+    "title": {
+      "text": "Reckless Spending"
+    },
+    "description": {
+      "text": "Purchase a diamond hoe from a toolsmith villager."
+    },
+    "icon": {
+      "item": "minecraft:diamond_hoe"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "getEmerald": {
+      "trigger": "minecraft:villager_trade",
+      "conditions": {
+        "item": {
+          "item": "minecraft:diamond_hoe"
+        }
+      }
+    }
+  },
+  "rewards": {
+      "experience": 150
+  },
+  "parent": "cheezsurv:trade_mending_book"
+}
