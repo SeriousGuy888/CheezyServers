@@ -13,9 +13,16 @@ options:
   passiveRandomPriceChange: 0.01
 
   changeMultiplierMin: 1
-  changeMultiplierMax: 10
+  changeMultiplierMax: 2.5
 
   maxStockCirculation: 15000
+
+
+# NOTICE
+# The growth stock price calculation system is now a legacy
+# system. {stocks.growth.%ticker%} variable
+# Billzo will soon be changing the way it works.
+
 
 # calculate new stock prices
 function calculateStockPrices():
@@ -43,16 +50,14 @@ function calculateStockPrices():
     # when companies dont have money, lower the stock price
     if {stocks.balance.%{stocks.registered::%loop-index%}%} is less than 0:
       remove {@negativeBalancePenalty} from {stocks.growth.%{stocks.registered::%loop-index%}%}
-    
+    # if a company's stock price is in the negatives, have it slowly recover
     if {stocks.value.%{stocks.registered::%loop-index%}%} is less than 0:
       add {@negativeValueRecovery} to {stocks.growth.%{stocks.registered::%loop-index%}%}
 
+
+
     set {_change_multiplier} to random number between {@changeMultiplierMin} and {@changeMultiplierMax}
     set {_net_change} to ({stocks.growth.%{stocks.registered::%loop-index%}%} / {@stockGrowthEffect}) * {_change_multiplier}
-
-
-    # this block randomly changes the stock up or down by 1 cent
-    # if chance of 25%:
 
     
 
