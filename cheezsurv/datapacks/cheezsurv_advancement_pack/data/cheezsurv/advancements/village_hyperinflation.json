@@ -1,0 +1,38 @@
+{
+  "display": {
+    "title": {
+      "text": "Village Hyperinflation"
+    },
+    "description": {
+      "text": "Have a stack of emerald blocks in your inventory."
+    },
+    "icon": {
+      "item": "minecraft:emerald_block",
+      "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:32767s}]}"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "emeralds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:emerald_block",
+            "count": {
+              "min": 64,
+              "max": 32767
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+      "experience": 150
+  },
+  "parent": "cheezsurv:emerald_wealth"
+}

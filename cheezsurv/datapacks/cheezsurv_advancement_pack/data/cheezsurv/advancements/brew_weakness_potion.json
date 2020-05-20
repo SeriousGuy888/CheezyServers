@@ -38,5 +38,5 @@
   "rewards": {
       "experience": 20
   },
-  "parent": "cheezsurv:sell_to_villager"
+  "parent": "cheezsurv:villager_traitor"
 }

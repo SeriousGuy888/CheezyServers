@@ -1,0 +1,28 @@
+{
+  "display": {
+    "title": {
+      "text": "Suicide Bombed"
+    },
+    "description": {
+      "text": "Be murdered by a creeper."
+    },
+    "icon": {
+      "item": "minecraft:creeper_head"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dead": {
+      "trigger": "minecraft:entity_killed_player",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:creeper"
+        }
+      }
+    }
+  },
+  "parent": "cheezsurv:exploration"
+}
