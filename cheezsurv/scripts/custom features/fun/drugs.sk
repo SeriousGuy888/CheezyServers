@@ -19,11 +19,11 @@ command /drugglez:
 
 command /drugeffects <player=%player%>:
   trigger:
-    if {drug_max_health.%arg-1%} is not set:
-      send "§7%arg-1% §7is not experiencing druggle effects on their max health."
-      stop
-    send "%arg-1%'s max health is at %{drug_max_health.%arg-1%}% and will wear off in %{drug_max_health.%arg-1%.timer}% seconds."
-    send "%arg-1%'s absorption will wear off in %{drug_absorption.%arg-1%.timer}% seconds."
+    # if {drug_max_health.%arg-1%} is not set:
+    #   send "§7%arg-1% §7is not experiencing druggle effects on their max health."
+    #   stop
+    send "%arg-1%'s max health is at %{drug_max_health.%arg-1%} otherwise ""default""% and will wear off in %{drug_max_health.%arg-1%.timer} otherwise ""-1""% seconds."
+    send "%arg-1%'s absorption will wear off in %{drug_absorption.%arg-1%.timer} otherwise ""-1""% seconds."
 
 every second in world "world":
   loop all players:
@@ -42,8 +42,9 @@ every second in world "world":
   loop all players:
     if {drug_absorption.%loop-player%.timer} <= 0:
       delete {drug_absorption.%loop-player%.timer}
-      delete {drug_absorption.%loop-player%}
+      set absorption hearts of loop-player to 0
       continue
+    remove 1 from {drug_absorption.%loop-player%.timer}
 
 
 
