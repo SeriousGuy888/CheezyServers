@@ -17,12 +17,13 @@ command /drugglez:
     format slot 0 of player with {@cocaine} to run [give player 64 of {@cocaine}]
     format slot 1 of player with {@weed} to run [give player 64 of {@weed}]
 
-command /drugmaxhealth <player=%player%>:
+command /drugeffects <player=%player%>:
   trigger:
     if {drug_max_health.%arg-1%} is not set:
       send "§7%arg-1% §7is not experiencing druggle effects on their max health."
       stop
-    send "%arg-1%'s druggle max health effects is at %{drug_max_health.%arg-1%}% and will wear off in %{drug_max_health.%arg-1%.timer}% seconds."
+    send "%arg-1%'s max health is at %{drug_max_health.%arg-1%}% and will wear off in %{drug_max_health.%arg-1%.timer}% seconds."
+    send "%arg-1%'s absorption will wear off in %{drug_absorption.%arg-1%.timer}% seconds."
 
 every second in world "world":
   loop all players:
@@ -30,13 +31,25 @@ every second in world "world":
       max health of loop-player != 10
       set max health of loop-player to 10
       continue
-    if {drug_max_health.%loop-player%.timer} is 0:
+    if {drug_max_health.%loop-player%.timer} <= 0:
       delete {drug_max_health.%loop-player%.timer}
       delete {drug_max_health.%loop-player%}
+      continue
     remove 1 from {drug_max_health.%loop-player%.timer}
     if max health of loop-player > {drug_max_health.%loop-player%}:
       set max health of loop-player to {drug_max_health.%loop-player%}
-    
+  
+  loop all players:
+    if {drug_absorption.%loop-player%.timer} <= 0:
+      delete {drug_absorption.%loop-player%.timer}
+      delete {drug_absorption.%loop-player%}
+      continue
+
+
+
+on death:
+  set {drug_max_health.%player%.timer} to 0
+  set {drug_absorption.%player%.timer} to 0
     
 
 
@@ -47,11 +60,14 @@ on right click:
     apply speed 3 to player for {@cocaineDuration} seconds
     apply strength 3 to player for {@cocaineDuration} seconds
     apply haste 3 to player for {@cocaineDuration} seconds
-    apply absorption 1 to player for {@cocaineDuration} seconds
+
     set {drug_max_health.%player%} to 8
     add {@cocaineDuration} to {drug_max_health.%player%.timer}
 
-    send "§eAdded {@cocaineDuration} seconds to the effects of the cocaine."
+    set absorption hearts of player to 4
+    add {@cocaineDuration} to {drug_absorption.%player%.timer}
+
+    send "§eAdded {@cocaineDuration} seconds to the effects of the cocaine." to player
 
   if player's tool is {@weed}:
     cancel event
@@ -59,10 +75,14 @@ on right click:
     apply slowness 1 to player for {@weedDuration} seconds
     apply hunger 1 to player for {@weedDuration} seconds
     apply strength 2 to player for {@weedDuration} seconds
-    apply jump boost 1 to player for {@weedDuration} seconds
-    apply absorption 1 to player for {@weedDuration} seconds
+    apply jump boost 2 to player for {@weedDuration} seconds
+    apply mining fatigue 1 to player for {@weedDuration} seconds
     apply nausea 1 to player for 3 seconds
+
     set {drug_max_health.%player%} to 9
     add {@weedDuration} to {drug_max_health.%player%.timer}
 
-    send "§eAdded {@weedDuration} seconds to the effects of the marijuana."
+    set absorption hearts of player to 2
+    add {@weedDuration} to {drug_absorption.%player%.timer}
+
+    send "§eAdded {@weedDuration} seconds to the effects of the marijuana." to player
