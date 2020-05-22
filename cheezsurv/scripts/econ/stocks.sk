@@ -382,11 +382,11 @@ command /stockbalance [<text>]:
     if arg-1 is not set:
       send "§c/stockbalance <ticker>"
       stop
-    
-    if {stocks.registered::*} does not contain arg-1 in upper case:
+    set {_ticker} to arg-1 in upper case
+    if {stocks.registered::*} does not contain {_ticker}:
       send "§cStock not registered!"
     
-    send "§2%arg-1 in upper case%§2: §a%{stocks.balance.%arg-1 in upper case%}%§ac%nl%§7§oIf you are a registered owner of this stock, you can withdraw from this with /stockwith."
+    send "§2%{_ticker}%§2: §a%{stocks.balance.%{_ticker}%}%§ac%nl%§7§oIf you are a registered owner of this stock, you can withdraw from this with /stockwith."
 
 command /registerstockowner [<text>] [<offlineplayer>]:
   trigger:
