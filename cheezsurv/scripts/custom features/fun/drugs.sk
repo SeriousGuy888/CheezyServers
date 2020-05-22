@@ -1,0 +1,61 @@
+options:
+  cocaine: sugar named "§rCocaine" with lore "§7CheezSurv Authentic Drugglez™"
+  weed: tall grass named "§rMarijuana" with lore "§7CheezSurv Authentic Drugglez™"
+
+command /drugglez:
+  executable by: players
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    
+    open chest with 1 row named "CheezSurv Authentic Drugglez™" to player
+    wait 1 tick
+    format slot 0 of player with {@cocaine} to run [give player 64 of {@cocaine}]
+    format slot 1 of player with {@weed} to run [give player 64 of {@weed}]
+
+command /drugeffects <player=%player%>:
+  trigger:
+    if {drug_max_health.%arg-1%} is not set:
+      send "§7%arg-1% §7is not experiencing druggle effects on their max health."
+      stop
+    send "%arg-1%'s druggle max health effects is at %{drug_max_health.%arg-1%}% and will wear off in %{drug_max_health.%arg-1%.timer}% seconds."
+
+every second in world "world":
+  loop all players:
+    if {drug_max_health.%loop-player%} is not set:
+      set max health of loop-player to 10
+      continue
+    if {drug_max_health.%loop-player%.timer} is 0:
+      delete {drug_max_health.%loop-player%.timer}
+      delete {drug_max_health.%loop-player%}
+    remove 1 from {drug_max_health.%loop-player%.timer}
+    if max health of loop-player > {drug_max_health.%loop-player%}:
+      set max health of loop-player to {drug_max_health.%loop-player%}
+
+on right click:
+  if player's tool is {@cocaine}:
+    cancel event
+    remove 1 from item amount of player's tool
+    apply speed 3 to player for 90 seconds
+    apply strength 3 to player for 90 seconds
+    apply haste 3 to player for 90 seconds
+    apply absorption 1 to player for 30 seconds
+    set {drug_max_health.%player%} to 8
+    add 90 to {drug_max_health.%player%.timer}
+
+    send "§eAdded 90 seconds to the effects of the cocaine."
+
+  if player's tool is {@weed}:
+    cancel event
+    remove 1 from item amount of player's tool
+    apply slowness 1 to player for 60 seconds
+    apply hunger 1 to player for 60 seconds
+    apply nausea 1 to player for 3 seconds
+    apply strength 2 to player for 60 seconds
+    apply jump boost 1 to player for 60 seconds
+    apply absorption 1 to player for 20 seconds
+    set {drug_max_health.%player%} to 9
+    add 60 to {drug_max_health.%player%.timer}
+
+    send "§eAdded 60 seconds to the effects of the marijuana."
