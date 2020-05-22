@@ -2,8 +2,8 @@ options:
   cocaine: sugar named "§rCocaine" with lore "§7CheezSurv Authentic Drugglez™"
   weed: tall grass named "§rMarijuana" with lore "§7CheezSurv Authentic Drugglez™"
 
-  cocaineDuration: 60
-  weedDuration: 45
+  cocaineDuration: 45
+  weedDuration: 30
 
 command /drugglez:
   executable by: players
