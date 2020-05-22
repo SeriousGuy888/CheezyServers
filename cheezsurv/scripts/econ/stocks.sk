@@ -9,7 +9,7 @@ options:
   negativeBalancePenalty: 500
   negativeValueRecovery: 600
 
-  randomChangeGrowthAmount: 1000
+  randomChangeGrowthAmount: 10000
   passiveRandomPriceChange: 0.01
 
   changeMultiplierMin: 1
@@ -23,6 +23,9 @@ options:
 # system. {stocks.growth.%ticker%} variable
 # Billzo will soon be changing the way it works.
 
+
+function stockLog(str: text):
+  set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{_str}%"
 
 # calculate new stock prices
 function calculateStockPrices():
@@ -83,7 +86,7 @@ function calculateStockPrices():
     
 
     # log
-    set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{stocks.registered::%loop-index%}% is now worth %{stocks.value.%{stocks.registered::%loop-index%}%}% coins with a net change of %{_net_change}% coins or %{_change_factor} * 100%%%"
+    stockLog("%{stocks.registered::%loop-index%}% is now worth %{stocks.value.%{stocks.registered::%loop-index%}%}% coins with a net change of %{_net_change}% coins or %{_change_factor} * 100%%%")
     # set stock balance
     set {stocks.balance.%{stocks.registered::%loop-index%}%} to {stocks.balance.%{stocks.registered::%loop-index%}%} * {_change_factor}
     # reset growth variable
