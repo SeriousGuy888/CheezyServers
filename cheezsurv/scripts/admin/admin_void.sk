@@ -1,0 +1,10 @@
+every 3 ticks in world "ul_admin":
+  loop all players:
+    loop-player's world is "ul_admin"
+    loop-player's y-coordinate is less than -32
+    teleport loop-player to location(loop-player's x-coordinate, 500, loop-player's z-coordinate, world "world_the_end")
+
+on damage:
+  victim's world is "ul_admin"
+  damage cause is void
+  cancel event
