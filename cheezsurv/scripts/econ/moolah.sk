@@ -1,10 +1,10 @@
 options:
   legacyCoinName: §6Fool's Gold Coin
   coinName: §6Coin
-  coinLore: §eFool's Gold Standard
+  coinLore: §ePyrite Standard
 
   banknoteName: §6Banknote
-  banknoteLore: §eFool's Gold Standard
+  banknoteLore: §ePyrite Standard
 
   discordChannelId: 711284320890781757 # economy logs channel
 
