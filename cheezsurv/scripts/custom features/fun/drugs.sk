@@ -77,7 +77,8 @@ on right click:
     apply hunger 1 to player for {@weedDuration} seconds
     apply strength 2 to player for {@weedDuration} seconds
     apply jump boost 2 to player for {@weedDuration} seconds
-    apply mining fatigue 1 to player for {@weedDuration} seconds
+    if chance of 25%:
+      apply mining fatigue 1 to player for {@weedDuration} seconds
     apply nausea 1 to player for 3 seconds
 
     set {drug_max_health.%player%} to 9
