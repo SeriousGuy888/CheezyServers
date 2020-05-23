@@ -1,0 +1,23 @@
+options:
+  pyriteName: §rPyrite
+  pyriteLore: §7Extremely valuable metal
+
+# on break of gold ore:
+#   if player is set:
+#     player's gamemode is creative
+#     stop
+  
+#   chance of 5%
+#   cancel event
+#   set event-block to air
+#   loop 3 times:
+#     chance of 1 / loop-number
+#     drop 1 of yellow dye named "{@pyriteName}" with lore "{@pyriteLore}" at event-block
+
+command /getpyrite <number=1>:
+  aliases: /getfoolsgold
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    give player arg-1 of yellow dye named "{@pyriteName}" with lore "{@pyriteLore}"
