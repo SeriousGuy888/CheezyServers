@@ -1,0 +1,34 @@
+{
+  "display": {
+    "title": {
+      "text": "Nuke Creeper (Revenge)"
+    },
+    "description": {
+      "text": "Kill a creeper using an explosion of some sort."
+    },
+    "icon": {
+      "item": "minecraft:gunpowder"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "poison": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:creeper"
+        },
+        "killing_blow": {
+          "is_explosion": true
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 75
+  },
+  "parent": "cheezsurv:blown_up_by_creeper"
+}
