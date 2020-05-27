@@ -41,13 +41,13 @@ function logAction(a: text):
 
 
 
-command /getcoin <number>:
+command /getcoin <number=1>:
   executable by: players
   trigger:
     player has permission "*"
     giveCoin(player, arg-1)
 
-command /getbanknote <number> <number>:
+command /getbanknote <number> <number=1>:
   executable by: players
   trigger:
     player has permission "*"
