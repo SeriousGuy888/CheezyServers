@@ -1,28 +1,28 @@
 command /stats <OfflinePlayer=%player%>:
-    trigger:
-        set {stats.%arg-1%.deaths} to 0 if {stats.%arg-1%.deaths} is not set
-        set {stats.%arg-1%.murders} to 0 if {stats.%arg-1%.murders} is not set
-        send "§3§lStats of §b§l%arg-1%§3§l:"
-        send "§2Deaths: §a%{stats.%arg-1%.deaths}%"
-        send "§2Murders: §a%{stats.%arg-1%.murders}%"
-        send "§6K/D: §e%{stats.%arg-1%.murders}/{stats.%arg-1%.deaths}%"
+  trigger:
+    set {stats.%arg-1%.deaths} to 0 if {stats.%arg-1%.deaths} is not set
+    set {stats.%arg-1%.murders} to 0 if {stats.%arg-1%.murders} is not set
+    send "§3§lStats of §b§l%arg-1%§3§l:"
+    send "§2Deaths: §a%{stats.%arg-1%.deaths}%"
+    send "§2Murders: §a%{stats.%arg-1%.murders}%"
+    send "§6K/D: §e%{stats.%arg-1%.murders}/{stats.%arg-1%.deaths}%"
 
 command /setstats <OfflinePlayer> <text> <number>:
-    permission: *
-    permission message: You cannot use this command because you are an illegal.
-    trigger:
-        set {stats.%arg-1%.%arg-2%} to arg-3
-        send "Set stat %arg-2% of %arg-1% to %arg-3%."
-        send "§7§o[%executor%§7§o: Set stat %arg-2%§7§o of %arg-1%§7§o to %arg-3%§7§o.]" to console if executor is not console
-        loop all players:
-            loop-player is op
-            loop-player is not executor 
-            send "§7§o[%executor%§7§o: Set stat %arg-2%§7§o of %arg-1%§7§o to %arg-3%§7§o.]" to loop-player
+  permission: *
+  permission message: You cannot use this command because you are an illegal.
+  trigger:
+    set {stats.%arg-1%.%arg-2%} to arg-3
+    send "Set stat %arg-2% of %arg-1% to %arg-3%."
+    send "§7§o[%executor%§7§o: Set stat %arg-2%§7§o of %arg-1%§7§o to %arg-3%§7§o.]" to console if executor is not console
+    loop all players:
+      loop-player is op
+      loop-player is not executor 
+      send "§7§o[%executor%§7§o: Set stat %arg-2%§7§o of %arg-1%§7§o to %arg-3%§7§o.]" to loop-player
 
 on death of player:
-    set {stats.%victim%.deaths} to 0 if {stats.%victim%.deaths} is not set
-    add 1 to {stats.%victim%.deaths}
+  set {stats.%victim%.deaths} to 0 if {stats.%victim%.deaths} is not set
+  add 1 to {stats.%victim%.deaths}
 
-    attacker is set
-    set {stats.%attacker%.murders} to 0 if {stats.%attacker%.murders} is not set
-    add 1 to {stats.%attacker%.murders}
+  attacker is set
+  set {stats.%attacker%.murders} to 0 if {stats.%attacker%.murders} is not set
+  add 1 to {stats.%attacker%.murders}
