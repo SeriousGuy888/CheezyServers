@@ -25,9 +25,10 @@ command /lockdown [<text>]:
 on skript start:
   wait 5 seconds
   {lockdown.on} is true
-  send ":no_entry: There is currently an active lockdown: %{lockdown.reason}%" to channel with id "{@discordChannelId}" with "Cheezy"
+  send ":lock: There is currently an active lockdown: %{lockdown.reason}%" to channel with id "{@discordChannelId}" with "Cheezy"
 
-on join:
+on connect:
   {lockdown.on} is true
   player does not have permission "lockdown.bypass"
-  kick player due to "§4§lServer is on lockdown.%nl%%{lockdown.reason}%"
+  kick player due to "§4§lServer is on lockdown.%nl%§cPlease try again later.%nl%%nl%§b%{lockdown.reason}%"
+  send ":no_entry: %player% failed to join due to an active lockdown." to channel with id "{@discordChannelId}" with "Cheezy"
