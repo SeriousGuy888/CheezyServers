@@ -26,3 +26,18 @@ on death of player:
   attacker is set
   set {stats.%attacker%.murders} to 0 if {stats.%attacker%.murders} is not set
   add 1 to {stats.%attacker%.murders}
+
+on join:
+  set {last_played.%player%.join} to now
+on quit:
+  set {last_played.%player%.leave} to now
+  add difference between {last_played.%player%.join} and {last_played.%player%.leave} to {playtime.%player%}
+
+command /lastplayed <offlineplayer=%player%>:
+  trigger:
+    send "%nl%§2§lLast Played §a§l%arg-1%%nl%%nl%§3§lLast Joined§b%nl%%{last_played.%arg-1%.join}% §bUTC %nl%§b%difference between now and {last_played.%arg-1%.join}% §3ago%nl%%nl%§3§lLast Left%nl%§b%{last_played.%arg-1%.leave}% §bUTC %nl%§b%difference between now and {last_played.%arg-1%.leave}% §3ago"
+
+command /playtime <offlineplayer=%player%>:
+  trigger:
+    send "%nl%§6§lTotal Playtime of %arg-1%§8<tooltip:a>[*]<reset>"
+    send "§b%{playtime.%player%}%"
