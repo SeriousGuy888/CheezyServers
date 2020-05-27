@@ -12,6 +12,10 @@ options:
 on script load:
   delete {banknote_denominations::*}
 
+  add 0.01 to {banknote_denominations::*}
+  add 0.05 to {banknote_denominations::*}
+  add 0.10 to {banknote_denominations::*}
+  add 0.25 to {banknote_denominations::*}
   add 5 to {banknote_denominations::*}
   add 10 to {banknote_denominations::*}
   add 20 to {banknote_denominations::*}
@@ -94,7 +98,7 @@ command /coin <integer>:
       send "§c§lWithdraw in coins:%nl%§c/coin <amount>"
       stop
 
-    if arg-1 is less than 1:
+    if arg-1 <= 0:
       send "§cYou may not withdraw a negative or zero amount!"
       logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Negative or zero amount")
       stop
@@ -130,7 +134,7 @@ command /banknote [<number>] [<integer>]:
       logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Invalid denomination")
       stop
 
-    if {_total} is less than 1:
+    if {_total} <= 0:
       send "§cYou may not withdraw a negative or zero amount!"
       logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Negative or zero amount")
       stop
