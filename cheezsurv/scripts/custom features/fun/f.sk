@@ -1,2 +1,2 @@
 on death of player:
-    send action bar "%player% just did a stupid and died. D:%nl%Please say f." to all players
+    send action bar "%player% just did a stupid and died. D: Please say f." to all players
