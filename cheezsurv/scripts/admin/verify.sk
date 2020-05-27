@@ -1,35 +1,35 @@
 command /verify <OfflinePlayer>:
-    permission: cheez.verify
-    permission message: §cInsufficient permissions!
-    trigger:
-        if player is op:
-            make console execute command "/pex user %arg-1% group set Citizen"
-            broadcast "§2%arg-1% §2has just been verified!"
-            send "§6You are now verified!" to arg-1
+  permission: cheez.verify
+  permission message: §cInsufficient permissions!
+  trigger:
+    if player is op:
+      make console execute command "/pex user %arg-1% group set Citizen"
+      broadcast "§2%arg-1% §2has just been verified!"
+      send "§6You are now verified!" to arg-1
 
 command /unverify <OfflinePlayer>:
-    permission: cheez.verify
-    permission message: §cInsufficient permissions!
-    trigger:
-        if player is op:
-            make executor execute command "/deop %arg-1%"
-            make console execute command "/pex user %arg-1% group set default"
-            broadcast "§c%arg-1% §ahas just been unverified!"
-            send "§4You are no longer verified." to arg-1
+  permission: cheez.verify
+  permission message: §cInsufficient permissions!
+  trigger:
+    if player is op:
+      make executor execute command "/deop %arg-1%"
+      make console execute command "/pex user %arg-1% group set default"
+      broadcast "§c%arg-1% §ahas just been unverified!"
+      send "§4You are no longer verified." to arg-1
 
 on damage:
-    attacker is set
-    attacker is player
-    attacker does not have permission "verified"
-    cancel event
-    send "§cYou are not verified!" to attacker
+  attacker is set
+  attacker is player
+  attacker does not have permission "verified"
+  cancel event
+  send "§cYou are not verified!" to attacker
 
 on break:
-    player does not have permission "verified"
-    cancel event
-    send "§cYou are not verified!"
+  player does not have permission "verified"
+  cancel event
+  send "§cYou are not verified!"
 
 on place:
-    player does not have permission "verified"
-    cancel event
-    send "§cYou are not verified!"
+  player does not have permission "verified"
+  cancel event
+  send "§cYou are not verified!"
