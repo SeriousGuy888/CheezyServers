@@ -38,6 +38,7 @@ command /lastplayed <offlineplayer=%player%>:
     send "%nl%§2§lLast Played §a§l%arg-1%%nl%%nl%§3§lLast Joined§b%nl%%{last_played.%arg-1%.join}% §bUTC %nl%§b%difference between now and {last_played.%arg-1%.join}% §3ago%nl%%nl%§3§lLast Left%nl%§b%{last_played.%arg-1%.leave}% §bUTC %nl%§b%difference between now and {last_played.%arg-1%.leave}% §3ago"
 
 command /playtime <offlineplayer=%player%>:
+  aliases: /pt
   trigger:
-    send "%nl%§6§lTotal Playtime of %arg-1%§8<tooltip:a>[*]<reset>"
-    send "§b%{playtime.%player%}%"
+    send "%nl%§6§lTotal Playtime of %arg-1%§8<tooltip:*Tracking started May 26th; *Only recalculates every time the player leaves>*<reset>"
+    send "§b%{playtime.%arg-1%}%"
