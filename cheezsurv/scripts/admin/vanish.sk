@@ -21,3 +21,19 @@
 #       send "§3No longer vanished."
 
 # command /seevanished:
+
+command /vanish <player=%player%>:
+  aliases: /v
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    hide arg-1 from all players
+
+command /unvanish <player=%player%>:
+  aliases: /uv
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    reveal arg-1 to all players
