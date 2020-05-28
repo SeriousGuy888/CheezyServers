@@ -27,5 +27,5 @@
   "rewards": {
       "experience": 150
   },
-  "parent": "cheezsurv:obtain_notch_apple"
+  "parent": "cheezsurv:eat_notch_apple"
 }
