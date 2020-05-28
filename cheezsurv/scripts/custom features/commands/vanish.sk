@@ -1,0 +1,23 @@
+# too hard
+
+# every 10 seconds:
+#   loop all players:
+#     if {vanished.%loop-player%} is true:
+#       hide loop-player from all players
+
+# command /vanish <player=%player%>:
+#   aliases: /v
+#   trigger:
+#     if player is not op:
+#       send "§cInsufficient permissions!"
+#       stop
+#     set {vanished.%player%} to false if {vanished.%player%} is not set
+
+#     if {vanished.%player%} is false:
+#       set {vanished.%player%} to true
+#       send "§3Vanished."
+#     else if {vanished.%player%} is true:
+#       set {vanished.%player%} to false
+#       send "§3No longer vanished."
+
+# command /seevanished:
