@@ -2,13 +2,13 @@ options:
   skeletonWeaponChance: 75%
   skeletonArmourChance: 50%
   skeletonCritChance: 35%
-  skeletonHealthLeechChance: 15%
+  skeletonHealthLeechChance: 35%
 
   zombieGhostChance: 1%
   zombieWeaponChance: 95%
   zombieArmourChance: 60%
   zombieCritChance: 25%
-  zombieHealthLeechChance: 15%
+  zombieHealthLeechChance: 35%
 
 on spawn:
   wait 1 tick
@@ -79,11 +79,11 @@ on damage:
     if chance of {@skeletonCritChance}:
       add 1.5 to damage
     if chance of {@skeletonHealthLeechChance}:
-      add 1 to attacker's health
+      add damage to attacker's health
   
 
   if attacker is zombie:
     if chance of {@zombieCritChance}:
       add 2 to damage
     if chance of {@zombieHealthLeechChance}:
-      add 1 to attacker's health
+      add damage to attacker's health
