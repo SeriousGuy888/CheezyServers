@@ -23,11 +23,11 @@ on script load:
   add 100 to {banknote_denominations::*}
 
 
-function giveCoin(p: player, a: number):
-  give {_p} {_a} of sunflower named "{@coinName}" with lore "{@coinLore}"
+function giveCoin(a: number) :: item:
+  return {_a} of sunflower named "{@coinName}" with lore "{@coinLore}"
 
-function giveBanknote(p: player, d: number, a: number):
-  give {_p} {_a} of shiny paper named "{@banknoteName}" with lore "{@banknoteLore}" and "§7%{_d}%§7c"
+function giveBanknote(d: number, a: number) :: item:
+  return {_a} of shiny paper named "{@banknoteName}" with lore "{@banknoteLore}" and "§7%{_d}%§7c"
 
 every 5 seconds:
   send {economy.logs.pending} to channel with id "{@discordChannelId}" with "Cheezy"
@@ -45,13 +45,13 @@ command /getcoin <number=1>:
   executable by: players
   trigger:
     player has permission "*"
-    giveCoin(player, arg-1)
+    give player giveCoin(arg-1)
 
 command /getbanknote <number> <number=1>:
   executable by: players
   trigger:
     player has permission "*"
-    giveBanknote(player, arg-1, arg-2)
+    give player giveBanknote(arg-1, arg-2)
 
 
 
@@ -114,7 +114,7 @@ command /coin <integer>:
       stop
 
     remove arg-1 from {bank.balance.%player%}
-    giveCoin(player, arg-1)
+    give player giveCoin(arg-1)
     logAction("`%player%` withdrew `%arg-1%` coins in coins")
     send "§2Withdrew §a%arg-1% §2coins from your bank balance."
 
@@ -150,7 +150,7 @@ command /banknote [<number>] [<integer>]:
       stop
     
     remove {_total} from {bank.balance.%player%}
-    giveBanknote(player, {_denom}, {_amount})
+    give player giveBanknote({_denom}, {_amount})
     logAction("`%player%` withdrew `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%`")
     send "§2Withdrew §a%{_total}% §2coins from your bank balance."
 
