@@ -1,13 +1,6 @@
 on skript load:
   send "[Magic Box Script] moolah.sk is a dependency of magic_box.sk" to console
 
-every 5 seconds:
-  send {magicboxes.logs.pending} to channel with id "{@discordChannelId}" with "Cheezy"
-  set {magicboxes.logs.pending} to ""
-
-function logMagicBoxAction(a: text):
-  set {magicboxes.logs.pending} to "%{magicboxes.logs.pending}%%nl%[%now% UTC] %{_a}%"
-
 function openMagicBox(p: player):
   remove 1 from {magicboxes.%{_p}%}
 
@@ -27,8 +20,9 @@ function openMagicBox(p: player):
   # loop 27 times:
   #   format slot loop-number - 1 of {_p} with random element out of {_panes::*} named " " named " " to be unstealable
 
-  set {_amount} to random number between 1 and 5
-  format slot 13 of {_p} with giveBanknote({_amount}, 1) to close # then run [send "quack" to {_p}]
+  loop random integer between 1 and 3 times:
+    set {_amount} to random integer between 1 and 5
+    format slot random number between 0 and 26 of {_p} with giveBanknote({_amount}, 1) to close # then run [send "quack" to {_p}]
 
 command /magicboxgive [<offlineplayer>] [<integer=1>]:
   trigger:
