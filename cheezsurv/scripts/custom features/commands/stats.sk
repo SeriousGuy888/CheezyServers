@@ -40,5 +40,5 @@ command /lastplayed <offlineplayer=%player%>:
 command /playtime <offlineplayer=%player%>:
   aliases: /pt
   trigger:
-    send "%nl%§6§lTotal Playtime of %arg-1%§8<tooltip:*Tracking started May 26th; *Only recalculates every time the player leaves>*<reset>"
+    send "%nl%§6§lTotal Playtime of %arg-1%§8 <tooltip:*Tracking was reset May 27th, 2020; *Only recalculates every time the player leaves>[*]<reset>"
     send "§b%{playtime.%arg-1%}%"
