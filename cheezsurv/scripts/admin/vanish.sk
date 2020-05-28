@@ -29,6 +29,7 @@ command /vanish <player=%player%>:
       send "§cInsufficient permissions!"
       stop
     hide arg-1 from all players
+    send "§aDone. /uv to undo"
 
 command /unvanish <player=%player%>:
   aliases: /uv
@@ -37,3 +38,4 @@ command /unvanish <player=%player%>:
       send "§cInsufficient permissions!"
       stop
     reveal arg-1 to all players
+    send "§aDone. /v to undo"
