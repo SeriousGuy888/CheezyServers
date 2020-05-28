@@ -28,7 +28,7 @@ command /drugeffects <player=%player%>:
 every second in world "world":
   loop all players:
     if {drug_max_health.%loop-player%} is not set:
-      max health of loop-player != 10
+      max health of loop-player < 10
       set max health of loop-player to 10
       continue
     if {drug_max_health.%loop-player%.timer} <= 0:
@@ -40,7 +40,7 @@ every second in world "world":
       set max health of loop-player to {drug_max_health.%loop-player%}
   
   loop all players:
-    if {drug_absorption.%loop-player%.timer} <= 0:
+    if {drug_absorption.%loop-player%.timer} = 0:
       delete {drug_absorption.%loop-player%.timer}
       set absorption hearts of loop-player to 0
       continue
