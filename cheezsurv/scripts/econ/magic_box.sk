@@ -1,6 +1,3 @@
-options:
-  discordChannelId: 711284320890781757 # economy logs channel
-
 on skript load:
   send "[Magic Box Script] moolah.sk is a dependency of magic_box.sk" to console
 
