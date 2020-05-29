@@ -19,12 +19,12 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-            {
-              "item": "minecraft:diamond_pickaxe"
-            }
-          ]
-        }
-      },
+          {
+            "item": "minecraft:diamond_pickaxe"
+          }
+        ]
+      }
+    },
     "diamondSword": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -36,14 +36,14 @@
       }
     },
     "diamondAxe": {
-        "trigger": "minecraft:inventory_changed",
-        "conditions": {
-          "items": [
-            {
-              "item": "minecraft:diamond_axe"
-            }
-          ]
-        }
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:diamond_axe"
+          }
+        ]
+      }
     },
     "diamondShovel": {
       "trigger": "minecraft:inventory_changed",
@@ -57,15 +57,15 @@
     }
   },
   "requirements": [
-      [
-          "diamondPick",
-          "diamondSword",
-          "diamondAxe",
-          "diamondShovel"
-      ]
+    [
+      "diamondPick",
+      "diamondSword",
+      "diamondAxe",
+      "diamondShovel"
+    ]
   ],
   "rewards": {
-      "experience": 5
+    "experience": 5
   },
   "parent": "cheezsurv:diamond_armour"
 }
