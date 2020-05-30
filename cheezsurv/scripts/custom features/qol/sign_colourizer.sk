@@ -1,0 +1,4 @@
+on sign change:
+  loop 4 times:
+    replace "&" with "§" in line loop-number
+    replace "\§" with "&" in line loop-number
