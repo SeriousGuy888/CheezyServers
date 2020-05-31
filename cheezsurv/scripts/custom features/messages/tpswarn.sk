@@ -1,0 +1,9 @@
+command /tpswarn:
+  permission: *
+  trigger:
+    set {_tps} to tps from last minute
+    if {_tps} is less than 17:
+      broadcast "§cThe server TPS is down to §e%{_tps}%§c!"
+
+every 3 minutes in world "world":
+  make console execute command "/tpswarn"
