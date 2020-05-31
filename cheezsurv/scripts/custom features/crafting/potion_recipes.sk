@@ -1,0 +1,57 @@
+options:
+  playSound: play sound "block.brewing_stand.brew" at player
+
+  blindnessColour: 2039583 #1f1f1f
+  blindnessNormal: Potion of Blindness
+  blindnessNormalDuration: 600 # 30 seconds
+  blindnessSplash: Splash Potion of Blindness
+  blindnessSplashDuration: 200 # 10 seconds
+  
+  witherColour: 65793 #010101
+  witherNormal: Potion of Decay
+  witherNormalDuration: 1200 # 60 seconds
+  witherSplash: Splash Potion of Decay
+  witherSplashDuration: 500 # 25 seconds
+
+on sneak toggle:
+  player is sneaking
+  if player's offhand tool is awkward potion:
+    if player's tool is ink sac:
+      if player's inventory cannot hold water bottle:
+        send "§cFailed to craft potion. Insufficient inventory space."
+        stop
+      remove 1 from item amount of player's offhand tool
+      remove 1 from item amount of player's tool
+      {@playSound}
+      make console execute command "/give %player% potion{display:{Name:'{""text"":""{@blindnessNormal}"",""italic"":false}',Lore:['{""text"":""{@blindnessNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:15b,Amplifier:0b,Duration:{@blindnessNormalDuration}}],CustomPotionColor:{@blindnessColour}}"
+  if player's offhand tool is potion:
+    if uncoloured line 1 of lore of player's offhand tool is "{@blindnessNormal}":
+      if player's tool is gunpowder:
+        if player's inventory cannot hold water bottle:
+          send "§cFailed to craft potion. Insufficient inventory space."
+          stop
+        remove 1 from item amount of player's offhand tool
+        remove 1 from item amount of player's tool
+        {@playSound}
+        make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@blindnessSplash}"",""italic"":false}',Lore:['{""text"":""{@blindnessSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:15b,Amplifier:0b,Duration:{@blindnessSplashDuration}}],CustomPotionColor:{@blindnessColour}}"
+
+        
+  if player's offhand tool is awkward potion:
+    if player's tool is wither rose:
+      if player's inventory cannot hold water bottle:
+        send "§cFailed to craft potion. Insufficient inventory space."
+        stop
+      remove 1 from item amount of player's offhand tool
+      remove 1 from item amount of player's tool
+      {@playSound}
+      make console execute command "/give %player% potion{display:{Name:'{""text"":""{@witherNormal}"",""italic"":false}',Lore:['{""text"":""{@witherNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:20b,Amplifier:0b,Duration:{@witherNormalDuration}}],CustomPotionColor:{@witherColour}}"
+  if player's offhand tool is potion:
+    if uncoloured line 1 of lore of player's offhand tool is "{@witherNormal}":
+      if player's tool is gunpowder:
+        if player's inventory cannot hold water bottle:
+          send "§cFailed to craft potion. Insufficient inventory space."
+          stop
+        remove 1 from item amount of player's offhand tool
+        remove 1 from item amount of player's tool
+        {@playSound}
+        make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@witherSplash}"",""italic"":false}',Lore:['{""text"":""{@witherSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:20b,Amplifier:0b,Duration:{@witherSplashDuration}}],CustomPotionColor:{@witherColour}}"
