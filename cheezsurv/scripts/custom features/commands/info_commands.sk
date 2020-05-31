@@ -13,4 +13,4 @@ command /ping <Player=%player%>:
     set {_ping_text} to "§a%{_ping}%ms" if {_ping} <= 100
     set {_ping_text} to "§2%{_ping}%ms" if {_ping} <= 50
 
-    send "§bPing of %arg-1%§b: %{_ping_text}%"
+    send "§3§l%arg-1%§3§l's Ping:§r %{_ping_text}%"
