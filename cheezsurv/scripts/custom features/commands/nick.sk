@@ -1,7 +1,7 @@
-function setNick(p: player, n: text):
+function setNick(p: offlineplayer, n: text):
   set {%{_p}%.nick} to {_n}
-  make console execute command "tab player %{_p}% customtabname %{_p}% (%{_n}%)"
-  make console execute command "tab player %{_p}% customtagname %{_p}% (%{_n}%)"
+  # make console execute command "tab player %{_p}% customtabname %{_p}% (%{_n}%)"
+  # make console execute command "tab player %{_p}% customtagname %{_p}% (%{_n}%)"
 
 command /nickname [<Text>] [<OfflinePlayer>]:
   aliases: /nick
