@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Your Flight Means Nothing"
+      "text": "Roasted Marshmallow"
     },
     "description": {
-      "text": "Kill a ghast using a melee weapon."
+      "text": "Kill a ghast by throwing a trident"
     },
     "icon": {
-      "item": "minecraft:ghast_tear"
+      "item": "minecraft:stick"
     },
     "frame": "challenge",
     "show_toast": true,
@@ -22,17 +22,16 @@
           "type": "minecraft:ghast"
         },
         "killing_blow": {
-          "is_explosion": false,
-          "is_fire": false,
-          "is_magic": false,
-          "is_projectile": false,
-          "is_lightning": false
+          "is_projectile": true,
+          "direct_entity": {
+            "type": "minecraft:trident"
+          }
         }
       }
     }
   },
   "rewards": {
-    "experience": 75
+    "experience": 150
   },
-  "parent": "cheezsurv:swimming_in_lava"
+  "parent": "cheezsurv:melee_ghast"
 }

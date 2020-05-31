@@ -4,7 +4,8 @@
       "text": "CheezSurv Advancement Pack"
     },
     "description": {
-      "text": "It's pretty fun."
+      "text": "It's pretty fun.",
+      "obfuscated": true
     },
     "icon": {
       "item": "minecraft:enchanted_golden_apple"

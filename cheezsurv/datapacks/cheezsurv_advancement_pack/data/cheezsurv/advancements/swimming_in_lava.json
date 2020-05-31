@@ -1,0 +1,43 @@
+{
+  "display": {
+    "title": {
+      "text": "Nether Beaches"
+    },
+    "description": {
+      "text": "Go for a swim in the nether. (Ideally with fire resistance)"
+    },
+    "icon": {
+      "item": "minecraft:lava_bucket"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "swim": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:lava"
+      }
+    },
+    "nether": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "dimension": "the_nether"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "swim"
+    ],
+    [
+      "nether"
+    ]
+  ],
+  "rewards": {
+    "experience": 25
+  },
+  "parent": "cheezsurv:exploration"
+}

@@ -1,0 +1,34 @@
+{
+  "display": {
+    "title": {
+      "text": "Electrifying"
+    },
+    "description": {
+      "text": "Use a trident and channel lightning to charge a creeper."
+    },
+    "icon": {
+      "item": "minecraft:trident",
+      "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:32767s}]}"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "aa": {
+      "trigger": "minecraft:channeled_lightning",
+      "conditions": {
+        "victims": [
+          {
+            "type": "minecraft:creeper"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "parent": "cheezsurv:trident_kill"
+}

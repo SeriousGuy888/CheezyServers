@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Where's the Body?"
+    },
+    "description": {
+      "text": "Steal a Dragon Head from an End Ship."
+    },
+    "icon": {
+      "item": "minecraft:dragon_head"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "gapple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:dragon_head"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+      "experience": 100
+  },
+  "parent": "cheezsurv:enter_village"
+}
