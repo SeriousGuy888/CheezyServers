@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Electrocution"
+      "text": "Powered Pig"
     },
     "description": {
-      "text": "Strike a player with a trident, channelling lightning onto them."
+      "text": "Use a trident and channel lightning onto a pig."
     },
     "icon": {
-      "item": "minecraft:player_head"
+      "item": "minecraft:cooked_porkchop"
     },
     "frame": "task",
     "show_toast": true,
@@ -20,7 +20,7 @@
       "conditions": {
         "victims": [
           {
-            "type": "minecraft:player"
+            "type": "minecraft:pig"
           }
         ]
       }
@@ -29,5 +29,5 @@
   "rewards": {
     "experience": 5
   },
-  "parent": "cheezsurv:smite_pig"
+  "parent": "cheezsurv:trident_kill"
 }
