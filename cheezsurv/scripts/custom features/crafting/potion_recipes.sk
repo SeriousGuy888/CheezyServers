@@ -12,6 +12,12 @@ options:
   witherNormalDuration: 1200 # 60 seconds
   witherSplash: Splash Potion of Decay
   witherSplashDuration: 500 # 25 seconds
+  
+  nauseaColour: 494122 #078A2A
+  nauseaNormal: Potion of Queasiness
+  nauseaNormalDuration: 900 # 45 seconds
+  nauseaSplash: Splash Potion of Queasiness
+  nauseaSplashDuration: 600 # 30 seconds
 
 on sneak toggle:
   player is sneaking
@@ -35,7 +41,7 @@ on sneak toggle:
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@blindnessSplash}"",""italic"":false}',Lore:['{""text"":""{@blindnessSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:15b,Amplifier:0b,Duration:{@blindnessSplashDuration}}],CustomPotionColor:{@blindnessColour}}"
 
-        
+  
   if player's offhand tool is awkward potion:
     if player's tool is wither rose:
       if player's inventory cannot hold water bottle:
@@ -55,3 +61,24 @@ on sneak toggle:
         remove 1 from item amount of player's tool
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@witherSplash}"",""italic"":false}',Lore:['{""text"":""{@witherSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:20b,Amplifier:0b,Duration:{@witherSplashDuration}}],CustomPotionColor:{@witherColour}}"
+
+
+  if player's offhand tool is awkward potion:
+    if player's tool is poisonous potato:
+      if player's inventory cannot hold water bottle:
+        send "§cFailed to craft potion. Insufficient inventory space."
+        stop
+      remove 1 from item amount of player's offhand tool
+      remove 1 from item amount of player's tool
+      {@playSound}
+      make console execute command "/give %player% potion{display:{Name:'{""text"":""{@nauseaNormal}"",""italic"":false}',Lore:['{""text"":""{@nauseaNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:9b,Amplifier:0b,Duration:{@nauseaNormalDuration}}],CustomPotionColor:{@nauseaColour}}"
+  if player's offhand tool is potion:
+    if uncoloured line 1 of lore of player's offhand tool is "{@nauseaNormal}":
+      if player's tool is gunpowder:
+        if player's inventory cannot hold water bottle:
+          send "§cFailed to craft potion. Insufficient inventory space."
+          stop
+        remove 1 from item amount of player's offhand tool
+        remove 1 from item amount of player's tool
+        {@playSound}
+        make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@nauseaSplash}"",""italic"":false}',Lore:['{""text"":""{@nauseaSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:9b,Amplifier:0b,Duration:{@nauseaSplashDuration}}],CustomPotionColor:{@nauseaColour}}"
