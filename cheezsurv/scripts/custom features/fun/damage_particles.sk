@@ -2,4 +2,5 @@ on death of player:
   make console execute command "/execute at %victim% run particle minecraft:block minecraft:redstone_block ~ ~-0.2 ~ 0.5 1.2 0.5 1 100"
 
 on damage of player:
+  damage > 0.5
   make console execute command "/execute at %victim% run particle minecraft:block minecraft:redstone_block ~ ~ ~ 0.25 0.75 0.25 1 50"
