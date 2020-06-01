@@ -18,6 +18,19 @@ options:
   nauseaNormalDuration: 900 # 45 seconds
   nauseaSplash: Splash Potion of Queasiness
   nauseaSplashDuration: 600 # 30 seconds
+  
+  hasteColour: 16117012 #F5ED14
+  hasteId: 3
+  hasteNormalAmplifier: 0
+  hastePotentAmplifier: 1
+  hasteNormal: Potion of Haste
+  hasteNormalDuration: 3600 # 180 seconds
+  hastePotent: Potent Potion of Haste
+  hastePotentDuration: 2400 # 120 seconds
+  hasteSplash: Splash Potion of Haste
+  hasteSplashDuration: 2400 # 120 seconds
+  hastePotentSplash: Potent Splash Potion of Haste
+  hastePotentSplashDuration: 1800 # 90 seconds
 
 on sneak toggle:
   player is sneaking
@@ -82,3 +95,44 @@ on sneak toggle:
         remove 1 from item amount of player's tool
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@nauseaSplash}"",""italic"":false}',Lore:['{""text"":""{@nauseaSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:9b,Amplifier:0b,Duration:{@nauseaSplashDuration}}],CustomPotionColor:{@nauseaColour}}"
+  
+  
+  if player's offhand tool is awkward potion:
+    if player's tool is iron block:
+      if player's inventory cannot hold water bottle:
+        send "§cFailed to craft potion. Insufficient inventory space."
+        stop
+      remove 1 from item amount of player's offhand tool
+      remove 1 from item amount of player's tool
+      {@playSound}
+      make console execute command "/give %player% potion{display:{Name:'{""text"":""{@hasteNormal}"",""italic"":false}',Lore:['{""text"":""{@hasteNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hasteNormalAmplifier}b,Duration:{@hasteNormalDuration}}],CustomPotionColor:{@hasteColour}}"
+  if player's offhand tool is potion:
+    if uncoloured line 1 of lore of player's offhand tool is "{@hasteNormal}":
+      if player's tool is glowstone dust:
+        if player's inventory cannot hold water bottle:
+          send "§cFailed to craft potion. Insufficient inventory space."
+          stop
+        remove 1 from item amount of player's offhand tool
+        remove 1 from item amount of player's tool
+        {@playSound}
+        make console execute command "/give %player% potion{display:{Name:'{""text"":""{@hastePotent}"",""italic"":false}',Lore:['{""text"":""{@hastePotent}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hastePotentAmplifier}b,Duration:{@hastePotentDuration}}],CustomPotionColor:{@hasteColour}}"
+  if player's offhand tool is potion:
+    if uncoloured line 1 of lore of player's offhand tool is "{@hasteNormal}":
+      if player's tool is gunpowder:
+        if player's inventory cannot hold water bottle:
+          send "§cFailed to craft potion. Insufficient inventory space."
+          stop
+        remove 1 from item amount of player's offhand tool
+        remove 1 from item amount of player's tool
+        {@playSound}
+        make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@hasteSplash}"",""italic"":false}',Lore:['{""text"":""{@hasteSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hasteNormalAmplifier}b,Duration:{@hasteSplashDuration}}],CustomPotionColor:{@hasteColour}}"
+  if player's offhand tool is potion:
+    if uncoloured line 1 of lore of player's offhand tool is "{@hastePotent}":
+      if player's tool is gunpowder:
+        if player's inventory cannot hold water bottle:
+          send "§cFailed to craft potion. Insufficient inventory space."
+          stop
+        remove 1 from item amount of player's offhand tool
+        remove 1 from item amount of player's tool
+        {@playSound}
+        make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@hastePotentSplash}"",""italic"":false}',Lore:['{""text"":""{@hastePotentSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hastePotentAmplifier}b,Duration:{@hastePotentSplashDuration}}],CustomPotionColor:{@hasteColour}}"
