@@ -1,0 +1,41 @@
+{
+  "display": {
+    "title": {
+      "text": "Experienced Killer"
+    },
+    "description": {
+      "text": "Deal the killing blow to a player using only your fist."
+    },
+    "icon": {
+      "item": "minecraft:stick"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "punch": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+          "entity": {
+            "type": "minecraft:player"
+          },
+          "killing_blow": {
+            "source_entity": {
+              "type": "minecraft:player",
+              "equipment": {
+                "mainhand": {
+                  "item": "minecraft:air"
+                }
+              }
+            }
+          }
+      }
+    }
+  },
+  "rewards": {
+      "experience": 50
+  },
+  "parent": "cheezsurv:murder"
+}
