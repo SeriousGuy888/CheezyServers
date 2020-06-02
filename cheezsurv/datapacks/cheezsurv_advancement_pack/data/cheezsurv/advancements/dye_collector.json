@@ -1,0 +1,78 @@
+{
+  "display": {
+    "title": {
+      "text": "Painter"
+    },
+    "description": {
+      "text": "Collect all sixteen dyes in your inventory"
+    },
+    "icon": {
+      "item": "minecraft:red_dye"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:white_dye"
+          },
+          {
+            "item": "minecraft:orange_dye"
+          },
+          {
+            "item": "minecraft:magenta_dye"
+          },
+          {
+            "item": "minecraft:light_blue_dye"
+          },
+          {
+            "item": "minecraft:yellow_dye"
+          },
+          {
+            "item": "minecraft:lime_dye"
+          },
+          {
+            "item": "minecraft:pink_dye"
+          },
+          {
+            "item": "minecraft:gray_dye"
+          },
+          {
+            "item": "minecraft:light_gray_dye"
+          },
+          {
+            "item": "minecraft:cyan_dye"
+          },
+          {
+            "item": "minecraft:purple_dye"
+          },
+          {
+            "item": "minecraft:blue_dye"
+          },
+          {
+            "item": "minecraft:brown_dye"
+          },
+          {
+            "item": "minecraft:green_dye"
+          },
+          {
+            "item": "minecraft:red_dye"
+          },
+          {
+            "item": "minecraft:black_dye"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "cheezsurv:root"
+}
