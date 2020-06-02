@@ -1,0 +1,68 @@
+{
+	"pools": [{
+		"rolls": 1,
+		"entries": [{
+				"type": "minecraft:item",
+				"name": "minecraft:gunpowder",
+				"functions": [{
+						"function": "minecraft:set_nbt",
+						"tag": "{maxUses:8,buy:{id:\"minecraft:emerald\",Count:1b},TradeOffer:1b}"
+					},
+					{
+						"function": "minecraft:set_count",
+						"count": 3
+					}
+				]
+			},
+			{
+				"type": "minecraft:item",
+				"name": "minecraft:podzol",
+				"functions": [{
+						"function": "minecraft:set_nbt",
+						"tag": "{maxUses:8,buy:{id:\"minecraft:emerald\",Count:1b},TradeOffer:1b}"
+					},
+					{
+						"function": "minecraft:set_count",
+						"count": 3
+					}
+				]
+			},
+			{
+				"type": "minecraft:item",
+				"name": "minecraft:packed_ice",
+				"functions": [{
+					"function": "minecraft:set_nbt",
+					"tag": "{maxUses:12,buy:{id:\"minecraft:emerald\",Count:3b},TradeOffer:1b}"
+				}]
+			},
+			{
+				"type": "minecraft:item",
+				"name": "minecraft:tropical_fish_bucket",
+				"functions": [{
+					"function": "minecraft:set_nbt",
+					"tag": "{maxUses:4,buy:{id:\"minecraft:emerald\",Count:3b},TradeOffer:1b}"
+				}]
+			},
+			{
+				"type": "minecraft:item",
+				"name": "minecraft:pufferfish_bucket",
+				"functions": [{
+					"function": "minecraft:set_nbt",
+					"tag": "{maxUses:4,buy:{id:\"minecraft:emerald\",Count:4b},TradeOffer:1b}"
+				}]
+			},
+			{
+				"type": "minecraft:item",
+				"name": "minecraft:blue_ice",
+				"functions": [{
+					"function": "minecraft:set_nbt",
+					"tag": "{maxUses:16,buy:{id:\"minecraft:emerald\",Count:6b},TradeOffer:1b}"
+				}]
+			},
+			{
+				"type": "minecraft:loot_table",
+				"name": "better_traders:map"
+			}
+		]
+	}]
+}
