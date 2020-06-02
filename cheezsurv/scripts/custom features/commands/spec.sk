@@ -1,9 +1,11 @@
 command /spec:
+  executable by: players
   aliases: /sp
   trigger:
     if player's gamemode is survival:
       set {%player%.spec.loc} to player's location
       set player's gamemode to spectator
+      send action bar "Activated Spectator Mode" to player
     else if player's gamemode is spectator:
       if {%player%.spec.loc} is not set:
         send "§cYou are not in /spec spectator mode."
@@ -11,8 +13,10 @@ command /spec:
         set player's gamemode to survival
         teleport player to {%player%.spec.loc}
         delete {%player%.spec.loc}
+        send action bar "Deativated Spectator Mode" to player
 
 command /dimension [<text>]:
+  executable by: players
   aliases: /dim
   trigger:
     if gamemode of player is not spectator:
@@ -26,8 +30,24 @@ command /dimension [<text>]:
       teleport player to spawn point of "world" if arg-1 is "o"
       teleport player to spawn point of "world_nether" if arg-1 is "n"
       teleport player to spawn point of "world_the_end" if arg-1 is "e"
+      send action bar "Teleporting..." to player
     else:
       send "/dim <o|n|e>%nl%/dim e §7to go to the end"
+
+command /spectp <player>:
+  executable by: players
+  aliases: /sptp
+  trigger:
+    if gamemode of player is not spectator:
+      send "§cYou are not in spectator mode!"
+      stop
+    if arg-1 is player:
+      send "§cThere's no point in trying to teleport to yourself."
+      stop
+    
+    teleport player to arg-1
+    send action bar "Teleporting to %arg-1%..." to player
+    
 
 on join:
   {%player%.spec.loc} is set
