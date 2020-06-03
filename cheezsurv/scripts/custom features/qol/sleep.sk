@@ -3,7 +3,7 @@ options:
 
 on bed enter:
   broadcast "§b%player% is now sleeping!"
-  send ":bed: %player% is now sleeping!" to channel with id "{@discordChannelId}" with "Cheezy"
+  send ":bed: **%player% is now sleeping!**" to channel with id "{@discordChannelId}" with "Cheezy"
   wait 2 seconds
   set time in player's world to 6am
   set weather in player's world to sun
