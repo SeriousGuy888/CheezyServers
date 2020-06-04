@@ -17,13 +17,6 @@ options:
 
   maxStockCirculation: 15000
 
-
-# NOTICE
-# The growth stock price calculation system is now a legacy
-# system. {stocks.growth.%ticker%} variable
-# Billzo will soon be changing the way it works.
-
-
 function stockLog(str: text):
   set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{_str}%"
 
