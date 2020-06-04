@@ -44,7 +44,8 @@ every second in world "world":
       delete {drug_absorption.%loop-player%.timer}
       set absorption hearts of loop-player to 0
       continue
-    remove 1 from {drug_absorption.%loop-player%.timer}
+    else:
+      remove 1 from {drug_absorption.%loop-player%.timer}
 
 
 
