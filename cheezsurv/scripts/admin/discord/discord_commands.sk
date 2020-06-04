@@ -5,7 +5,7 @@ discord command help:
   prefixes: {@prefixes}
   aliases: ?
   trigger:
-    reply with "duck you im not keeping an up to date list of commands. use <#702392225174388786>"
+    reply with "duck you im not keeping an up to date list of commands. use <##702392225174388786>"
 
 
 discord command list:
