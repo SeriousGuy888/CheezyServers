@@ -1,0 +1,32 @@
+on script load:
+  send "CheezSurv Functions script has been loaded." to console
+
+# This function will take in two location variables and return all of the blocks in the cuboid between them
+function cuboidBetween(1: location, 2: location) :: blocks:
+  set {_x} to 1
+  set {_y} to 1
+  set {_z} to 1
+  
+  if x coord of {_1} > x coord of {_2}:
+    set {_x} to -1
+  if y coord of {_1} > y coord of {_2}:
+    set {_y} to -1
+  if z coord of {_1} > z coord of {_2}:
+    set {_z} to -1
+  
+  set {_base1} to {_1}
+  loop abs(x coord of {_1} - x coord of {_2}) + 1 times:
+    loop abs(z coord of {_1} - z coord of {_2}) + 1 times:
+      loop abs(y coord of {_1} - y coord of {_2}) + 1 times:
+  
+        add 1 to {_next}
+        set {_b::%{_next}%} to block at {_1}
+      
+        add {_y} to y coord of {_1}
+    
+      add {_z} to z coord of {_1}
+      set y coord of {_1} to y coord of {_base1}
+  
+    add {_x} to x coord of {_1}
+    set z coord of {_1} to z coord of {_base1}
+  return {_b::*}
