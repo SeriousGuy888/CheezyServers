@@ -1,21 +1,11 @@
 options:
   prefixes: "s2!", "%mention tag of event-bot% "
-  
+
 discord command help:
   prefixes: {@prefixes}
   aliases: ?
   trigger:
-    set {_msg} to a message builder
-    append line "**CheezSurv2 Bot Commands**"
-    append line "Prefix: `s2!` or mention the bot"
-    append line ""
-    append line "`list` - See online players"
-    append line "`stats <Player>` - See the stats of a specified player"
-    append line "`bal <Player>` - See the bank balance of a specified player"
-    append line "`stocklist <Player>` - See the stocks that a player owns"
-    append line "`stocklookup <Ticker>` - Query the company that a ticker represents"
-
-    reply with {_msg}
+    reply with "duck you im not keeping an up to date list of commands. use <#702392225174388786>"
 
 
 discord command list:
