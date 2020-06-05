@@ -18,7 +18,7 @@ options:
   maxStockCirculation: 15000
 
 function stockLog(str: text):
-  set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{_str}%"
+  set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now%] %{_str}%"
 
 # calculate new stock prices
 function calculateStockPrices():

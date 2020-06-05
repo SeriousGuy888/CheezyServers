@@ -36,7 +36,7 @@ every 5 seconds:
   loop all players:
     set {bank.balance.%loop-player%} to 0 if {bank.balance.%loop-player%} is not set
 function logAction(a: text):
-  set {economy.logs.pending} to "%{economy.logs.pending}%%nl%[%now% UTC] %{_a}%"
+  set {economy.logs.pending} to "%{economy.logs.pending}%%nl%[%now%] %{_a}%"
 
 
 
