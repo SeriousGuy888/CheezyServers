@@ -1,0 +1,29 @@
+{
+  "display": {
+    "title": {
+      "text": "Is That a Heartbeat?"
+    },
+    "description": {
+      "text": "Place down a conduit."
+    },
+    "icon": {
+      "item": "minecraft:conduit"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "wealth": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "minecraft:conduit"
+    }
+  }
+  },
+  "rewards": {
+      "experience": 15
+  },
+  "parent": "cheezsurv:obtain_heart_of_the_sea"
+}

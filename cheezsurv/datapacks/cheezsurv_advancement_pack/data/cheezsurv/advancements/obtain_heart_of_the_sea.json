@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Doesn't Look Like a Heart"
+    },
+    "description": {
+      "text": "Obtain a Heart of the Sea."
+    },
+    "icon": {
+      "item": "minecraft:heart_of_the_sea"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:heart_of_the_sea"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "parent": "cheezsurv:enter_shipwreck"
+}

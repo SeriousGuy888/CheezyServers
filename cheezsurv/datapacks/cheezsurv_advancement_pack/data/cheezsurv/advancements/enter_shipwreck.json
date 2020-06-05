@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Shipwreck"
+    },
+    "description": {
+      "text": "Enter a Shipwreck"
+    },
+    "icon": {
+      "item": "minecraft:spruce_boat"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:heart_of_the_sea"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "cheezsurv:creeper_revenge"
+}
