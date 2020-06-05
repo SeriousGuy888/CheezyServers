@@ -1,5 +1,8 @@
 options:
   prefixes: "s2!", "%mention tag of event-bot% "
+  linkDefaultedMsg: "`Defaulted to looking up your player data as you have your Discord ID linked.`%nl%"
+  specifyPlayer: "Please specify a player name. If you wish for the command to default to your info, link your Discord ID with `/link` in game."
+  playerNotFound: "No player found by that name. Try fixing your spelling."
 
 discord command help:
   prefixes: {@prefixes}
@@ -34,17 +37,26 @@ discord command stats [<OfflinePlayer>]:
   prefixes: {@prefixes}
   aliases: stat
   trigger:
+    set {_p} to arg-1
+    set {_link_defaulted} to false
+
     if arg-1 is not set:
-      reply with "Syntax: s2!stats <Player>"
-      stop
-    if {stats.%arg-1%.deaths} is not set:
-      reply with "no player found by that name. try spelling it right next time. im not helping you search for someone with similar usernames. it wont work because billzo already tried to add that feature and it didnt work. spell the username correctly, idot."
+      if {discord_link.link.discord.%id of author of event-message%} is set:
+        set {_p} to {discord_link.link.discord.%id of author of event-message%}
+        set {_link_defaulted} to true
+      else:
+        reply with {@specifyPlayer}
+        stop
+    
+    if {stats.%{_p}%.deaths} is not set:
+      reply with {@playerNotFound}
       stop
     set {_msg} to a message builder
-    append line "**Stats of %arg-1%**"
-    append line "💀 Deaths: %{stats.%arg-1%.deaths}%"
-    append line "🔪 Murders: %{stats.%arg-1%.murders}%"
-    append line "➗ K/D: %{stats.%arg-1%.murders}/{stats.%arg-1%.deaths}%"
+    append line {@linkDefaultedMsg} if {_link_defaulted} is true
+    append line "**Stats of %{_p}%**"
+    append line "💀 Deaths: %{stats.%{_p}%.deaths}%"
+    append line "🔪 Murders: %{stats.%{_p}%.murders}%"
+    append line "➗ K/D: %{stats.%{_p}%.murders}/{stats.%{_p}%.deaths}%"
 
     reply with {_msg}
 
@@ -52,14 +64,26 @@ discord command balance [<OfflinePlayer>]:
   prefixes: {@prefixes}
   aliases: bal
   trigger:
+    set {_p} to arg-1
+    set {_link_defaulted} to false
+
     if arg-1 is not set:
-      reply with "Syntax: s2!balance <Player>"
-      stop
-    if {bank.balance.%arg-1%} is not set:
-      reply with "No player found by that name. Try fixing your spelling."
+      if {discord_link.link.discord.%id of author of event-message%} is set:
+        set {_p} to {discord_link.link.discord.%id of author of event-message%}
+        set {_link_defaulted} to true
+      else:
+        reply with {@specifyPlayer}
+        stop
+    
+    if {bank.balance.%{_p}%} is not set:
+      reply with {@playerNotFound}
       stop
 
-    reply with "**Bank Balance of %arg-1%**%nl%%{bank.balance.%arg-1%}% coins"
+    set {_msg} to a message builder
+    append line {@linkDefaultedMsg} if {_link_defaulted} is true
+    append line "**Bank Balance of %{_p}%**%nl%%{bank.balance.%{_p}%}% coins"
+
+    reply with {_msg}
 
 
 discord command stocklookup [<text>]:
@@ -77,17 +101,30 @@ discord command stocklookup [<text>]:
 discord command stocklist [<OfflinePlayer>]:
   prefixes: {@prefixes}
   trigger:
+    set {_p} to arg-1
+    set {_link_defaulted} to false
+
     if arg-1 is not set:
-      reply with "s2!stocklist <Player>"
-      stop
-    set {_m} to "**Stocks of %arg-1%**"
+      if {discord_link.link.discord.%id of author of event-message%} is set:
+        set {_p} to {discord_link.link.discord.%id of author of event-message%}
+        set {_link_defaulted} to true
+      else:
+        reply with {@specifyPlayer}
+        stop
+    
+    set {_m} to "**Stocks of %{_p}%**"
     set {_net_worth} to 0
     loop {stocks.registered::*}:
-      set {stocks.ownership.%arg-1%.%{stocks.registered::%loop-index%}%} to 0 if {stocks.ownership.%arg-1%.%{stocks.registered::%loop-index%}%} is not set
-      set {_m} to "%{_m}%%nl%- __%{stocks.registered::%loop-index%}%__: %{stocks.value.%{stocks.registered::%loop-index%}%}% coins%nl%  Owned: %{stocks.ownership.%arg-1%.%{stocks.registered::%loop-index%}%}% shares."
-      add {stocks.value.%{stocks.registered::%loop-index%}%} * {stocks.ownership.%arg-1%.%{stocks.registered::%loop-index%}%} to {_net_worth}
+      set {stocks.ownership.%{_p}%.%{stocks.registered::%loop-index%}%} to 0 if {stocks.ownership.%{_p}%.%{stocks.registered::%loop-index%}%} is not set
+      set {_m} to "%{_m}%%nl%- __%{stocks.registered::%loop-index%}%__: %{stocks.value.%{stocks.registered::%loop-index%}%}% coins%nl%  Owned: %{stocks.ownership.%{_p}%.%{stocks.registered::%loop-index%}%}% shares."
+      add {stocks.value.%{stocks.registered::%loop-index%}%} * {stocks.ownership.%{_p}%.%{stocks.registered::%loop-index%}%} to {_net_worth}
     set {_m} to "%{_m}%%nl%%nl%**NET WORTH IN STOCKS**%nl%%{_net_worth}% coins"
-    reply with {_m}
+
+    set {_msg} to a message builder
+    append line {@linkDefaultedMsg} if {_link_defaulted} is true
+    append line {_m}
+
+    reply with {_msg}
 
 discord command stockbalance [<text>]:
   prefixes: {@prefixes}
