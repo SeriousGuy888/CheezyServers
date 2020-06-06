@@ -16,13 +16,9 @@
   },
   "criteria": {
     "a": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "minecraft:location",
       "conditions": {
-        "items": [
-          {
-            "item": "minecraft:heart_of_the_sea"
-          }
-        ]
+        "feature": "shipwreck"
       }
     }
   },
