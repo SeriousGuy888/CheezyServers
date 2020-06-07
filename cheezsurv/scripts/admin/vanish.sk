@@ -1,6 +1,8 @@
 options:
   vanished: "§2You are now vanished"
   unvanished: "§2You are no longer vanished"
+  seeing: "§2Now seeing vanished players"
+  notseeing: "§2No longer seeing vanished players"
 
 command /vanish [<player>]:
   aliases: /v
@@ -30,6 +32,38 @@ command /vanish [<player>]:
         send {@unvanished} to arg-1
         send "ok unvanished %arg-1%" to player
         set {vanished.%arg-1%} to false
+
+command /seevanished:
+  aliases: /seev
+  trigger:
+    if player is not op:
+      send "§cInsufficient permission!"
+      stop
+    set {vanished.%player%.see} to false if {vanished.%player%.see} is not set
+    if {vanished.%player%.see} is false:
+      set {vanished.%player%.see} to true
+      loop all players:
+        if {vanished.%loop-player%} is true:
+          reveal loop-player to player
+      send {@seeing}
+    else if {vanished.%player%.see} is true:
+      set {vanished.%player%.see} to false
+      loop all players:
+        if {vanished.%loop-player%} is true:
+          hide loop-player from player
+      send {@notseeing}
+
+every 2 seconds:
+  loop all players:
+
+    if {vanished.%loop-player%} is true:
+      if {vanished.%loop-player%.see} is false:
+        send action bar "§aVanished" to loop-player
+      if {vanished.%loop-player%.see} is true:
+        send action bar "§aVanished, Seeing Vanished Players" to loop-player
+    if {vanished.%loop-player%} is false:
+      if {vanished.%loop-player%.see} is true:
+        send action bar "§aSeeing Vanished Players" to loop-player
 
 on join:
   loop all players:
