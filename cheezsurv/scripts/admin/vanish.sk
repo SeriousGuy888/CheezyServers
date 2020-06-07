@@ -1,41 +1,37 @@
-# too hard
+options:
+  vanished: "§2You are now vanished"
+  unvanished: "§2You are no longer vanished"
 
-# every 10 seconds:
-#   loop all players:
-#     if {vanished.%loop-player%} is true:
-#       hide loop-player from all players
-
-# command /vanish <player=%player%>:
-#   aliases: /v
-#   trigger:
-#     if player is not op:
-#       send "§cInsufficient permissions!"
-#       stop
-#     set {vanished.%player%} to false if {vanished.%player%} is not set
-
-#     if {vanished.%player%} is false:
-#       set {vanished.%player%} to true
-#       send "§3Vanished."
-#     else if {vanished.%player%} is true:
-#       set {vanished.%player%} to false
-#       send "§3No longer vanished."
-
-# command /seevanished:
-
-command /vanish <player=%player%>:
+command /vanish [<player>]:
   aliases: /v
   trigger:
     if player is not op:
-      send "§cInsufficient permissions!"
+      send "§cInsufficient permission!"
       stop
-    hide arg-1 from all players
-    send "§aDone. /uv to undo"
+    if arg-1 is not set:
+      set {vanished.%player%} to false if {vanished.%player%} is not set
+      if {vanished.%player%} is false:
+        hide the player from all players
+        send {@vanished}
+        set {vanished.%player%} to true
+      else:
+        reveal the player to all players
+        send {@unvanished}
+        set {vanished.%player%} to false
+    if arg-1 is set:
+      set {vanished.%arg-1%} to false if {vanished.%arg-1%} is not set
+      if {vanished.%arg-1%} is false:
+        hide the arg-1 from all players
+        send {@vanished} to arg-1
+        send "ok vanished %arg-1%" to player
+        set {vanished.%arg-1%} to true
+      else:
+        reveal the arg-1 to all players
+        send {@unvanished} to arg-1
+        send "ok unvanished %arg-1%" to player
+        set {vanished.%arg-1%} to false
 
-command /unvanish <player=%player%>:
-  aliases: /uv
-  trigger:
-    if player is not op:
-      send "§cInsufficient permissions!"
-      stop
-    reveal arg-1 to all players
-    send "§aDone. /v to undo"
+on join:
+  loop all players:
+    if {vanished.%loop-player%} is true:
+      hide loop-player from all players
