@@ -29,5 +29,5 @@
   "rewards": {
       "experience": 100
   },
-  "parent": "cheezsurv:enter_village"
+  "parent": "cheezsurv:creeper_revenge"
 }
