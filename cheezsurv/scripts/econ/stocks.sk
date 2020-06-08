@@ -31,7 +31,7 @@ function calculateStockPrices():
       set {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} to 0 if {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} is not set
       add {stocks.value.%{stocks.registered::%loop-index%}%} * {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} to {_stock_amount}
   
-  set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %{_amount}% coins is in circulation in bank accounts and %{_stock_amount}% coins are in circulation in stocks"
+  set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now%] %{_amount}% coins is in circulation in bank accounts and %{_stock_amount}% coins are in circulation in stocks"
 
   if chance of 10 / ({_amount} + {_stock_amount}):
     if chance of 50%:

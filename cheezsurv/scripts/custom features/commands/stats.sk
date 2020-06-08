@@ -39,7 +39,7 @@ on quit:
 
 command /lastplayed <offlineplayer=%player%>:
   trigger:
-    send "%nl%§2§lLast Played §a§l%arg-1%%nl%%nl%§3§lLast Joined§b%nl%%{last_played.%arg-1%.join}% §bUTC %nl%§b%difference between now and {last_played.%arg-1%.join}% §3ago%nl%%nl%§3§lLast Left%nl%§b%{last_played.%arg-1%.leave}% §bUTC %nl%§b%difference between now and {last_played.%arg-1%.leave}% §3ago"
+    send "%nl%§2§lLast Played §a§l%arg-1%%nl%%nl%§3§lLast Joined§b%nl%%{last_played.%arg-1%.join}%%nl%§b%difference between now and {last_played.%arg-1%.join}% §3ago%nl%%nl%§3§lLast Left%nl%§b%{last_played.%arg-1%.leave}%%nl%§b%difference between now and {last_played.%arg-1%.leave}% §3ago"
 
 command /playtime <offlineplayer=%player%>:
   aliases: /pt
