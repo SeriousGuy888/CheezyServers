@@ -41,11 +41,11 @@ every second in world "world":
   
   loop all players:
     if {drug_absorption.%loop-player%.timer} = 0:
-      delete {drug_absorption.%loop-player%.timer}
       set absorption hearts of loop-player to 0
+    if {drug_absorption.%loop-player%.timer} < -1:
+      set {drug_absorption.%loop-player%.timer} to -1
       continue
-    else:
-      remove 1 from {drug_absorption.%loop-player%.timer}
+    remove 1 from {drug_absorption.%loop-player%.timer}
 
 
 
