@@ -16,7 +16,6 @@ on script load:
   add "Dystopian surveillance is in the best interest of the citizens." to {propaganda::*}
   add "By order of the CheezSurv Dictatorship, Matteo is now illegal." to {propaganda::*}
   add "Who says a constitution or rights for citizens are needed?" to {propaganda::*}
-  add "The noose awaits those who ask questions." to {propaganda::*}
   add "The actionlogger is logging your actions." to {propaganda::*}
   add "Do not question the dictatorship." to {propaganda::*}
   add "Ignorance is strength." to {propaganda::*}
