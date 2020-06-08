@@ -26,7 +26,7 @@ on death of villager:
     set {death_msg} to "%{_villager_name}% %random element out of {_died_variations::*}% from %damage cause%"
 
 
-  send ":skull: **%{death_msg}%  |  [COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | WORLD: %world of victim%]**" to channel with id "{@discordChannelId}" with "Cheezy"
+  send ":skull: **%{death_msg}%  |  [COORDS: %x-coordinate of victim%, %y-coordinate of victim%, %z-coordinate of victim% | ID: %{entityid.%victim's entity uuid%}% | WORLD: %world of victim%]**" to channel with id "{@discordChannelId}" with "Cheezy"
   loop all players:
     set {villager_death_messages.%loop-player%} to true if {villager_death_messages.%loop-player%} is not set
     {villager_death_messages.%loop-player%} is true
