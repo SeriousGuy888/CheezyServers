@@ -17,7 +17,9 @@ on script load:
   add "By order of the CheezSurv Dictatorship, Matteo is now illegal." to {propaganda::*}
   add "Who says a constitution or rights for citizens are needed?" to {propaganda::*}
   add "The actionlogger is logging your actions." to {propaganda::*}
+  add "Bees and cows produce high quality wool." to {propaganda::*}
   add "Do not question the dictatorship." to {propaganda::*}
+  add "Kash has been legalized." to {propaganda::*}
   add "Ignorance is strength." to {propaganda::*}
   add "Love is fake." to {propaganda::*}
   add "Crapitalism!" to {propaganda::*}
