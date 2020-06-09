@@ -1,3 +1,27 @@
+function timeToText(t: timespan) :: text:
+  # set {_w} to 0
+  set {_d} to 0
+  set {_h} to 0
+  set {_m} to 0
+  set {_s} to 0
+  # while {_t} > 1 week:
+  #   subtract 1 day from {_t}
+  #   add 1 to {_w}
+  while {_t} > 1 day:
+    subtract 1 day from {_t}
+    add 1 to {_d}
+  while {_t} > 1 hour:
+    subtract 1 hour from {_t}
+    add 1 to {_h}
+  while {_t} > 1 minute:
+    subtract 1 minute from {_t}
+    add 1 to {_m}
+  while {_t} > 1 second:
+    subtract 1 second from {_t}
+    add 1 to {_s}
+  
+  return "%{_d}% days, %{_h}%h%{_m}%m%{_s}%"
+
 command /stats <OfflinePlayer=%player%>:
   trigger:
     set {stats.%arg-1%.deaths} to 0 if {stats.%arg-1%.deaths} is not set
@@ -10,6 +34,8 @@ command /stats <OfflinePlayer=%player%>:
     send "§2Deaths: §a%{stats.%arg-1%.deaths}%"
     send "§2Murders: §a%{stats.%arg-1%.murders}%"
     send "§6K/D: §e%{_kd}%"
+
+    send "§2Playtime: §a%timeToText({playtime.%arg-1%})%§7<tooltip:*Tracking was reset May 27th, 2020; *Only recalculates every time the player leaves; *While the default Minecraft playtime statistic exists, we do not use it as it requires the player to be online to access.>*<reset>"
 
 command /setstats <OfflinePlayer> <text> <number>:
   permission: *
@@ -44,5 +70,4 @@ command /lastplayed <offlineplayer=%player%>:
 command /playtime <offlineplayer=%player%>:
   aliases: /pt
   trigger:
-    send "%nl%§6§lTotal Playtime of %arg-1%§8 <tooltip:*Tracking was reset May 27th, 2020; *Only recalculates every time the player leaves>[*]<reset>"
-    send "§b%{playtime.%arg-1%}%"
+    send "The /playtime command has been merged into /stats."
