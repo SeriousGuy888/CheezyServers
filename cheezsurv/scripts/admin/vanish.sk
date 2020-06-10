@@ -55,6 +55,8 @@ command /seevanished:
 
 every 2 seconds:
   loop all players:
+    if {vanished.%loop-player%.see} is true:
+      reveal all players to loop-player
     if {vanished.%loop-player%} is true:
       if {vanished.%loop-player%.see} is false:
         send action bar "§aVanished" to loop-player
