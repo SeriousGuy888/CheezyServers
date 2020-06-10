@@ -16,15 +16,19 @@ on script load:
 on death of villager:
   set {_villager_name} to display name of victim otherwise "Villager"
   set {_id} to {entityid.%victim's entity uuid%} otherwise "[unassigned]"
+  if attacker is set:
+    set {_attacker_name} to display name of attacker otherwise capitalize("%attacker%")
 
   if victim is leashed:
-    set {death_msg} to "%{_villager_name}% was executed by hanging"
+    if attacker is set:
+      set {death_msg} to "%{_villager_name}% was executed by hanging by %{_attacker_name}%"
+    else:
+      set {death_msg} to "%{_villager_name}% was executed by hanging"
   else:
     set {_murder_variations::*} to "murdered", "assassinated", "slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", "killed to death", "put down", "euthanized", "butchered", and "deleted"
     set {_died_variations::*} to "died", "removed from existence", "cancelled their free trial of life", and "had their existence suspended"
 
     if attacker is set:
-      set {_attacker_name} to display name of attacker otherwise capitalize("%attacker%")
       set {death_msg} to "%{_villager_name}% was %random element out of {_murder_variations::*}% by %{_attacker_name}%"
     else:
       set {death_msg} to "%{_villager_name}% %random element out of {_died_variations::*}% from %damage cause%"

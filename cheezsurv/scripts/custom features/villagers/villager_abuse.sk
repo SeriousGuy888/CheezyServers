@@ -5,10 +5,11 @@
     # leash player's target entity to player
 
 on damage:
-  victim is villager
+  victim is villager or wandering trader
   attacker is player
 
   if attacker's tool is lead:
+    leash holder of victim is not set
     cancel event
 
     leash victim to attacker
