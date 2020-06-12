@@ -1,4 +1,4 @@
-every 3 ticks in world "ul_admin":
+every second in world "ul_admin":
   loop all players:
     loop-player's world is "ul_admin"
     loop-player's y-coordinate is less than -32
