@@ -6,5 +6,6 @@ every 3 ticks in world "ul_admin":
 
 on damage:
   victim's world is "ul_admin"
+  victim is player
   damage cause is void
   cancel event
