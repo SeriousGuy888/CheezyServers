@@ -1,0 +1,2 @@
+on death:
+  send "§6Your death location is: §e%player's x-coordinate%§e, %player's y-coordinate%§e, %player's z-coordinate%§e, in %player's world%" to victim
