@@ -1,4 +1,5 @@
 on death of player:
     # make console execute command "/give %attacker% player_head{SkullOwner:{Name:""%victim%""}}"
+    victim's gamemode is not spectator
     set {_head} to ("%victim%" parsed as offline player)'s skull
     drop {_head} at victim's location
