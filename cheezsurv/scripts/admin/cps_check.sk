@@ -8,10 +8,10 @@ every second:
     set {cps.left.%loop-player%} to {cps.left.%loop-player%.curr}
     set {cps.right.%loop-player%} to {cps.right.%loop-player%.curr}
 
-    if {cps.left.%loop-player%} > 20:
+    if {cps.left.%loop-player%} > 15:
       send "%loop-player% has %{cps.left.%loop-player%}% Left CPS" to console
-    if {cps.left.%loop-player%} > 75:
-      kick loop-player due to "§4§l[AntiCheat] CPS%nl%§c%{cps.left.%loop-player%}% Left CPS"
+    if {cps.left.%loop-player%} > 50:
+      kick loop-player due to "§4§l[AntiCheat] CPS%nl%%nl%§c%{cps.left.%loop-player%}% Left CPS%nl%Seriously? This is an SMP server."
       send "%loop-player% was kicked for %{cps.left.%loop-player%}% autoclicking with %{cps.left.%loop-player%}% Left CPS" to console
     
     delete {cps.left.%loop-player%.curr}
