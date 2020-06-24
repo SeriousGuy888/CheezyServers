@@ -2,9 +2,17 @@ options:
   discordChannelId: 695751303586119700
 
 on death of ender dragon:
-  broadcast "§6%attacker% §6has defeated an ender dragon!"
-  send ":dragon: **%attacker% has defeated an ender dragon!**" to channel with id "{@discordChannelId}" with "Cheezy"
+  if attacker is set:
+    broadcast "§6%attacker% §6has defeated an ender dragon!"
+    send ":dragon: **%attacker% has defeated an ender dragon!**" to channel with id "{@discordChannelId}" with "Cheezy"
+  else:
+    broadcast "§6An ender dragon has been defeated!"
+    send ":dragon: **An ender dragon has been defeated!**" to channel with id "{@discordChannelId}" with "Cheezy"
 
 on death of wither:
-  broadcast "§6%attacker% §6has defeated a wither"
-  send ":duck: **%attacker% has defeated a wither!**" to channel with id "{@discordChannelId}" with "Cheezy"
+  if attacker is set:
+    broadcast "§6%attacker% §6has defeated a wither"
+    send ":duck: **%attacker% has defeated a wither!**" to channel with id "{@discordChannelId}" with "Cheezy"
+  else:
+    broadcast "§6A wither has been defeated!"
+    send ":duck: **A wither has been defeated!**" to channel with id "{@discordChannelId}" with "Cheezy"
