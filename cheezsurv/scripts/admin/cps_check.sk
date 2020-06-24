@@ -20,6 +20,6 @@ command /cps <player>:
     if player is not op:
       send "§cInsufficient permissions!"
       stop
-    send "§3§lCPS of §b§l%arg-1%"
+    send "§3§lCurrent CPS of §b§l%arg-1% §d§oBecause averages are hard."
     send "§3Left: §b%{cps.left.%arg-1%} otherwise 0%"
     send "§3Right: §b%{cps.right.%arg-1%} otherwise 0%"
