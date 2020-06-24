@@ -1,0 +1,25 @@
+on left click:
+  add 1 to {cps.left.%player%}
+on right click:
+  add 1 to {cps.right.%player%}
+
+every second:
+  loop all players:
+    if {cps.left.%loop-player%} > 20:
+      send "%loop-player% has %{cps.left.%loop-player%}% Left CPS" to console
+    if {cps.left.%loop-player%} > 75:
+      kick loop-player due to "§4§l[AntiCheat] CPS%nl%§c%{cps.left.%loop-player%}% Left CPS"
+      send "%loop-player% was kicked for %{cps.left.%loop-player%}% autoclicking with %{cps.left.%loop-player%}% Left CPS" to console
+    
+    delete {cps.left.%loop-player%}
+    delete {cps.right.%loop-player%}
+      
+
+command /cps <player>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    send "§3§lCPS of §b§l%arg-1%"
+    send "§3Left: §b%{cps.left.%arg-1%} otherwise 0%"
+    send "§3Right: §b%{cps.right.%arg-1%} otherwise 0%"
