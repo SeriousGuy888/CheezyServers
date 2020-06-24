@@ -1,0 +1,5 @@
+on damage:
+  victim is player
+  projectile is snowball or egg
+  make attacker damage victim by 0.00001
+  add 0.00001 to victim's health
