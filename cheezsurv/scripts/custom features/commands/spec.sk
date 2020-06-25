@@ -58,17 +58,17 @@ command /spectp <player>:
       {subspec.%loop-player%} is true
       send "%player% used /sptp %arg-1%" to loop-player
     
-command /subscribespec:
-  executable by: players
-  aliases: /subsp, /subscribesp, /subspec
-  trigger:
-    set {subspec.%player%} to false if {subspec.%player%} is not set
-    if {subspec.%player%} is false:
-      set {subspec.%player%} to true
-      send "§3Subscribed. You will be notified when people use /sp or /sptp"
-    else if {subspec.%player%} is true:
-      set {subspec.%player%} to false
-      send "§3Unsubscribed."
+# command /subscribespec:
+#   executable by: players
+#   aliases: /subsp, /subscribesp, /subspec
+#   trigger:
+#     set {subspec.%player%} to false if {subspec.%player%} is not set
+#     if {subspec.%player%} is false:
+#       set {subspec.%player%} to true
+#       send "§3Subscribed. You will be notified when people use /sp or /sptp"
+#     else if {subspec.%player%} is true:
+#       set {subspec.%player%} to false
+#       send "§3Unsubscribed."
 
 on join:
   {%player%.spec.loc} is set
