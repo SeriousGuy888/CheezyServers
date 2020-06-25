@@ -1,0 +1,23 @@
+{
+  "display": {
+    "title": {
+      "text": "Victor of Matteo's Manhunt I"
+    },
+    "description": {
+      "text": "Win Matteo's Manhunt I"
+    },
+    "icon": {
+      "item": "minecraft:diamond_sword"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "events:mmh1_participation"
+}
