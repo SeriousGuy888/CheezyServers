@@ -1,0 +1,31 @@
+{
+  "display": {
+    "title": {
+      "text": "I Drink Honey from the Jar"
+    },
+    "description": {
+      "text": "Drink some honey."
+    },
+    "icon": {
+      "item": "minecraft:honey_bottle"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "eat": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "minecraft:honey_bottle"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "parent": "cheezsurv:root"
+}
