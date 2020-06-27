@@ -28,9 +28,8 @@ command /magicboxgive [<integer=1>] [<offlineplayer>]:
         send "§2You have been given §a%arg-1%§2 magic boxes." to loop-player
     else:
       send "§2Gave §a%arg-1%§2 magic boxes to §a%arg-2%§2."
-      loop all players:
-        add arg-1 to {magicboxes.%arg-2%}
-        send "§2You have been given §a%arg-1%§2 magic boxes." to arg-2
+      add arg-1 to {magicboxes.%arg-2%}
+      send "§2You have been given §a%arg-1%§2 magic boxes." to arg-2
 
 command /magicboxes <offlineplayer=%player%>:
   trigger:
