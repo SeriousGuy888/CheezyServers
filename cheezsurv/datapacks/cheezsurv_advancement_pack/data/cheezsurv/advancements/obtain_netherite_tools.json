@@ -1,0 +1,45 @@
+{
+  "display": {
+    "title": {
+      "text": "Purple Tools"
+    },
+    "description": {
+      "text": "Get a full set of netherite tools (pickaxe, sword, axe, shovel, hoe) in your inventory."
+    },
+    "icon": {
+      "item": "minecraft:netherite_pickaxe"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "netherite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:netherite_pickaxe"
+          },
+          {
+            "item": "minecraft:netherite_sword"
+          },
+          {
+            "item": "minecraft:netherite_axe"
+          },
+          {
+            "item": "minecraft:netherite_shovel"
+          },
+          {
+            "item": "minecraft:netherite_hoe"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "cheezsurv:obtain_netherite_ingot"
+}
