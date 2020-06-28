@@ -1,0 +1,38 @@
+{
+  "display": {
+    "title": {
+      "text": "Piglin Banners!"
+    },
+    "description": {
+      "text": "Obtain a snout banner pattern."
+    },
+    "icon": {
+      "item": "minecraft:white_banner",
+      "nbt": "{BlockEntityTag:{Patterns:[{Pattern:\"pig\",Color:6}]}}"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "gapple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:piglin_banner_pattern",
+            "count": {
+              "min": 1,
+              "max": 32767
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "parent": "cheezsurv:swimming_in_lava"
+}
