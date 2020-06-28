@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "New Mushrooms?"
+      "text": "Nihilism Blocks"
     },
     "description": {
-      "text": "Obtain either warped or crimson fungus."
+      "text": "Obtain either warped or crimson nylium."
     },
     "icon": {
-      "item": "minecraft:crimson_fungus"
+      "item": "minecraft:warped_nylium"
     },
     "frame": "task",
     "show_toast": true,
@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:crimson_fungus"
+            "item": "minecraft:crimson_nylium"
           }
         ]
       }
@@ -30,7 +30,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:warped_fungus"
+            "item": "minecraft:warped_nylium"
           }
         ]
       }
@@ -45,5 +45,5 @@
   "rewards": {
     "experience": 5
   },
-  "parent": "cheezsurv:obtain_nylium"
+  "parent": "cheezsurv:nether_update"
 }
