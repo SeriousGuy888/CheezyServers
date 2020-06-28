@@ -34,5 +34,5 @@
   "rewards": {
     "experience": 20
   },
-  "parent": "cheezsurv:swimming_in_lava"
+  "parent": "cheezsurv:nether_update"
 }
