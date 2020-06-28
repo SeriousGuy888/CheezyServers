@@ -15,3 +15,6 @@ on death of villager:
 on death of wandering trader:
   set {_drop_amount} to random number between 2 and 4
   drop {_drop_amount} of steak named "§rWandering Trader Meat" with lore "§7§oIt's technically not cannibalism." and "§7§o(Different from villager meat)" at victim
+
+on death of bat:
+  drop 1 of cooked mutton named "§rBat Meat" with lore "§7§oHoang loves to eat bats!" at victim
