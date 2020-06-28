@@ -1,0 +1,5 @@
+on right click on piglin:
+  player's tool is lead
+  leash holder of event-entity is not set
+  leash event-entity to player
+  remove 1 from item amount of player's tool if gamemode of attacker is not creative
