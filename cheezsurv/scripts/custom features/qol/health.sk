@@ -25,7 +25,7 @@ on damage:
   else if {_max_health} is greater than or equal to 50:
     set {_health_str} to "§c%{_health} * 2%§7/§4%{_max_health} * 2% §7HP" 
 
-  send action bar "%{_health_str}% | §4Damage Dealt: §c%final damage%§cHP" to attacker
+  send action bar "%{_health_str}% §7| §4Damage Dealt: §c%final damage%§cHP" to attacker
 
 command /health [<player>]:
   trigger:
