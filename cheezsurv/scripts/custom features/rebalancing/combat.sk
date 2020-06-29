@@ -59,7 +59,7 @@ on damage:
     add 1 to {combat.shield_combo.%attacker%.count} if {combat.shield_combo.%attacker%.count} < {@shieldComboMax}
     play sound {@shieldComboSound} to attacker
     add ({combat.shield_combo.%attacker%.count} / {@shieldComboDamageFactor}) / 2 to damage
-    set {combat.shield_combo.%attacker%.dmg} to (final damage / 2)
+    set {combat.shield_combo.%attacker%.dmg} to final damage
 
 command /togglecombatmessage:
   aliases: /togglecombatmsg
