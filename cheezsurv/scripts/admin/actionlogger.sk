@@ -10,12 +10,16 @@ options:
   villagerDeathLog: true
   vehicleLog: true
   rightClickBlockLog: true
+  dropLog: true
 
   publicActionLogger: false
 
 # every 3 seconds:
 #   send {actionlogger.publiclog} to channel with id "{@discordChannelId}" with "Cheezy"
 #   set {actionlogger.publiclog} to ""
+
+function sendActionlogger(t: text):
+  send "{@pre} %{_t}%" to the console
 
 on place:
   {@placeLog} is true
@@ -66,7 +70,11 @@ on vehicle create:
 on right click:
   {@rightClickBlockLog} is true
   clicked block is set
-  send "{@pre} %player% used %clicked block% at %location of clicked block% in %world of clicked block%" to the console
+  sendActionlogger("%player% used %player's tool% on %clicked block% at %location of clicked block% in %world of clicked block%")
 
   {@publicActionLogger} is true
   set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%player% used %clicked block% at %location of clicked block% in %world of clicked block%`"
+
+on drop:
+  {@dropLog} is true
+  sendActionlogger("%player% at %location of player% dropped %event-itemtype% in %event-world%")
