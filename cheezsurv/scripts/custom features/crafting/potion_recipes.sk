@@ -1,5 +1,6 @@
 options:
   playSound: play sound "block.brewing_stand.brew" at player
+  invSpaceMsg: send "§cFailed to craft potion. Insufficient inventory space."
 
   blindnessColour: 2039583 #1f1f1f
   blindnessNormal: Potion of Blindness
@@ -32,12 +33,18 @@ options:
   hastePotentSplash: Potent Splash Potion of Haste
   hastePotentSplashDuration: 1800 # 90 seconds
 
+  hungerColour: 2402596 #24A924
+  hungerNormal: Potion of Peckishness
+  hungerNormalDuration: 900 # 45 seconds
+  hungerSplash: Splash Potion of Peckishness
+  hungerSplashDuration: 600 # 30 seconds
+
 on sneak toggle:
   player is sneaking
   if player's offhand tool is awkward potion:
     if player's tool is ink sac:
       if player's inventory cannot hold water bottle:
-        send "§cFailed to craft potion. Insufficient inventory space."
+        {@invSpaceMsg}
         stop
       remove 1 from item amount of player's offhand tool
       remove 1 from item amount of player's tool
@@ -47,7 +54,7 @@ on sneak toggle:
     if uncoloured line 1 of lore of player's offhand tool is "{@blindnessNormal}":
       if player's tool is gunpowder:
         if player's inventory cannot hold water bottle:
-          send "§cFailed to craft potion. Insufficient inventory space."
+          {@invSpaceMsg}
           stop
         remove 1 from item amount of player's offhand tool
         remove 1 from item amount of player's tool
@@ -58,7 +65,7 @@ on sneak toggle:
   if player's offhand tool is awkward potion:
     if player's tool is wither rose:
       if player's inventory cannot hold water bottle:
-        send "§cFailed to craft potion. Insufficient inventory space."
+        {@invSpaceMsg}
         stop
       remove 1 from item amount of player's offhand tool
       remove 1 from item amount of player's tool
@@ -68,7 +75,7 @@ on sneak toggle:
     if uncoloured line 1 of lore of player's offhand tool is "{@witherNormal}":
       if player's tool is gunpowder:
         if player's inventory cannot hold water bottle:
-          send "§cFailed to craft potion. Insufficient inventory space."
+          {@invSpaceMsg}
           stop
         remove 1 from item amount of player's offhand tool
         remove 1 from item amount of player's tool
@@ -79,7 +86,7 @@ on sneak toggle:
   if player's offhand tool is awkward potion:
     if player's tool is poisonous potato:
       if player's inventory cannot hold water bottle:
-        send "§cFailed to craft potion. Insufficient inventory space."
+        {@invSpaceMsg}
         stop
       remove 1 from item amount of player's offhand tool
       remove 1 from item amount of player's tool
@@ -89,7 +96,7 @@ on sneak toggle:
     if uncoloured line 1 of lore of player's offhand tool is "{@nauseaNormal}":
       if player's tool is gunpowder:
         if player's inventory cannot hold water bottle:
-          send "§cFailed to craft potion. Insufficient inventory space."
+          {@invSpaceMsg}
           stop
         remove 1 from item amount of player's offhand tool
         remove 1 from item amount of player's tool
@@ -100,7 +107,7 @@ on sneak toggle:
   if player's offhand tool is awkward potion:
     if player's tool is iron block:
       if player's inventory cannot hold water bottle:
-        send "§cFailed to craft potion. Insufficient inventory space."
+        {@invSpaceMsg}
         stop
       remove 1 from item amount of player's offhand tool
       remove 1 from item amount of player's tool
@@ -110,7 +117,7 @@ on sneak toggle:
     if uncoloured line 1 of lore of player's offhand tool is "{@hasteNormal}":
       if player's tool is glowstone dust:
         if player's inventory cannot hold water bottle:
-          send "§cFailed to craft potion. Insufficient inventory space."
+          {@invSpaceMsg}
           stop
         remove 1 from item amount of player's offhand tool
         remove 1 from item amount of player's tool
@@ -120,7 +127,7 @@ on sneak toggle:
     if uncoloured line 1 of lore of player's offhand tool is "{@hasteNormal}":
       if player's tool is gunpowder:
         if player's inventory cannot hold water bottle:
-          send "§cFailed to craft potion. Insufficient inventory space."
+          {@invSpaceMsg}
           stop
         remove 1 from item amount of player's offhand tool
         remove 1 from item amount of player's tool
@@ -130,9 +137,30 @@ on sneak toggle:
     if uncoloured line 1 of lore of player's offhand tool is "{@hastePotent}":
       if player's tool is gunpowder:
         if player's inventory cannot hold water bottle:
-          send "§cFailed to craft potion. Insufficient inventory space."
+          {@invSpaceMsg}
           stop
         remove 1 from item amount of player's offhand tool
         remove 1 from item amount of player's tool
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@hastePotentSplash}"",""italic"":false}',Lore:['{""text"":""{@hastePotentSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hastePotentAmplifier}b,Duration:{@hastePotentSplashDuration}}],CustomPotionColor:{@hasteColour}}"
+
+ 
+  if player's offhand tool is awkward potion:
+    if player's tool is bread:
+      if player's inventory cannot hold water bottle:
+        {@invSpaceMsg}
+        stop
+      remove 1 from item amount of player's offhand tool
+      remove 1 from item amount of player's tool
+      {@playSound}
+      make console execute command "/give %player% potion{display:{Name:'{""text"":""{@hungerNormal}"",""italic"":false}',Lore:['{""text"":""{@hungerNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:17b,Amplifier:0b,Duration:{@hungerNormalDuration}}],CustomPotionColor:{@hungerColour}}"
+  if player's offhand tool is potion:
+    if uncoloured line 1 of lore of player's offhand tool is "{@hungerNormal}":
+      if player's tool is gunpowder:
+        if player's inventory cannot hold water bottle:
+          {@invSpaceMsg}
+          stop
+        remove 1 from item amount of player's offhand tool
+        remove 1 from item amount of player's tool
+        {@playSound}
+        make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@hungerSplash}"",""italic"":false}',Lore:['{""text"":""{@hungerSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:17b,Amplifier:0b,Duration:{@hungerSplashDuration}}],CustomPotionColor:{@hungerColour}}"
