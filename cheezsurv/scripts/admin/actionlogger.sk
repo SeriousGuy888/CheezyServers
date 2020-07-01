@@ -82,4 +82,4 @@ on drop:
 
 on pick up:
   {@pickupLog} is true
-  sendActionlogger("%player% at %location of player% dropped %event-itemtype% in %event-world%")
+  sendActionlogger("%player% at %location of player% picked up %event-itemtype% in %event-world%")
