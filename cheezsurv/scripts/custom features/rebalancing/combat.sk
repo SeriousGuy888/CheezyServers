@@ -1,17 +1,19 @@
 options:
-  shieldComboTimer: 3.25 seconds
-  shieldComboSound: "block.anvil.place" at volume 0.1
-  shieldComboDamageFactor: 0.5
-  shieldComboMax: 16
+  comboTimer: 3.25 seconds
+  comboSound: "block.anvil.place" at volume 0.1
+  comboDamageFactor: 0.25
+  comboMax: 32
+  comboBasicMin: 3
 
 function clearCombo(p: player):
   delete {combat.combo.%{_p}%.time}
   set {combat.combo.%{_p}%.count} to 0
   delete {combat.combo.%{_p}%.dmg}
+  delete {combat.combo.%{_p}%.basic_buildup}
 
 every 2.5 seconds:
   loop all players:
-    if difference between now and {combat.combo.%loop-player%.time} > {@shieldComboTimer}:
+    if difference between now and {combat.combo.%loop-player%.time} > {@comboTimer}:
       clearCombo(loop-player)
       stop
 
@@ -20,14 +22,14 @@ every 5 ticks:
     {combat.combo.%loop-player%.time} is set
     set {_combo_time} to difference between now and {combat.combo.%loop-player%.time}
 
-    {_combo_time} < {@shieldComboTimer}
+    {_combo_time} < {@comboTimer}
 
     set {_count} to {combat.combo.%loop-player%.count}
-    set {_timer} to difference between {@shieldComboTimer} and {_combo_time}
-    set {_damage_bonus} to {_count} * {@shieldComboDamageFactor}
+    set {_timer} to difference between {@comboTimer} and {_combo_time}
+    set {_damage_bonus} to {_count} * {@comboDamageFactor}
     set {_damage_dealt} to {combat.combo.%loop-player%.dmg}
 
-    set {_actionbar} to "§6§lShield Combo x%{_count}%§7: §e%{_timer}% §4(§c+%{_damage_bonus}% DMG§4) §7|§c %{_damage_dealt} otherwise 0%HP §4Dealt"
+    set {_actionbar} to "§6§lCombo x%{_count}%§7: §e%{_timer}% §4(§c+%{_damage_bonus}% DMG§4) §7|§c %{_damage_dealt} otherwise 0%HP §4Dealt"
     send action bar {_actionbar} to loop-player
 
 on damage:
@@ -38,8 +40,8 @@ on damage:
     if final damage = 0:
       set {combat.combo.%victim%.time} to now
       set {combat.combo.%victim%.count} to 0 if {combat.combo.%victim%.count} is not set
-      add 1 to {combat.combo.%victim%.count} if {combat.combo.%victim%.count} < {@shieldComboMax}
-      play sound {@shieldComboSound} to attacker
+      add 1 to {combat.combo.%victim%.count} if {combat.combo.%victim%.count} < {@comboMax}
+      play sound {@comboSound} to attacker
     # if final damage > 0:
     #   send action bar "damaged while using shield (s)" to victim
   else if victim is not blocking:
@@ -52,14 +54,26 @@ on damage:
 on damage:
   attacker is player
   damage cause != thorns
-  difference between now and {combat.combo.%attacker%.time} < {@shieldComboTimer}
-  if final damage > 0:
+  final damage > 0
+
+  if difference between now and {combat.combo.%attacker%.time} < {@comboTimer}:
     set {combat.combo.%attacker%.time} to now
     set {combat.combo.%attacker%.count} to 0 if {combat.combo.%attacker%.count} is not set
-    add 1 to {combat.combo.%attacker%.count} if {combat.combo.%attacker%.count} < {@shieldComboMax}
-    play sound {@shieldComboSound} to attacker
-    add ({combat.combo.%attacker%.count} * {@shieldComboDamageFactor}) / 2 to damage
+    add 1 to {combat.combo.%attacker%.count} if {combat.combo.%attacker%.count} < {@comboMax}
+    play sound {@comboSound} to attacker
+    add ({combat.combo.%attacker%.count} * {@comboDamageFactor}) / 2 to damage
     set {combat.combo.%attacker%.dmg} to final damage
+  
+  if {combat.combo.%attacker%.victim} = victim:
+    set {combat.combo.%attacker%.time} to now
+    if difference between now and {combat.combo.%attacker%.time} < {@comboTimer}:
+      add 1 to {combat.combo.%attacker%.basic_buildup}
+
+      if {combat.combo.%attacker%.basic_buildup} >= {@comboBasicMin}:
+        add 1 to {combat.combo.%attacker%.count} if {combat.combo.%victim%.count} < {@comboMax}
+  else:
+    set {combat.combo.%attacker%.victim} to victim
+    set {combat.combo.%attacker%.basic_buildup} to 0
 
 command /togglecombatmessage:
   aliases: /togglecombatmsg
