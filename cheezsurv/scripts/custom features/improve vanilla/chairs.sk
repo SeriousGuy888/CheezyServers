@@ -7,7 +7,7 @@ on right click on stair:
       if data value of clicked block is between 0 and 3:
         cancel the event
         set {_o} to type of clicked block
-        spawn 1 armor stand at location 1.7 below and 0.2 in front of event-block
+        spawn 1 armor stand at location 0.25 below and 0.2 in front of event-block
         set {_s} to last spawned entity
         add "{NoGravity:1}" to nbt of {_s}
         add "{Invisible:1}" to nbt of {_s}
