@@ -1,7 +1,7 @@
 options:
   shieldComboTimer: 3.25 seconds
   shieldComboSound: "block.anvil.place" at volume 0.1
-  shieldComboDamageFactor: 0.25
+  shieldComboDamageFactor: 0.5
   shieldComboMax: 16
 
 function clearCombo(p: player):
