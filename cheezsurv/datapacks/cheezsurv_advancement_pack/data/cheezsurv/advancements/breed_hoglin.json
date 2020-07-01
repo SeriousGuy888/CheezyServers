@@ -1,0 +1,37 @@
+{
+  "display": {
+    "title": {
+      "text": "Pigs with Tusks"
+    },
+    "description": {
+      "text": "Breed two hoglins together. (Breeding a hostile mob? Wow.)"
+    },
+    "icon": {
+      "item": "minecraft:crimson_fungus"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a": {
+      "trigger": "minecraft:bred_animals",
+      "conditions": {
+        "child": {
+          "type": "minecraft:hoglin"
+        },
+        "parent": {
+          "type": "minecraft:hoglin"
+        },
+        "partner": {
+          "type": "minecraft:hoglin"
+        }
+      }
+    }
+  },
+  "rewards": {
+      "experience": 100
+  },
+  "parent": "cheezsurv:hurt_zombie_piglin"
+}
