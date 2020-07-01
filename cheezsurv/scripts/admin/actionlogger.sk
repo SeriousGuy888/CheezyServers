@@ -11,6 +11,7 @@ options:
   vehicleLog: true
   rightClickBlockLog: true
   dropLog: true
+  pickupLog: true
 
   publicActionLogger: false
 
@@ -77,4 +78,8 @@ on right click:
 
 on drop:
   {@dropLog} is true
+  sendActionlogger("%player% at %location of player% dropped %event-itemtype% in %event-world%")
+
+on pick up:
+  {@pickupLog} is true
   sendActionlogger("%player% at %location of player% dropped %event-itemtype% in %event-world%")
