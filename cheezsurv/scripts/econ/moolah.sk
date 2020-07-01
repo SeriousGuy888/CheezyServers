@@ -82,13 +82,19 @@ command /balance <OfflinePlayer=%player%>:
 
 
 
+command /givemoolah <OfflinePlayer> <Number>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    add arg-2 to {bank.balance.%arg-1%}
+    send "Gave %arg-2%c to %arg-1%"
 
 command /withdraw [<text>]:
   executable by: players
   aliases: /with
   trigger:
     send "§bThe /withdraw command has been split into the /coin and /banknote commands."
-
 
 command /coin <integer>:
   executable by: players
