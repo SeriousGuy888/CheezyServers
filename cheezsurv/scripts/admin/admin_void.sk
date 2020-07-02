@@ -1,11 +1,11 @@
-every second in world "ul_admin":
+every second:
   loop all players:
-    loop-player's world is "ul_admin"
-    loop-player's y-coordinate is less than -32
+    world of loop-player is "ul_admin"
+    loop-player's y-coordinate < -32
     teleport loop-player to location(loop-player's x-coordinate, 500, loop-player's z-coordinate, world "world_the_end")
 
 on damage:
-  victim's world is "ul_admin"
+  world of victim is "ul_admin"
   victim is player
   damage cause is void
   cancel event
