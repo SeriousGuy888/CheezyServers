@@ -1,7 +1,7 @@
 on join:
-	set join message to "§e%player% joined the game" if {%player%.nick} is not set
-	set join message to "§e%player% (%{%player%.nick}%) joined the game" if {%player%.nick} is set
+  set {_nick} to "(%{%player%.nick}%) " if {%player%.nick} is set
+  set join message to "§e%player% %{_nick} otherwise """"%joined the game"
 
 on quit:
-	set quit message to "§e%player% left the game" if {%player%.nick} is not set
-	set quit message to "§e%player% (%{%player%.nick}%) left the game" if {%player%.nick} is set
+  set {_nick} to "(%{%player%.nick}%) " if {%player%.nick} is set
+  set quit message to "§e%player% %{_nick} otherwise """"%left the game"
