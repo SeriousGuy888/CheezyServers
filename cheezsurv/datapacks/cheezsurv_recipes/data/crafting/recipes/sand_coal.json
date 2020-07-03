@@ -10,12 +10,11 @@
             "item": "minecraft:dirt"
         },
         "C": {
-            "item": "minecraft:coal"
+            "tag": "minecraft:coals"
         }
     },
     "result": {
         "item": "minecraft:sand",
         "count": 8
-    },
-    "group": "sand"
+    }
 }
