@@ -4,6 +4,7 @@ options:
   comboDamageFactor: 0.25
   comboMax: 32
   comboBasicMin: 3
+  maxDistance: 6
 
 function clearCombo(p: player):
   delete {combat.combo.%{_p}%.time}
@@ -57,6 +58,7 @@ on damage:
   final damage > 0
 
   if difference between now and {combat.combo.%attacker%.time} < {@comboTimer}:
+    distance between location of attacker and location of victim < {@maxDistance}
     set {combat.combo.%attacker%.time} to now
     set {combat.combo.%attacker%.count} to 0 if {combat.combo.%attacker%.count} is not set
     add 1 to {combat.combo.%attacker%.count} if {combat.combo.%attacker%.count} < {@comboMax}
