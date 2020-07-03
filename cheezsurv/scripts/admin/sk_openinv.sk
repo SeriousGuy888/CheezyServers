@@ -1,0 +1,20 @@
+options:
+  failed: §cPlayer is offline.
+
+command /skoi [<offlineplayer>]:
+  trigger:
+    player is op
+    set {_p} to arg-1 ? player
+    if {_p} is offline:
+      send "{@failed}"
+    else:
+      open {_p}'s inventory to player
+
+command /skoe [<offlineplayer>]:
+  trigger:
+    player is op
+    set {_p} to arg-1 ? player
+    if {_p} is offline:
+      send "{@failed}"
+    else:
+      open ender chest of {_p} to player
