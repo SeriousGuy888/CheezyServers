@@ -1,0 +1,67 @@
+options:
+  bottleName: §2Bottled XP
+  bottleLore: §a§nSigner
+  bottleLoreCurrency: XP Levels
+  minXpWithdrawn: 2
+  maxXpWithdrawn: 100000
+  maxBottleAmount: 64
+
+function giveBottledXp(val: number, amt: number, signer: text) :: item:
+  return {_amt} of xp bottle named "{@bottleName}" with lore "{@bottleLore}:§a %{_signer}%" and "§7%{_val}% §7{@bottleLoreCurrency}"
+
+command /getxpbottle <number> <number=1>:
+  executable by: players
+  aliases: /getbottledxp
+  trigger:
+    player has permission "*"
+    give player giveBottledXp(arg-1, arg-2, "Console")
+
+command /bottlexp [<integer>] <integer=1>:
+  executable by: players
+  aliases: /withdrawxp, /withxp
+  trigger:
+    if arg-1 is not set:
+      send "§c/bottlexp <Levels> [Bottles]"
+      stop
+
+    set {_lvls} to arg-1 * arg-2
+
+    if player's level < {_lvls}:
+      send "§cInsufficent XP levels!"
+      stop
+    if arg-1 < {@minXpWithdrawn}:
+      send "§cTo prevent XP duplication, you may not withdraw less than {@minXpWithdrawn} XP levels per bottle."
+      stop
+    if arg-1 > {@maxXpWithdrawn}:
+      send "§cYou may not store more than {@maxXpWithdrawn} XP levels in a single bottle."
+      stop
+    if arg-2 > {@maxBottleAmount}:
+      send "§cYou may only withdraw up to {@maxBottleAmount} bottles at a time."
+      stop
+    if player's inventory cannot hold arg-2 of xp bottle named "{@bottleName}":
+      send "§cInsufficient inventory space!"
+      stop
+    remove {_lvls} from player's level
+    give player giveBottledXp(arg-1, arg-2, "%player%")
+    # remove 0.05 from player's level progress # transaction fee
+    send "§2Withdrew §a%{_lvls}%§2 XP levels in §a%arg-2%§2 bottles of §a%arg-1%§2 levels."
+
+on right click:
+  if name of player's tool is not "{@bottleName}":
+    stop
+  
+  cancel event
+  
+  set {_lore} to uncoloured line 2 of lore of player's tool
+  replace all "{@bottleLoreCurrency}" in {_lore} with ""
+  remove 1 from item amount of player's tool
+
+  set {_xp_amt} to ({_lore} parsed as number)
+  # if {_xp_amt} < 0:
+  #   send "§cYou cannot redeem a negative xp amount!"
+  #   stop
+  
+  add {_xp_amt} to player's level
+  
+  send "§2Redeemed §a%{_lore}%§2{@bottleLoreCurrency}"
+  play sound "entity.experience_orb.pickup" at volume 0.25 to player
