@@ -96,6 +96,9 @@ command /pay [<player>] [<number>]:
     if arg-2 is not set:
       send "§c/pay <player> <amount>"
       stop
+    if arg-1 is player:
+      send "§cYou can't send money to yourself."
+      stop
     if {bank.balance.%player%} < arg-2:
       send "§cInsufficient funds!"
       stop
