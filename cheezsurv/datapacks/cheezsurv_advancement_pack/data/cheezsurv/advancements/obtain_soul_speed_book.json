@@ -1,0 +1,34 @@
+{
+  "display": {
+    "title": {
+      "text": "Speedy Souls"
+    },
+    "description": {
+      "text": "Obtain an enchanted book with Soul Speed III."
+    },
+    "icon": {
+      "item": "minecraft:soul_sand"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "asdsg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:enchanted_book",
+            "nbt": "{StoredEnchantments:[{id:\"minecraft:soul_speed\",lvl:3s}]}"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "cheezsurv:obtain_fungus"
+}
