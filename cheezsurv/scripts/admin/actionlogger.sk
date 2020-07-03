@@ -70,8 +70,10 @@ on vehicle create:
 
 on right click:
   {@rightClickBlockLog} is true
-  clicked block is set
-  sendActionlogger("%player% used %player's tool% on %clicked block% at %location of clicked block% in %world of clicked block%")
+  if clicked block is set:
+    sendActionlogger("%player% used %player's tool% on %clicked block% at %location of clicked block% in %world of clicked block%")
+  else:
+    sendActionlogger("%player% used %player's tool% at %location of player% in %world of player%")
 
   {@publicActionLogger} is true
   set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%player% used %clicked block% at %location of clicked block% in %world of clicked block%`"
