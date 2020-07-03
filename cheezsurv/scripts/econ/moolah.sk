@@ -35,7 +35,7 @@ every 5 seconds:
 
   loop all players:
     set {bank.balance.%loop-player%} to 0 if {bank.balance.%loop-player%} is not set
-function logAction(a: text):
+function logEconomyAction(a: text):
   set {economy.logs.pending} to "%{economy.logs.pending}%%nl%[%now%] %{_a}%"
 
 
@@ -90,6 +90,25 @@ command /givemoolah <OfflinePlayer> <Number>:
     add arg-2 to {bank.balance.%arg-1%}
     send "Gave %arg-2%c to %arg-1%"
 
+command /pay [<player>] [<number>]:
+  executable by: players
+  trigger:
+    if arg-2 is not set:
+      send "§c/pay <player> <amount>"
+      stop
+    if {bank.balance.%player%} < arg-2:
+      send "§cInsufficient funds!"
+      stop
+    if arg-2 <= 0:
+      send "§cYou can't send negative or zero amounts you idot."
+      stop
+    
+    remove arg-2 from {bank.balance.%player%}
+    add arg-2 to {bank.balance.%arg-1%}
+    send "§2Paid §a%arg-2%§2 coins to §a%arg-1%§2."
+    send "§2Received §a%arg-2%§2 coins from §a%player%§2." to arg-1
+    logEconomyAction("`%player%` paid `%arg-2%` coins to `%arg-1%` via /pay")
+
 command /withdraw [<text>]:
   executable by: players
   aliases: /with
@@ -106,22 +125,22 @@ command /coin <integer>:
 
     if arg-1 <= 0:
       send "§cYou may not withdraw a negative or zero amount!"
-      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Negative or zero amount")
+      logEconomyAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Negative or zero amount")
       stop
     
     if {bank.balance.%player%} is less than arg-1:
       send "§cInsufficient funds! /bal"
-      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient funds")
+      logEconomyAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient funds")
       stop
 
     if player's inventory cannot hold arg-1 of sunflower:
       send "§cInsufficient inventory space!"
-      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient inventory space")
+      logEconomyAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient inventory space")
       stop
 
     remove arg-1 from {bank.balance.%player%}
     give player giveCoin(arg-1)
-    logAction("`%player%` withdrew `%arg-1%` coins in coins")
+    logEconomyAction("`%player%` withdrew `%arg-1%` coins in coins")
     send "§2Withdrew §a%arg-1% §2coins from your bank balance."
 
 command /banknote [<number>] [<integer>]:
@@ -137,27 +156,27 @@ command /banknote [<number>] [<integer>]:
 
     if {banknote_denominations::*} does not contain {_denom}:
       send "§4Invalid denomination! The valid ones are: §c%{banknote_denominations::*}%"
-      logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Invalid denomination")
+      logEconomyAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Invalid denomination")
       stop
 
     if {_total} <= 0:
       send "§cYou may not withdraw a negative or zero amount!"
-      logAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Negative or zero amount")
+      logEconomyAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Negative or zero amount")
       stop
 
     if {bank.balance.%player%} is less than {_total}:
       send "§cInsufficient funds! /bal"
-      logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient funds")
+      logEconomyAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient funds")
       stop
     
     if player's inventory cannot hold {_amount} of paper:
       send "§cInsufficient inventory space!"
-      logAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient inventory space")
+      logEconomyAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient inventory space")
       stop
     
     remove {_total} from {bank.balance.%player%}
     give player giveBanknote({_denom}, {_amount})
-    logAction("`%player%` withdrew `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%`")
+    logEconomyAction("`%player%` withdrew `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%`")
     send "§2Withdrew §a%{_total}% §2coins from your bank balance."
 
 
@@ -184,7 +203,7 @@ on right click:
   send action bar "§3Deposited §b%{_deposited}%§3 coins. §b/bal" to player
   play sound "block.note_block.pling" at volume 0.25 to player
 
-  logAction("`%player%` deposited `%{_deposited}%` coins")
+  logEconomyAction("`%player%` deposited `%{_deposited}%` coins")
 
 
   
