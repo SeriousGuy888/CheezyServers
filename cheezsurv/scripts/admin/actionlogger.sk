@@ -40,22 +40,22 @@ on damage:
   {@damageLog} is true
   if attacker is set:
     if attacker is player:
-      send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage" to the console
+      send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage" to the console
 
       {@publicActionLogger} is true
-      set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage`"
+      set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage`"
     if attacker is not player:
       {@damageLogPlayerless} is true
-      send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage" to the console
+      send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage" to the console
 
       {@publicActionLogger} is true
-      set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %damage% damage`"
+      set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage`"
   else if attacker is not set:
     {@damageLogPlayerless} is true
-    send "{@pre} %victim% at %victim's location% in %victim's world% was damaged via %event-damagecause% dealing %damage% damage" to the console
+    send "{@pre} %victim% at %victim's location% in %victim's world% was damaged via %event-damagecause% dealing %final damage% HP of damage" to the console
 
     {@publicActionLogger} is true
-    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%victim% at %victim's location% in %victim's world% was damaged via %event-damagecause% dealing %damage% damage`"
+    set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%victim% at %victim's location% in %victim's world% was damaged via %event-damagecause% dealing %final damage% HP of damage`"
 
 on death of villager:
   {@villagerDeathLog} is true
