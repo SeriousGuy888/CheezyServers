@@ -10,7 +10,7 @@
       "item": "minecraft:bow",
       "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:32767s}]}"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
@@ -23,7 +23,10 @@
           "type": "minecraft:cod"
         },
         "killing_blow": {
-          "is_projectile": true
+          "is_projectile": true,
+          "direct_entity": {
+            "type": "minecraft:arrow"
+          }
         }
       }
     },
@@ -34,7 +37,10 @@
           "type": "minecraft:cod"
         },
         "killing_blow": {
-          "is_projectile": true
+          "is_projectile": true,
+          "direct_entity": {
+            "type": "minecraft:arrow"
+          }
         }
       }
     },
@@ -45,7 +51,10 @@
           "type": "minecraft:cod"
         },
         "killing_blow": {
-          "is_projectile": true
+          "is_projectile": true,
+          "direct_entity": {
+            "type": "minecraft:arrow"
+          }
         }
       }
     },
