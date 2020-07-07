@@ -16,6 +16,14 @@
 					"function": "minecraft:set_nbt",
 					"tag": "{maxUses:8,buy:{id:\"minecraft:emerald\",Count:1b},TradeOffer:1b}"
 				}]
+			},
+			{
+				"type": "minecraft:item",
+				"name": "minecraft:saddle",
+				"functions": [{
+					"function": "minecraft:set_nbt",
+					"tag": "{maxUses:3,buy:{id:\"minecraft:emerald\",Count:12b},TradeOffer:1b}"
+				}]
 			}
 		]
 	}]
