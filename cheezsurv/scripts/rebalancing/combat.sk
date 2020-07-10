@@ -3,8 +3,9 @@ options:
   comboSound: "block.anvil.place" at volume 0.1
   comboDamageFactor: 0.25
   comboMax: 32
-  comboBasicMin: 3
+  comboBasicMin: 4
   maxDistance: 6
+  excludedMobs: ender dragon, ender crystal
 
 function clearCombo(p: player):
   delete {combat.combo.%{_p}%.time}
@@ -56,6 +57,7 @@ on damage:
   attacker is player
   damage cause != thorns
   final damage > 0
+  {@excludedMobs} does not contain victim
 
   if difference between now and {combat.combo.%attacker%.time} < {@comboTimer}:
     victim != attacker
