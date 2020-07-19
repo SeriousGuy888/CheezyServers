@@ -46,5 +46,5 @@
     "rewards": {
         "experience": 50
     },
-    "parent": "dogmeat:mass_dog_executions"
+    "parent": "dog_meat:mass_dog_executions"
 }

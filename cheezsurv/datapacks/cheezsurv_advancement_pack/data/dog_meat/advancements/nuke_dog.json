@@ -30,5 +30,5 @@
     "rewards": {
         "experience": 100
     },
-    "parent": "dogmeat:revenge_against_dogs"
+    "parent": "dog_meat:revenge_against_dogs"
 }

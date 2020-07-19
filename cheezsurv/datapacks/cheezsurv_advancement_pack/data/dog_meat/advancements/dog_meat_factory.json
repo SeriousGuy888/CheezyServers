@@ -33,5 +33,5 @@
     "rewards": {
         "experience": 10
     },
-    "parent": "dogmeat:tame_dog"
+    "parent": "dog_meat:tame_dog"
 }

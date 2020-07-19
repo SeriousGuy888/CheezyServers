@@ -27,5 +27,5 @@
             }
         }
     },
-    "parent": "dogmeat:poison_dog"
+    "parent": "dog_meat:poison_dog"
 }

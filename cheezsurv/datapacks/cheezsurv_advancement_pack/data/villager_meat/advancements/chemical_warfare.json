@@ -30,5 +30,5 @@
     "rewards": {
         "experience": 50
     },
-    "parent": "villagermeat:burn_the_witch"
+    "parent": "villager_meat:burn_the_witch"
 }

@@ -36,5 +36,5 @@
     "rewards": {
         "experience": 500
     },
-    "parent": "dogmeat:cereal_dog_killer"
+    "parent": "dog_meat:cereal_dog_killer"
 }

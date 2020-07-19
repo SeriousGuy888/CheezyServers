@@ -34,5 +34,5 @@
   "rewards": {
       "experience": 10
   },
-  "parent": "dogmeat:two_hit_dog_death"
+  "parent": "dog_meat:two_hit_dog_death"
 }

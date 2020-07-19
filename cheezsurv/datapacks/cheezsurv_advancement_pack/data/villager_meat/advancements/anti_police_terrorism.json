@@ -27,5 +27,5 @@
     "rewards": {
         "experience": 500
     },
-    "parent": "villagermeat:enemy_of_the_people"
+    "parent": "villager_meat:enemy_of_the_people"
 }

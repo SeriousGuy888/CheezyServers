@@ -46,5 +46,5 @@
     "rewards": {
         "experience": 500
     },
-    "parent": "villagermeat:mass_executions"
+    "parent": "villager_meat:mass_executions"
 }

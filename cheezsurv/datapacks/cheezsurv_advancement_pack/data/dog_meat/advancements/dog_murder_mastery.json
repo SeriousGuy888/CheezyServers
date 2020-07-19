@@ -36,5 +36,5 @@
     "rewards": {
         "experience": 150
     },
-    "parent": "dogmeat:dog_assassin"
+    "parent": "dog_meat:dog_assassin"
 }

@@ -27,5 +27,5 @@
             }
         }
     },
-    "parent": "villagermeat:retaliatory_murder"
+    "parent": "villager_meat:retaliatory_murder"
 }

@@ -30,5 +30,5 @@
   "rewards": {
     "experience": 75
   },
-  "parent": "villagermeat:chemical_warfare"
+  "parent": "villager_meat:chemical_warfare"
 }

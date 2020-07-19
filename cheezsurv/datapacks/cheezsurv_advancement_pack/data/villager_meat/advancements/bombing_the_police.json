@@ -30,5 +30,5 @@
     "rewards": {
         "experience": 200
     },
-    "parent": "villagermeat:anti_police_terrorism"
+    "parent": "villager_meat:anti_police_terrorism"
 }
