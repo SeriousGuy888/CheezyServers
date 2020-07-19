@@ -33,9 +33,9 @@ every {@idAssignmentInterval}:
     
 
     if loop-entity's name is not set:
-      set name of loop-entity to "{@namePrefix} %{villagerid.%loop-entity's entity uuid%}%"
+      set name of loop-entity to "{@namePrefix}%{villagerid.%loop-entity's entity uuid%}%"
     if loop-entity's name starts with "{@namePrefix}":
-      set name of loop-entity to "{@namePrefix} %{villagerid.%loop-entity's entity uuid%}%"
+      set name of loop-entity to "{@namePrefix}%{villagerid.%loop-entity's entity uuid%}%"
 
 every {@legacyCodeUpdateInterval}:
   loop all entities:
