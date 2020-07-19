@@ -58,8 +58,8 @@ discord command stats [<OfflinePlayer>]:
     append line "🔪 Murders: %{stats.%{_p}%.murders}%"
     append line "➗ K/D: %{stats.%{_p}%.murders}/{stats.%{_p}%.deaths}%"
     append line "⌛ Playtime: %timeToText({playtime.%{_p}%})%"
-
-    append line "*\*Playtime and stat tracking was reset May 27th, 2020*"
+    append line "  "
+    # append line "*\*Playtime and stat tracking was reset May 27th, 2020*"
     append line "*\*Playtime only recalculates every time the player leaves*"
     append line "*\*While the default Minecraft playtime statistic exists, we do not use it as it requires the player to be online to access.*"
     reply with {_msg}

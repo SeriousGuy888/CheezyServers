@@ -35,7 +35,7 @@ command /stats <OfflinePlayer=%player%>:
     send "§2Murders: §a%{stats.%arg-1%.murders}%"
     send "§6K/D: §e%{_kd}%"
 
-    send "§2Playtime: §a%timeToText({playtime.%arg-1%})%§7<tooltip:*Tracking was reset May 27th, 2020; *Only recalculates every time the player leaves; *While the default Minecraft playtime statistic exists, we do not use it as it requires the player to be online to access.>*<reset>"
+    send "§2Playtime: §a%timeToText({playtime.%arg-1%})%§7<tooltip:*Only recalculates every time the player leaves; *While the default Minecraft playtime statistic exists, we do not use it as it requires the player to be online to access.>*<reset>"
 
 command /setstats <OfflinePlayer> <text> <number>:
   permission: *
