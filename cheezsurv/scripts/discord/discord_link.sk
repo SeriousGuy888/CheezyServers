@@ -1,6 +1,6 @@
 options:
-  prefixes: "s2!", "%mention tag of event-bot% "
-  codePrefix: "surv2-"
+  prefixes: "s3!", "%mention tag of event-bot% "
+  codePrefix: "surv3-"
   codeLength: 6
 
 on skript unload:
@@ -35,7 +35,7 @@ command /link:
     set {discord_link.code.%player%.created} to now
 
     send new line
-    send "§7Use the Discord command §bs2!link %{_code}%§7 to complete linkage. Your code will expire in 15 minutes or when the server goes offline. Following the linkage, CheezSurv Discord commands will be able to default to your username."
+    send "§7Use the Discord command §bs3!link %{_code}%§7 to complete linkage. Your code will expire in 15 minutes or when the server goes offline. Following the linkage, CheezSurv Discord commands will be able to default to your username."
     send new line
 
 command /unlink:
