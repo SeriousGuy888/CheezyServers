@@ -1,0 +1,14 @@
+command /setconfig <text> <text>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    set {config.%arg-1%} to arg-2
+    send "Set ""{config.%arg-1%}"" to ""%arg-2%"""
+
+command /getconfig <text>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    send """{config.%arg-1%}"" is set to ""%{config.%arg-1%}%"""
