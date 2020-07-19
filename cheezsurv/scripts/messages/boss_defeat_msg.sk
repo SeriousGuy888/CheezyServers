@@ -1,5 +1,5 @@
 options:
-  discordChannelId: 695751303586119700
+  discordChannelId: %{config.discord_chat}%
 
 on death of ender dragon:
   if attacker is set:
