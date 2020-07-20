@@ -3,7 +3,7 @@ command /coords:
     if {%player%.coords} is not set:
       set {%player%.coords} to true
       send "§aNow showing coordinates."
-    if {%player%.coords} is false:
+    else if {%player%.coords} is false:
       set {%player%.coords} to true
       send "§aNow showing coordinates."
     else if {%player%.coords} is true:
