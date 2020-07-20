@@ -5,7 +5,6 @@ options:
 on script load:
   delete {propaganda::*}
 
-  # add "Hail Santa." to {propaganda::*}
   # add """One of the zombies turned into a zombie."" -Hoang 2020" to {propaganda::*}
   # add "latest news: hoang and liam nuke the economy" to {propaganda::*}
   # add "inflation lol" to {propaganda::*}
@@ -13,16 +12,14 @@ on script load:
   # add "billzo does a stupid and makes it possible for hoang and liam to break the economy" to {propaganda::*}
   # add """I think communism was good"" -Liam 2020" to {propaganda::*}
 
-  add "Dystopian surveillance is in the best interest of the citizens." to {propaganda::*}
   add "By order of the CheezSurv Dictatorship, Matteo is now illegal." to {propaganda::*}
   add "The actionlogger is logging your actions." to {propaganda::*}
   add "Bees and cows produce high quality wool." to {propaganda::*}
-  add "Do not question the dictatorship." to {propaganda::*}
-  add "Matteo's §mBloodbath§r Manhunt" to {propaganda::*}
-  add "Kash has been legalized." to {propaganda::*}
   add "Ignorance is strength." to {propaganda::*}
   add "Scaaaaaaaaaaaam" to {propaganda::*}
+  add "CheezSurv 3.0" to {propaganda::*}
   add "Love is fake." to {propaganda::*}
+  add "Hail Santa." to {propaganda::*}
 
 every {@interval}:
   send action bar "{@prefix}%random element out of {propaganda::*}%" to all players
