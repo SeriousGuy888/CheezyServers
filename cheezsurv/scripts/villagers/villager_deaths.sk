@@ -38,7 +38,9 @@ on death of villager:
   loop all players:
     set {villager_death_messages.%loop-player%} to true if {villager_death_messages.%loop-player%} is not set
     {villager_death_messages.%loop-player%} is true
-    send "%{death_msg}%" to loop-player # %nl%§7§o[COORDS: %x-coordinate of victim%§7§o, %y-coordinate of victim%§7§o, %z-coordinate of victim%§7§o | WORLD: %world of victim%§7§o]"
+    send "%{death_msg}%" to loop-player
+  
+  delete {villagerid.%victim's entity uuid%}
   
 command /villagerdeathmessages:
   aliases: /villdeathmsgs, /vdm
