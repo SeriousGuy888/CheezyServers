@@ -29,5 +29,5 @@
   "rewards": {
     "experience": 100
   },
-  "parent": "cheezsurv:obtain_diamond_armour"
+  "parent": "cheezsurv:root"
 }
