@@ -1,5 +1,4 @@
 options:
-  legacyCoinName: §6Fool's Gold Coin
   coinName: §6Coin
   coinLore: §ePyrite Standard
 
@@ -186,14 +185,13 @@ command /banknote [<number>] [<integer>]:
 
 on right click:
   if name of player's tool is not "{@coinName}":
-    if name of player's tool is not "{@legacyCoinName}":
-      if name of player's tool is not "{@banknoteName}":
-        stop
+    if name of player's tool is not "{@banknoteName}":
+      stop
   
   cancel event
   set {_deposited} to 0
 
-  if name of player's tool is "{@coinName}" or "{@legacyCoinName}":
+  if name of player's tool is "{@coinName}":
     add 1 to {_deposited}
     remove 1 from item amount of player's tool
   else if name of player's tool is "{@banknoteName}":
