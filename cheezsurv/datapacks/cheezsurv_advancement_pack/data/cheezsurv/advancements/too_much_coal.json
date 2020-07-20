@@ -33,5 +33,5 @@
   "rewards": {
       "experience": 20
   },
-  "parent": "cheezsurv:obtain_diamond_tools"
+  "parent": "cheezsurv:obtain_diamond_pick"
 }
