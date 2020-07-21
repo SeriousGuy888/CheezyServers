@@ -27,6 +27,9 @@ every 5 ticks:
     {_combo_time} < {@comboTimer}
 
     set {_count} to {combat.combo.%loop-player%.count}
+
+    {_count} >= 1
+
     set {_timer} to difference between {@comboTimer} and {_combo_time}
     set {_damage_bonus} to {_count} * {@comboDamageFactor}
     set {_damage_dealt} to {combat.combo.%loop-player%.dmg}
