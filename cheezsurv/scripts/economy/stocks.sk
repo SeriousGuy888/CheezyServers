@@ -33,11 +33,11 @@ function calculateStockPrices():
   
   set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now%] %{_amount}% coins is in circulation in bank accounts and %{_stock_amount}% coins are in circulation in stocks"
 
-  if chance of 10 / ({_amount} + {_stock_amount}):
-    if chance of 50%:
-      make console execute command "/growth {@randomChangeGrowthAmount} %random element out of {stocks.registered::*}%"
-    else:
-      make console execute command "/recession {@randomChangeGrowthAmount} %random element out of {stocks.registered::*}%"
+  # if chance of 10 / ({_amount} + {_stock_amount}):
+  #   if chance of 50%:
+  #     make console execute command "/growth {@randomChangeGrowthAmount} %random element out of {stocks.registered::*}%"
+  #   else:
+  #     make console execute command "/recession {@randomChangeGrowthAmount} %random element out of {stocks.registered::*}%"
   
   if {_stock_amount} is more than {@maxStockCirculation}:
     make console execute command "/recession %({_amount} / 15) + ({_stock_amount} / 2)%"
