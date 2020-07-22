@@ -42,14 +42,17 @@ on damage:
     if attacker is player:
       send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage" to the console
 
-      {@publicActionLogger} is true
-      set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage`"
+      # {@publicActionLogger} is true
+      # set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage`"
     if attacker is not player:
-      {@damageLogPlayerless} is true
-      send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage" to the console
+      if victim is player:
+        send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage" to the console
+      else:
+        {@damageLogPlayerless} is true
+        send "{@pre} %attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage" to the console
 
-      {@publicActionLogger} is true
-      set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage`"
+        {@publicActionLogger} is true
+        set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage`"
   else if attacker is not set:
     {@damageLogPlayerless} is true
     send "{@pre} %victim% at %victim's location% in %victim's world% was damaged via %event-damagecause% dealing %final damage% HP of damage" to the console
