@@ -140,7 +140,7 @@ command /registerstock [<text>] [<text>]:
     set {stocks.ticker.%{_ticker}%} to arg-2
     set {stocks.value.%{_ticker}%} to 2
     send "§3Registered ticker §b%arg-1%§3 to company §b%arg-2%§3. Make sure to register owners of the stock with /registerstockowner."
-    set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] Stock for %arg-2% registered with ticker symbol %{_ticker}%"
+    set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now%] Stock for %arg-2% registered with ticker symbol %{_ticker}%"
 
 command /deregisterstock [<text>]:
   trigger:
