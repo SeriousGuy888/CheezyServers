@@ -123,6 +123,7 @@ every tick:
       stop
     loop all entities in radius {@shieldChargeRadius} around loop-player:
       loop-entity-2 is not loop-player
+      metadata "shield_charge_damaged_by_%loop-player%" of loop-entity-2 is not true
       make loop-player damage loop-entity-2 by {@shieldChargeDamage}
       play sound {@shieldChargeSound} to loop-player
       set metadata "shield_charge_damaged_by_%loop-player%" of loop-entity-2 to true
