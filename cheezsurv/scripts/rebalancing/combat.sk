@@ -6,6 +6,14 @@ options:
   comboBasicMin: 4
   maxDistance: 6
   excludedMobs: ender dragon, ender crystal
+  shieldChargeEffective: 0.75 seconds
+  shieldChargeRadius: 1.5
+  shieldChargeCooldown: 7.5 seconds
+  shieldChargeHungerCost: 2 # two points
+  shieldChargeSaturationCost: 4
+  shieldChargeDamage: 5
+  shieldChargeForce: 2.5
+  shieldChargeSound: "item.shield.block" at volume 1
 
 function clearCombo(p: player):
   delete {combat.combo.%{_p}%.time}
@@ -82,6 +90,45 @@ on damage:
   else:
     set {combat.combo.%attacker%.victim} to victim
     set {combat.combo.%attacker%.basic_buildup} to 0
+
+on left click:
+  player's tool is shield
+  player's gamemode is not spectator
+  player's facing is not up or down
+
+  if player's hunger <= 3:
+    player's gamemode is not creative
+    send "§cInsufficient hunger! §7(/togglecombatmessage)" if {combat.msg.%player%} is true
+    stop
+  if difference between now and {combat.shield_charge.%player%.time} < {@shieldChargeCooldown}:
+    send "§6Shield charge cooldown: §e%difference between {@shieldChargeCooldown} and (difference between now and {combat.shield_charge.%player%.time})% §7(/togglecombatmessage)" if {combat.msg.%player%} is true
+    stop
+
+  if player's gamemode is not creative:
+    subtract {@shieldChargeHungerCost} / 2 from player's hunger
+    subtract {@shieldChargeSaturationCost} from player's saturation
+  set player's saturation to (player's hunger * 2) if (player's hunger * 2) < player's saturation
+  push player forward with force {@shieldChargeForce}
+  send "§aShield charge §7(/togglecombatmessage)" if {combat.msg.%player%} is true
+  set {combat.shield_charge.%player%.time} to now
+  set metadata "shield_charging" of player to true
+
+every tick:
+  loop all players:
+    metadata "shield_charging" of loop-player is true
+    if difference between now and {combat.shield_charge.%loop-player%.time} > {@shieldChargeEffective}:
+      clear metadata "shield_charging" of loop-player
+      loop all entities:
+        clear metadata "shield_charge_damaged_by_%loop-player%" of loop-entity-2
+      stop
+    loop all entities in radius {@shieldChargeRadius} around loop-player:
+      loop-entity-2 is not loop-player
+      make loop-player damage loop-entity-2 by {@shieldChargeDamage}
+      play sound {@shieldChargeSound} to loop-player
+      set metadata "shield_charge_damaged_by_%loop-player%" of loop-entity-2 to true
+
+on join:
+  set {combat.msg.%player%} to true if {combat.msg.%player%} is not set
 
 command /togglecombatmessage:
   aliases: /togglecombatmsg
