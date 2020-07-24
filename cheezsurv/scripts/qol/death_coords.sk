@@ -1,2 +1,19 @@
 on death:
-  send "§6Your death location is: §e%player's x-coordinate%§e, %player's y-coordinate%§e, %player's z-coordinate%§e, in %player's world%" to victim
+  set {death_coords.%player%.coords} to "%floor(player's x-coordinate)%§e, %floor(player's y-coordinate)%§e, %floor(player's z-coordinate)%§e in ""%player's world%"""
+  send "§6Your death location is: §e%{death_coords.%player%.coords}%" to victim
+  if {discord_link.link.player.%player%} is set:
+    {death_coords.%player%} is true
+    send "Hi %player%, here are your death coordinates: %uncoloured {death_coords.%player%.coords}%.%nl%*You can toggle receiving this message with the in game command* `/togglediscorddeathcoords`" to user with id {discord_link.link.player.%player%} with "Cheezy"
+
+on join:
+  set {death_coords.%player%} to true if {death_coords.%player%} is not set
+
+command /togglediscorddeathcoords:
+  trigger:
+    set {death_coords.%player%} to true if {death_coords.%player%} is not set
+    if {death_coords.%player%} is false:
+      set {combat.msg.%player%} to true
+      send "§aToggled discord death coordinates on."
+    else if {combat.msg.%player%} is true:
+      set {death_coords.%player%} to false
+      send "§cToggled discord death coordinates off."
