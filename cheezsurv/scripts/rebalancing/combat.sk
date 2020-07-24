@@ -1,19 +1,20 @@
 options:
-  comboTimer: 3.25 seconds
   comboSound: "block.anvil.place" at volume 0.1
+  comboTimer: 3.25 seconds
   comboDamageFactor: 0.25
   comboMax: 32
   comboBasicMin: 4
   maxDistance: 6
   excludedMobs: ender dragon, ender crystal
-  shieldChargeEffective: 0.75 seconds
-  shieldChargeRadius: 1.5
-  shieldChargeCooldown: 7.5 seconds
-  shieldChargeHungerCost: 2 # two points
-  shieldChargeSaturationCost: 4
-  shieldChargeDamage: 5
-  shieldChargeForce: 2.5
+
   shieldChargeSound: "item.shield.block" at volume 1
+  shieldChargeEffective: 0.67 seconds
+  shieldChargeRadius: 1.5
+  shieldChargeCooldown: 10 seconds
+  shieldChargeHungerCost: 3
+  shieldChargeSaturationCost: 5
+  shieldChargeDamage: 5
+  shieldChargeForce: 2
   shieldChargeMaxYVel: 0.05
 
 function clearCombo(p: player):
