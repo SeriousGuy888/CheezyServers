@@ -30,3 +30,11 @@ function cuboidBetween(1: location, 2: location) :: blocks:
     add {_x} to x coord of {_1}
     set z coord of {_1} to z coord of {_base1}
   return {_b::*}
+
+function clamp(min: number, val: number, max: number) :: number:
+  if {_val} > {_max}:
+    return {_max}
+  if {_val} < {_min}:
+    return {_min}
+  else:
+    return {_val}
