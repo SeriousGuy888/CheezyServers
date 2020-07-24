@@ -14,6 +14,7 @@ options:
   shieldChargeDamage: 5
   shieldChargeForce: 2.5
   shieldChargeSound: "item.shield.block" at volume 1
+  shieldChargeMaxYVel: 0.05
 
 function clearCombo(p: player):
   delete {combat.combo.%{_p}%.time}
@@ -109,6 +110,7 @@ on left click:
     subtract {@shieldChargeSaturationCost} from player's saturation
   set player's saturation to (player's hunger * 2) if (player's hunger * 2) < player's saturation
   push player forward with force {@shieldChargeForce}
+  set y of player's velocity to min(y of player's velocity, {@shieldChargeMaxYVel})
   send "§aShield charge §7(/togglecombatmessage)" if {combat.msg.%player%} is true
   set {combat.shield_charge.%player%.time} to now
   set metadata "shield_charging" of player to true
