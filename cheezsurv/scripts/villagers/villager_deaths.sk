@@ -25,8 +25,8 @@ on death of villager:
     else:
       set {death_msg} to "%{_villager_name}% was executed by hanging"
   else:
-    set {_murder_variations::*} to "murdered", "assassinated", "slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", "killed to death", "put down", "euthanized", "butchered", and "deleted"
-    set {_died_variations::*} to "died", "removed from existence", "cancelled their free trial of life", and "had their existence suspended"
+    set {_murder_variations::*} to "murdered", "assassinated", "slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", "killed to death", "put down", "euthanized", "butchered", "destroyed", "dismembered", "quartered", "purged", and "deleted"
+    set {_died_variations::*} to "died", "passed away", "removed from existence", "cancelled their free trial of life", and "had their existence suspended"
 
     if attacker is set:
       set {death_msg} to "%{_villager_name}% was %random element out of {_murder_variations::*}% by %{_attacker_name}%"
