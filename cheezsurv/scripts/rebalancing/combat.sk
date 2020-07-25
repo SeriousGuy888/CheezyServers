@@ -45,8 +45,8 @@ on damage:
     damage cause != thorns
     {combat.combo.%victim%.time} is set
     clearCombo(victim)
-    set {combat.msg.%victim%} to true if {combat.msg.%victim%} is not set
-    send "§cCombo cancelled from taking damage! §7(/togglecombatmessage)" to victim if {combat.msg.%victim%} is true
+    set {combat.enable_info_msg.chat.%victim%} to true if {combat.enable_info_msg.chat.%victim%} is not set
+    send "§cCombo cancelled from taking damage! §7(/togglecombatmessage)" to victim if {combat.enable_info_msg.chat.%victim%} is true
 
 on damage:
   attacker is player
@@ -82,10 +82,10 @@ on left click:
 
   if player's hunger <= 3:
     player's gamemode is not creative
-    send "§cInsufficient hunger! §7(/togglecombatmessage)" if {combat.msg.%player%} is true
+    send "§cInsufficient hunger! §7(/togglecombatmessage)" if {combat.enable_info_msg.chat.%player%} is true
     stop
   if difference between now and {combat.shield_charge.%player%.time} < {@shieldChargeCooldown}:
-    send "§6Shield charge cooldown: §e%difference between {@shieldChargeCooldown} and (difference between now and {combat.shield_charge.%player%.time})% §7(/togglecombatmessage)" if {combat.msg.%player%} is true
+    send "§6Shield charge cooldown: §e%difference between {@shieldChargeCooldown} and (difference between now and {combat.shield_charge.%player%.time})% §7(/togglecombatmessage)" if {combat.enable_info_msg.chat.%player%} is true
     stop
 
   if player's gamemode is not creative:
@@ -94,7 +94,7 @@ on left click:
   set player's saturation to (player's hunger * 2) if (player's hunger * 2) < player's saturation
   push player forward with force {@shieldChargeForce}
   set y of player's velocity to min(y of player's velocity, {@shieldChargeMaxYVel})
-  send "§aShield charge §7(/togglecombatmessage)" if {combat.msg.%player%} is true
+  send "§aShield charge §7(/togglecombatmessage)" if {combat.enable_info_msg.chat.%player%} is true
   set {combat.shield_charge.%player%.time} to now
   set metadata "shield_charging" of player to true
 
@@ -123,6 +123,8 @@ every 5 ticks:
       else:
         send action bar "§5Shield Charge Ready" to loop-player
     else:
+      {combat.enable_info_msg.combo.%loop-player%} is true
+
       {combat.combo.%loop-player%.time} is set
       set {_combo_time} to difference between now and {combat.combo.%loop-player%.time}
       {_combo_time} < {@comboTimer}
@@ -139,15 +141,26 @@ every 5 ticks:
 
 
 on join:
-  set {combat.msg.%player%} to true if {combat.msg.%player%} is not set
+  set {combat.enable_info_msg.chat.%player%} to true if {combat.enable_info_msg.chat.%player%} is not set
+  set {combat.enable_info_msg.combo.%player%} to true if {combat.enable_info_msg.combo.%player%} is not set
+
+command /togglecombatinfo [<text>]:
+  trigger:
+    set {_valid_options::*} to ("chat", "combo")
+    if arg-1 is not set:
+      send "§cValid options: %{_valid_options::*}%"
+      stop
+    if {_valid_options::*} does not contain arg-1:
+      send "§cValid options: %{_valid_options::*}%"
+      stop
+    if {combat.enable_info_msg.%arg-1%.%player%} is false:
+      set {combat.enable_info_msg.%arg-1%.%player%} to true
+      send "§6Combat info option §e%arg-1% §6turned §aon§6."
+    else if {combat.enable_info_msg.%arg-1%.%player%} is true:
+      set {combat.enable_info_msg.%arg-1%.%player%} to false
+      send "§6Combat info option §e%arg-1% §6turned §coff§6."
 
 command /togglecombatmessage:
   aliases: /togglecombatmsg
   trigger:
-    set {combat.msg.%player%} to true if {combat.msg.%player%} is not set
-    if {combat.msg.%player%} is false:
-      set {combat.msg.%player%} to true
-      send "§aToggled combat message on."
-    else if {combat.msg.%player%} is true:
-      set {combat.msg.%player%} to false
-      send "§cToggled combat message off."
+    send "This command has been merged into another command. Run command §7/togglecombatinfo chat§r."
