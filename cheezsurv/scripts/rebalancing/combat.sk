@@ -146,7 +146,7 @@ on join:
 
 command /togglecombatinfo [<text>]:
   trigger:
-    set {_valid_options::*} to ("chat", "combat")
+    set {_valid_options::*} to ("chat", "combo")
     set {_opt} to arg-1 in lowercase
     # if {_opt} is not set:
     #   open chest with 1 row named "Combat Info Control Panel" to player
