@@ -42,3 +42,4 @@ function clamp(min: number, val: number, max: number) :: number:
 function makePlayerRunCommands(p: player, cs: strings):
   loop {_cs::*}:
     make {_p} execute command loop-value
+    wait 1 tick

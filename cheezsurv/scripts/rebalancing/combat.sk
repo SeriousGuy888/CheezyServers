@@ -146,19 +146,29 @@ on join:
 
 command /togglecombatinfo [<text>]:
   trigger:
-    set {_valid_options::*} to ("chat", "combo")
-    if arg-1 is not set:
+    set {_valid_options::*} to ("chat", "combat")
+    set {_opt} to arg-1 in lowercase
+    # if {_opt} is not set:
+    #   open chest with 1 row named "Combat Info Control Panel" to player
+    #   wait 1 tick
+    #   loop 9 times:
+    #     format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
+    #   loop {_valid_options::*}:
+    #     set {_item} to red concrete
+    #     set {_item} to lime concrete if {combat.enable_info_msg.%loop-value%.%player%} is true
+    #     set {_conf_text} to "§cfalse"
+    #     set {_conf_text} to "§atrue" if {combat.enable_info_msg.%loop-value%.%player%} is true
+    #     format slot (loop-index parsed as number - 1) of player with {_item} named "§e%loop-value in uppercase%" with lore {_conf_text} to run [make player execute command "/togglecombatinfo %loop-value%"]
+    #   stop
+    if {_valid_options::*} does not contain {_opt}:
       send "§cValid options: %{_valid_options::*}%"
       stop
-    if {_valid_options::*} does not contain arg-1:
-      send "§cValid options: %{_valid_options::*}%"
-      stop
-    if {combat.enable_info_msg.%arg-1%.%player%} is false:
-      set {combat.enable_info_msg.%arg-1%.%player%} to true
-      send "§6Combat info option §e%arg-1% §6turned §aon§6."
-    else if {combat.enable_info_msg.%arg-1%.%player%} is true:
-      set {combat.enable_info_msg.%arg-1%.%player%} to false
-      send "§6Combat info option §e%arg-1% §6turned §coff§6."
+    if {combat.enable_info_msg.%{_opt}%.%player%} is false:
+      set {combat.enable_info_msg.%{_opt}%.%player%} to true
+      send "§6Combat info option §e%{_opt}% §6turned §aon§6."
+    else if {combat.enable_info_msg.%{_opt}%.%player%} is true:
+      set {combat.enable_info_msg.%{_opt}%.%player%} to false
+      send "§6Combat info option §e%{_opt}% §6turned §coff§6."
 
 command /togglecombatmessage:
   aliases: /togglecombatmsg
