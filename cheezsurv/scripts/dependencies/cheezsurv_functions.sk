@@ -38,3 +38,7 @@ function clamp(min: number, val: number, max: number) :: number:
     return {_min}
   else:
     return {_val}
+
+function makePlayerRunCommands(p: player, cs: strings):
+  loop {_cs::*}:
+    make {_p} execute command loop-value
