@@ -10,7 +10,7 @@ command /lockdown [<text>]:
       set {lockdown.on} to false
       send "§aLockdown lifted."
       broadcast "§a%executor% §ahas lifted the lockdown."
-      send ":unlock: %executor% has lifted the lockdown." to channel with id "{@discordChannelId}" with "Cheezy"
+      send ":unlock: **%executor% has lifted the lockdown.**" to channel with id "{@discordChannelId}" with "Cheezy"
     else if {lockdown.on} is false:
       send "§cLockdown imposed."
       set {_reason} to arg-1 otherwise "§cNo reason provided."
@@ -20,15 +20,15 @@ command /lockdown [<text>]:
         loop-player does not have permission "*"
         kick loop-player due to "§4§lServer is on lockdown.%nl%%{lockdown.reason}%"
       broadcast "§c%executor% §chas imposed a lockdown due to %{lockdown.reason}%"
-      send ":lock: %executor% has imposed a lockdown due to %{lockdown.reason}%." to channel with id "{@discordChannelId}" with "Cheezy"
+      send ":lock: **%executor% has imposed a lockdown due to %{lockdown.reason}%.**" to channel with id "{@discordChannelId}" with "Cheezy"
 
 on skript start:
   wait 5 seconds
   {lockdown.on} is true
-  send ":lock: There is currently an active lockdown: %{lockdown.reason}%" to channel with id "{@discordChannelId}" with "Cheezy"
+  send ":lock: **There is currently an active lockdown: %{lockdown.reason}%**" to channel with id "{@discordChannelId}" with "Cheezy"
 
 on connect:
   {lockdown.on} is true
   player does not have permission "lockdown.bypass"
   kick player due to "§4§lServer is on lockdown.%nl%§cPlease try again later.%nl%%nl%§b%{lockdown.reason}%"
-  send ":no_entry: %player% failed to join due to an active lockdown." to channel with id "{@discordChannelId}" with "Cheezy"
+  send ":no_entry: **%player% failed to join due to an active lockdown.**" to channel with id "{@discordChannelId}" with "Cheezy"
