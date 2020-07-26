@@ -1,0 +1,34 @@
+{
+  "display": {
+    "title": {
+      "text": "A Taste of Your Own Medicine"
+    },
+    "description": {
+      "text": "Kill a witch with magical means."
+    },
+    "icon": {
+      "item": "minecraft:potion"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "poison": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:witch"
+        },
+        "killing_blow": {
+          "is_magic": true
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 75
+  },
+  "parent": "cheezsurv:creeper_revenge"
+}
