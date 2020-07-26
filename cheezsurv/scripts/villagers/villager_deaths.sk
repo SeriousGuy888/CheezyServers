@@ -1,12 +1,5 @@
 options:
   discordChannelId: %{config.discord_chat}%
-  recentAttackTime: 15 seconds
-
-function capitalize(t: text) :: text:
-  set {_first_char} to first character of {_t}
-  set {_remaining_chars} to last (length of {_t} - 1) characters of {_t}
-  set {_output} to "%{_first_char} in upper case%%{_remaining_chars}%"
-  return {_output}
 
 on script load:
   loop {recently_attacked::*}:
@@ -17,7 +10,7 @@ on death of villager:
   set {_villager_name} to display name of victim otherwise "Villager"
   set {_id} to {villagerid::%victim's entity uuid%} otherwise "[unassigned]"
   if attacker is set:
-    set {_attacker_name} to display name of attacker otherwise capitalize("%attacker%")
+    set {_attacker_name} to display name of attacker ? ("%attacker%" in title case)
 
   if victim is leashed:
     if attacker is set:
@@ -52,12 +45,3 @@ command /villagerdeathmessages:
     else if {villager_death_messages.subscribed.%player%} is false:
       set {villager_death_messages.subscribed.%player%} to true
       send "§aSubscribed to villager death messages."
-
-
-# on damage:
-#     victim is villager
-#     add victim's entity uuid to {recently_attacked::*} # make it so that if the server stops before the wait time is over, that the variable doesnt clog everything and have the server delete it on startup
-#     set {recently_attacked.%victim's entity uuid%} to display name of attacker otherwise capitalize("%attacker%")
-#     wait {@recentAttackTime}
-#     delete {recently_attacked.%victim's entity uuid%}
-#     remove victim's entity uuid from {recently_attacked::*}
