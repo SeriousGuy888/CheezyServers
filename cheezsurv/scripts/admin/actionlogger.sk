@@ -1,5 +1,5 @@
 options:
-  pre: [Billzo's Action Logger]
+  pre: [BZAL]
 
   discordChannelId: 699344873580396575
 
@@ -40,7 +40,7 @@ on damage:
   {@damageLog} is true
   if attacker is set:
     if attacker is player:
-      send "{@pre} %attacker%, holding %attacker's tool% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage" to the console
+      send "{@pre} %attacker%, holding %attacker's tool%, damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage" to the console
 
       # {@publicActionLogger} is true
       # set {actionlogger.publiclog} to "%{actionlogger.publiclog}%%nl%[%now% UTC] `%attacker% damaged %victim% at %victim's location% in %victim's world% via %event-damagecause% dealing %final damage% HP of damage`"
