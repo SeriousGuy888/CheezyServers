@@ -7,7 +7,7 @@ options:
   idVersion: 5
   idAssignedParticleEffect: show 15 happy villager above location of loop-entity
 
-function genId(l: number) :: text:
+function generateVillagerId(l: number) :: text:
   set {_c::*} to "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "a", "b", "c", "d", "e", and "f"
   set {_r} to ""
   loop {_l} times:
@@ -21,7 +21,7 @@ every {@idAssignmentInterval}:
   loop all entities:
     loop-entity is villager
     if {villagerid::%loop-entity's entity uuid%} is not set:
-      set {_id} to "{@idPrefix}%genId({@idLength})%"
+      set {_id} to "{@idPrefix}%generateVillagerId({@idLength})%"
 
       if {villagerids::*} contains {_id}: # dont allow the same id to be used twice.
         send "[WARN] Villager with UUID %loop-entity's uuid% could not be given an entity ID this cycle as the generated ID, %{_id}%, is already taken. Will attempt to assign an ID next cycle." to console
@@ -44,7 +44,7 @@ every {@legacyCodeUpdateInterval}:
       loop {_old_id_formats::*}:
         if {villagerid::%loop-entity%} starts with {_old_id_formats::%loop-index%}: # convert all old id formats to the newest format
           remove {villagerid::%loop-entity's entity uuid%} from {villagerids::*}
-          set {villagerid::%loop-entity's entity uuid%} to "{@idPrefix}%genId({@idLength})%"
+          set {villagerid::%loop-entity's entity uuid%} to "{@idPrefix}%generateVillagerId({@idLength})%"
           add {villagerid::%loop-entity's entity uuid%} to {villagerids::*}
           {@idAssignedParticleEffect}
 
