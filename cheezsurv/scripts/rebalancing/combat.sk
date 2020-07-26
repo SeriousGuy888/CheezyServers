@@ -1,4 +1,6 @@
 options:
+  defaultYVelocity: -0.08
+
   comboSound: "block.anvil.place" at volume 0.1
   comboTimer: 3.25 seconds
   comboDamageFactor: 0.25
@@ -54,12 +56,19 @@ on damage:
   final damage > 0
   {@excludedMobs} does not contain victim
 
+  set {_combo_count_addend} to 1
+
+  #critical hit detection
+  if y of attacker's velocity < {@defaultYVelocity}:
+    damage cause = attacker
+    set {_combo_count_addend} to 2
+
   if difference between now and {combat.combo.%attacker%.time} < {@comboTimer}:
     victim != attacker
     distance between location of attacker and location of victim < {@maxDistance}
     set {combat.combo.%attacker%.time} to now
     set {combat.combo.%attacker%.count} to 0 if {combat.combo.%attacker%.count} is not set
-    add 1 to {combat.combo.%attacker%.count} if {combat.combo.%attacker%.count} < {@comboMax}
+    add {_combo_count_addend} to {combat.combo.%attacker%.count} if {combat.combo.%attacker%.count} + {_combo_count_addend} <= {@comboMax}
     play sound {@comboSound} to attacker
     add ({combat.combo.%attacker%.count} * {@comboDamageFactor}) / 2 to damage
     set {combat.combo.%attacker%.dmg} to final damage
@@ -70,7 +79,7 @@ on damage:
       add 1 to {combat.combo.%attacker%.basic_buildup}
 
       if {combat.combo.%attacker%.basic_buildup} >= {@comboBasicMin}:
-        add 1 to {combat.combo.%attacker%.count} if {combat.combo.%victim%.count} < {@comboMax}
+        add {_combo_count_addend} to {combat.combo.%attacker%.count} if {combat.combo.%attacker%.count} + {_combo_count_addend} <= {@comboMax}
   else:
     set {combat.combo.%attacker%.victim} to victim
     set {combat.combo.%attacker%.basic_buildup} to 0
