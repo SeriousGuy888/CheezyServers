@@ -193,12 +193,12 @@ on right click:
 
   if name of player's tool is "{@coinName}":
     add 1 to {_deposited}
-    remove 1 from item amount of player's tool
+    remove 1 of player's tool from player
   else if name of player's tool is "{@banknoteName}":
     set {_lore} to uncoloured line 2 of lore of player's tool
     replace all "c" in {_lore} with ""
     add {_lore} parsed as number to {_deposited}
-    remove 1 from item amount of player's tool
+    remove 1 of player's tool from player
 
   add {_deposited} to {bank.balance::%player%}
   send action bar "§3Deposited §b%{_deposited}%§3 coins. §b/bal" to player
