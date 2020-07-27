@@ -5,7 +5,7 @@ options:
   banknoteName: §6Banknote
   banknoteLore: §ePyrite Standard
 
-  discordChannelId: 734208802814951477 # economy logs channel
+  discordChannelId: %{config.economy_log_channel}% # economy logs channel
 
 
 on script load:

@@ -1,5 +1,5 @@
 options:
-  discordChannelId: 734208817063133295
+  discordChannelId: %{config.stock_log_channel}%
 
   shareLimit: 500
 

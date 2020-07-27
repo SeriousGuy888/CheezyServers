@@ -1,5 +1,5 @@
 options:
-  discordChannelId: 711284320890781757 # economy logs channel
+  discordChannelId: %{config.economy_log_channel}% # economy logs channel
 
 every 5 seconds:
   send {treasury.logs.pending} to channel with id "{@discordChannelId}" with "Cheezy"
