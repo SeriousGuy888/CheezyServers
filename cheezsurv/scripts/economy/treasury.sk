@@ -12,7 +12,7 @@ function withdrawFromTreasury(p: player, a: number):
   format slot 4 of {_p} with lime stained glass pane named "§a[✓]" with lore "§rI confirm that I am not" and "§rembezzling public funds." to be unstealable
   wait 5 ticks
   remove {_a} from {treasury.balance}
-  add {_a} to {bank.balance.%{_p}%}
+  add {_a} to {bank.balance::%{_p}%}
   send "§2Moved §a%{_a}%§2 coins from the treasury to your balance." to {_p}
   logTreasuryAction("`%{_p}%` withdrew `%{_a}%` coins from the treasury")
   close {_p}'s inventory
@@ -54,11 +54,11 @@ command /treasurydeposit <number>:
       send "§cCannot deposit negative or zero amount!"
       stop
 
-    if {bank.balance.%player%} < arg-1:
+    if {bank.balance::%player%} < arg-1:
       send "§cInsufficient funds in your balance!"
       stop
     
-    remove arg-1 from {bank.balance.%player%}
+    remove arg-1 from {bank.balance::%player%}
     add arg-1 to {treasury.balance}
     send "§2Moved §a%arg-1%§2 coins from the your balance to the treasury."
     logTreasuryAction("`%player%` deposited `%arg-1%` coins to the treasury")

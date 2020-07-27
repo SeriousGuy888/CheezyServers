@@ -33,7 +33,7 @@ every 5 seconds:
   set {economy.logs.pending} to ""
 
   loop all players:
-    set {bank.balance.%loop-player%} to 0 if {bank.balance.%loop-player%} is not set
+    set {bank.balance::%loop-player%} to 0 if {bank.balance::%loop-player%} is not set
 function logEconomyAction(a: text):
   set {economy.logs.pending} to "%{economy.logs.pending}%%nl%[%now%] %{_a}%"
 
@@ -57,14 +57,14 @@ command /getbanknote <number> <number=1>:
 command /balance <OfflinePlayer=%player%>:
   aliases: /bal
   trigger:
-    send "§3Bank balance of §b%arg-1%§3 is §b%{bank.balance.%arg-1%}% §3coins."
+    send "§3Bank balance of §b%arg-1%§3 is §b%{bank.balance::%arg-1%}% §3coins."
 
 # command /balancetop:
 #   aliases: /baltop
 #   trigger:
 #     loop all offline players:
 #       set {_len} to 9
-#       set {_num} to {bank.balance.%loop-offlineplayer%}
+#       set {_num} to {bank.balance::%loop-offlineplayer%}
 #       set {_p::*} to {_num} split at "."
 #       set {_decimals} to {_p::2}
 #       set {_num} to {_p::1}
@@ -86,7 +86,7 @@ command /givemoolah <OfflinePlayer> <Number>:
     if player is not op:
       send "§cInsufficient permissions!"
       stop
-    add arg-2 to {bank.balance.%arg-1%}
+    add arg-2 to {bank.balance::%arg-1%}
     send "Gave %arg-2%c to %arg-1%"
 
 command /pay [<player>] [<number>]:
@@ -98,15 +98,15 @@ command /pay [<player>] [<number>]:
     if arg-1 is player:
       send "§cYou can't send money to yourself."
       stop
-    if {bank.balance.%player%} < arg-2:
+    if {bank.balance::%player%} < arg-2:
       send "§cInsufficient funds!"
       stop
     if arg-2 <= 0:
       send "§cYou can't send negative or zero amounts you idot."
       stop
     
-    remove arg-2 from {bank.balance.%player%}
-    add arg-2 to {bank.balance.%arg-1%}
+    remove arg-2 from {bank.balance::%player%}
+    add arg-2 to {bank.balance::%arg-1%}
     send "§2Paid §a%arg-2%§2 coins to §a%arg-1%§2."
     send "§2Received §a%arg-2%§2 coins from §a%player%§2." to arg-1
     logEconomyAction("`%player%` paid `%arg-2%` coins to `%arg-1%` via /pay")
@@ -130,7 +130,7 @@ command /coin <integer>:
       logEconomyAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Negative or zero amount")
       stop
     
-    if {bank.balance.%player%} is less than arg-1:
+    if {bank.balance::%player%} is less than arg-1:
       send "§cInsufficient funds! /bal"
       logEconomyAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient funds")
       stop
@@ -140,7 +140,7 @@ command /coin <integer>:
       logEconomyAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in coins - Insufficient inventory space")
       stop
 
-    remove arg-1 from {bank.balance.%player%}
+    remove arg-1 from {bank.balance::%player%}
     give player giveCoin(arg-1)
     logEconomyAction("`%player%` withdrew `%arg-1%` coins in coins")
     send "§2Withdrew §a%arg-1% §2coins from your bank balance."
@@ -166,7 +166,7 @@ command /banknote [<number>] [<integer>]:
       logEconomyAction("`%player%` attempted and failed to withdraw `%arg-1%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Negative or zero amount")
       stop
 
-    if {bank.balance.%player%} is less than {_total}:
+    if {bank.balance::%player%} is less than {_total}:
       send "§cInsufficient funds! /bal"
       logEconomyAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient funds")
       stop
@@ -176,7 +176,7 @@ command /banknote [<number>] [<integer>]:
       logEconomyAction("`%player%` attempted and failed to withdraw `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%` - Insufficient inventory space")
       stop
     
-    remove {_total} from {bank.balance.%player%}
+    remove {_total} from {bank.balance::%player%}
     give player giveBanknote({_denom}, {_amount})
     logEconomyAction("`%player%` withdrew `%{_total}%` coins in `%{_amount}%` banknotes of denomination `%{_denom}%`")
     send "§2Withdrew §a%{_total}% §2coins from your bank balance."
@@ -200,7 +200,7 @@ on right click:
     add {_lore} parsed as number to {_deposited}
     remove 1 from item amount of player's tool
 
-  add {_deposited} to {bank.balance.%player%}
+  add {_deposited} to {bank.balance::%player%}
   send action bar "§3Deposited §b%{_deposited}%§3 coins. §b/bal" to player
   play sound "block.note_block.pling" at volume 0.25 to player
 
@@ -216,5 +216,5 @@ command /circulation:
   trigger:
     set {_amount} to 0
     loop all offline players:
-      add {bank.balance.%loop-offlineplayer%} to {_amount}
+      add {bank.balance::%loop-offlineplayer%} to {_amount}
     send "§3There are §b%{_amount}%§3 coins in circulation in people's bank balances."

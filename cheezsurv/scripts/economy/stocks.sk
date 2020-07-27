@@ -26,7 +26,7 @@ function calculateStockPrices():
   set {_stock_amount} to 0
 
   loop all offline players:
-    add {bank.balance.%loop-offlineplayer%} to {_amount}
+    add {bank.balance::%loop-offlineplayer%} to {_amount}
     loop {stocks.registered::*}:
       set {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} to 0 if {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} is not set
       add {stocks.value.%{stocks.registered::%loop-index%}%} * {stocks.ownership.%loop-offlineplayer%.%{stocks.registered::%loop-index%}%} to {_stock_amount}
@@ -183,7 +183,7 @@ command /buystock [<text>] <number=1>:
     if {_amount} is less than 1:
       send "§cNegative numbers are not allowed! Use /sellstock to sell instead."
 
-    if {bank.balance.%player%} is less than {_total_price}:
+    if {bank.balance::%player%} is less than {_total_price}:
       send "§4Insufficient funds! Share price is §c%{_share_price}%§4 coins and §c%{_total_price}%§4 coins for §c%{_amount}%§4 shares. Deposit by right clicking with coins and see your balance with §c/bal§4."
       stop
     
@@ -200,7 +200,7 @@ command /buystock [<text>] <number=1>:
       stop
     
     add {_amount} to {stocks.ownership.%player%.%{_ticker}%}
-    remove {_total_price} from {bank.balance.%player%}
+    remove {_total_price} from {bank.balance::%player%}
     add {_total_price} to {stocks.balance.%{_ticker}%}
 
     add {_amount} to {stocks.growth.%{_ticker}%}
@@ -230,7 +230,7 @@ command /sellstock [<text>] <number=1>:
       send "§4Insufficient stocks! Share price is §c%{_share_price}%§4 coins and §c%{_total_price}%§4 coins for §c%{_amount}%§4 shares. You own §c%{stocks.ownership.%player%.%{_ticker}%}%§4 shares in §c%{_ticker}%§4."
       stop
     remove {_amount} from {stocks.ownership.%player%.%{_ticker}%}
-    add {_total_price} to {bank.balance.%player%}
+    add {_total_price} to {bank.balance::%player%}
     remove {_total_price} from {stocks.balance.%{_ticker}%}
 
     remove {_amount} from {stocks.growth.%{_ticker}%}
@@ -415,7 +415,7 @@ command /stockwithdraw [<text>] [<number>]:
       stop
     
     remove arg-2 from {stocks.balance.%arg-1 in upper case%}
-    add arg-2 to {bank.balance.%player%}
+    add arg-2 to {bank.balance::%player%}
     send "§aMoved %arg-2%§a coins from the stock balance to your bank account. /bal"
     set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %player% withdrew %arg-2% coins from %arg-1%"
     remove (arg-2 / {@stockBalEffect}) from {stocks.growth.%arg-1 in upper case%}
@@ -434,12 +434,12 @@ command /stockdeposit [<text>] [<number>]:
       send "§cYou are not a registered owner of this stock."
       stop
 
-    if {bank.balance.%player%} is less than arg-2:
+    if {bank.balance::%player%} is less than arg-2:
       send "§cInsufficient funds."
       stop
     
     add arg-2 to {stocks.balance.%arg-1 in upper case%}
-    remove arg-2 from {bank.balance.%player%}
+    remove arg-2 from {bank.balance::%player%}
     send "§aMoved %arg-2%§a coins from your bank account to the stock balance. /bal"
     set {stocks.publiclog} to "%{stocks.publiclog}%%nl%[%now% UTC] %player% deposited %arg-2% coins to %arg-1%"
     add (arg-2 / {@stockBalEffect}) to {stocks.growth.%arg-1 in upper case%}
