@@ -8,13 +8,13 @@ on script load:
   # add """One of the zombies turned into a zombie."" -Hoang 2020" to {propaganda::*}
   # add "latest news: hoang and liam nuke the economy" to {propaganda::*}
   # add "inflation lol" to {propaganda::*}
-  # add """It didn't have water because I didn't place water."" -Liam 2020" to {propaganda::*}
   # add "billzo does a stupid and makes it possible for hoang and liam to break the economy" to {propaganda::*}
 
-  add "By order of the CheezSurv Dictatorship, Matteo is now illegal." to {propaganda::*}
+  add """It didn't have water because I didn't place water."" -Liam 2020" to {propaganda::*}
   add "The actionlogger is logging your actions." to {propaganda::*}
   add """I think communism was good"" -Liam 2020" to {propaganda::*}
   add "Ever tried to shear a bee?" to {propaganda::*}
+  add "You shouldn't dupe items." to {propaganda::*}
   add "Ignorance is strength." to {propaganda::*}
   add "Scaaaaaaaaaaaam" to {propaganda::*}
   add "CheezSurv 3.0" to {propaganda::*}
