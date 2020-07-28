@@ -59,25 +59,36 @@ command /balance <OfflinePlayer=%player%>:
   trigger:
     send "§3Bank balance of §b%arg-1%§3 is §b%{bank.balance::%arg-1%}% §3coins."
 
-# command /balancetop:
-#   aliases: /baltop
-#   trigger:
-#     loop all offline players:
-#       set {_len} to 9
-#       set {_num} to {bank.balance::%loop-offlineplayer%}
-#       set {_p::*} to {_num} split at "."
-#       set {_decimals} to {_p::2}
-#       set {_num} to {_p::1}
-
-#       set {_padded} to "-1" if length of {_num} > {_len}
-#       set {_padded} to "%{_num}%.%{_decimals}%" if length of {_num} = {_len}
-#       if length of {_num} < {_len}:
-#         loop {_len} - {_num} times:
-#           set {_num} to "0%{_num}%"
-#         set {_padded} to "%{_num}%.%{_decimals}%"
-
-#       add "%{_padded}%|%loop-offlineplayer%" to {_bals::*}
-#     send {_bals::*}
+command /balancetop <number=1>:
+  aliases: /baltop
+  trigger:
+    loop {bank.balance::*}:
+      add 1 to {_size}
+      if {_low_to_high_list::%loop-value%} is not set:
+        set {_low_to_high_list::%loop-value%} to loop-index
+      else:
+        set {_n} to 0
+        loop {_size} times:
+          add 1 to {_n}
+          if {_low_to_high_list::%loop-value-1%.%{_n}%} is not set:
+            set {_low_to_high_list::%loop-value-1%.%{_n}%} to loop-index
+          stop loop
+    wait 1 tick
+    set {_n} to size of {_low_to_high_list::*}
+    loop {_low_to_high_list::*}:
+      set {_high_to_low_list::%{_n}%} to loop-value
+      subtract 1 from {_n}
+    wait 1 tick
+    set {_total_players} to 0
+    send "§6§l§nCheezSurv Richest Players%nl%"
+    loop {_high_to_low_list::*}:
+      add 1 to {_ranking}
+      set {_player} to "%loop-value%" parsed as offline player
+      send "§7%{_ranking}%§7. §2%{_player}% §7→ §a%{bank.balance::%loop-value%}%§ac"
+      if {_ranking} = 10:
+        stop loop
+      add 1 to {_total_players}
+    # send "%nl%§7There are a total of §a%{_total_players}% §7registered accounts"
 
 
 
