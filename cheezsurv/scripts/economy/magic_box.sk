@@ -2,9 +2,6 @@ options:
   magicBoxName: §rMagic Box
   magicBoxLore: §7Right click to redeem and use /magicbox to open.
 
-on skript load:
-  send "[Magic Box Script] moolah.sk is a dependency of magic_box.sk" to console
-
 function openMagicBox(p: player):
   remove 1 from {magicboxes.%{_p}%}
 
