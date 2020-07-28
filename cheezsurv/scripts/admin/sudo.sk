@@ -1,7 +1,7 @@
 command /sudo [<Player>] [<Text>]:
   trigger:
     if player is not op:
-      send "§cInsufficient permissions!"
+      send "%nl%§7[sudo] password for %player's name in lowercase%§7:§7%nl%%player's name in lowercase% §7is not in the sudoers file. This incident will be reported.%nl%<tooltip:This is a Linux joke; You just have insufficient permissions for this command.>§9[What?]<reset>"
       stop
     
     if arg-2 is not set:
