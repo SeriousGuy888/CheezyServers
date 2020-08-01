@@ -55,7 +55,7 @@ every {@speedTestInterval} ticks:
     else:
       set {_maxSpeedToWarn} to {@warnSprint}
       set {_maxSpeedToInfraction} to {@infracSprint}
-      set {_speed} to {_xz_movement}
+      set {_speed} to {_xyz_movement}
     
 
     if {speed.show_info.%loop-player%} = true:
