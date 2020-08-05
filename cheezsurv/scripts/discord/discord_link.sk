@@ -12,6 +12,7 @@ on skript unload:
   delete {discord_link.codes_in_use::*}
 
 command /link:
+  aliases: /linkaccount
   trigger:
     if {discord_link.link.player.%player%} is set:
       send "§cThis account is already linked!"
