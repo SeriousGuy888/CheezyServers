@@ -1,0 +1,44 @@
+{
+  "display": {
+    "title": {
+      "text": "Pyrotechnic Plane"
+    },
+    "description": {
+      "text": "Damage another player who is not flying with an elytra using a firework while you are flying with an elytra. (Because apparently you can't detect firework kills.)"
+    },
+    "icon": {
+      "item": "minecraft:firework_rocket"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "explode": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:player",
+          "nbt": "{FallFlying:0b}"
+        },
+        "damage": {
+          "type": {
+            "is_explosion": true,
+            "direct_entity": {
+              "type": "minecraft:firework_rocket"
+            }
+          },
+          "source_entity": {
+            "type": "minecraft:player",
+            "nbt": "{FallFlying:1b}"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 125
+  },
+  "parent": "cheezsurv:dogfight"
+}
