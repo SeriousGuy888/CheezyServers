@@ -25,7 +25,7 @@
     }
   },
   "rewards": {
-      "experience": 150
+    "experience": 150
   },
-  "parent": "cheezsurv:trade_mending_book"
+  "parent": "cheezsurv:sell_to_villager"
 }
