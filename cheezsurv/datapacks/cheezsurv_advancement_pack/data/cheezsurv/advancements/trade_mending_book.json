@@ -1,19 +1,19 @@
 {
   "display": {
     "title": {
-      "text": "Purchase Mending Book"
+      "text": "Magical Means of Mending"
     },
     "description": {
-      "text": "Trade with a villager for a mending book"
+      "text": "Trade with a villager for a mending book."
     },
     "icon": {
-      "item": "minecraft:enchanted_book"
+      "item": "minecraft:enchanted_book",
+      "nbt": "{StoredEnchantments:[{id:\"minecraft:mending\",lvl:1s}]}"
     },
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": false,
-    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+    "hidden": false
   },
   "criteria": {
     "trade": {
@@ -31,7 +31,7 @@
     }
   },
   "rewards": {
-      "experience": 250
+    "experience": 500
   },
-  "parent": "cheezsurv:sell_to_villager"
+  "parent": "cheezsurv:trade_enchanted_book"
 }
