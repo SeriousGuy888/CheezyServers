@@ -12,8 +12,8 @@ command /togglediscorddeathcoords:
   trigger:
     set {death_coords.%player%} to true if {death_coords.%player%} is not set
     if {death_coords.%player%} is false:
-      set {combat.msg.%player%} to true
+      set {death_coords.%player%} to true
       send "§aToggled discord death coordinates on."
-    else if {combat.msg.%player%} is true:
+    else if {death_coords.%player%} is true:
       set {death_coords.%player%} to false
       send "§cToggled discord death coordinates off."
