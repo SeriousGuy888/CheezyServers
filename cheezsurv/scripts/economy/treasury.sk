@@ -20,7 +20,7 @@ function withdrawFromTreasury(p: player, a: number):
 command /treasurybalance:
   aliases: /treasurybal
   trigger:
-    send "§6☭--§e§lTREASURY OF CHEEZSURV2§6--☭"
+    send "§6$--§e§lTREASURY OF CHEEZSURV2§6--$"
     send "§e%{treasury.balance}%§e coins"
 
 command /treasurywithdraw <number>:
