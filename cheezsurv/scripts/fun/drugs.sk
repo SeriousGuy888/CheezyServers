@@ -59,7 +59,7 @@ on death:
 on right click:
   if player's tool is {@cocaine}:
     cancel event
-    remove 1 from item amount of player's tool
+    remove 1 of player's tool from player
     apply speed 3 to player for {@cocaineDuration} seconds
     apply strength 3 to player for {@cocaineDuration} seconds
     apply haste 3 to player for {@cocaineDuration} seconds
@@ -75,6 +75,7 @@ on right click:
   if player's tool is {@weed}:
     cancel event
     remove 1 from item amount of player's tool
+    remove 1 of player's tool from player
     apply slowness 1 to player for {@weedDuration} seconds
     apply hunger 1 to player for {@weedDuration} seconds
     apply strength 2 to player for {@weedDuration} seconds
