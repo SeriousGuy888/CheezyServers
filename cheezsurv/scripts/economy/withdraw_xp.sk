@@ -83,7 +83,7 @@ on right click:
   
   set {_lore} to uncoloured line 2 of lore of player's tool
   replace all "{@bottleLoreCurrency}" in {_lore} with ""
-  remove 1 from item amount of player's tool
+  remove 1 of player's tool from player
 
   set {_xp_amt} to ({_lore} parsed as number)
   # if {_xp_amt} < 0:
