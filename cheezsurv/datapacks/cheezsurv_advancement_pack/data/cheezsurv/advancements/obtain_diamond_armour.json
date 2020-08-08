@@ -1,10 +1,10 @@
 {
   "display": {
     "title": {
-      "text": "Diamond Armour"
+      "text": "I now super shiny"
     },
     "description": {
-      "text": "Get any of the diamond armour pieces in your inventory."
+      "text": "Get a full set of diamond armour pieces in your inventory."
     },
     "icon": {
       "item": "minecraft:diamond_chestplate"
@@ -15,40 +15,19 @@
     "hidden": false
   },
   "criteria": {
-    "diamondHelm": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-            {
-              "item": "minecraft:diamond_helmet"
-            }
-          ]
-        }
-      },
-    "diamondChest": {
+    "aa": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
+            "item": "minecraft:diamond_helmet"
+          },
+          {
             "item": "minecraft:diamond_chestplate"
-          }
-        ]
-      }
-    },
-    "diamondLegs": {
-        "trigger": "minecraft:inventory_changed",
-        "conditions": {
-          "items": [
-            {
-              "item": "minecraft:diamond_leggings"
-            }
-          ]
-        }
-    },
-    "diamondBoots": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
+          },
+          {
+            "item": "minecraft:diamond_leggings"
+          },
           {
             "item": "minecraft:diamond_boots"
           }
@@ -56,16 +35,8 @@
       }
     }
   },
-  "requirements": [
-      [
-          "diamondHelm",
-          "diamondChest",
-          "diamondLegs",
-          "diamondBoots"
-      ]
-  ],
   "rewards": {
-      "experience": 5
+    "experience": 5
   },
   "parent": "cheezsurv:obtain_diamond_pick"
 }
