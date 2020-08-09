@@ -190,3 +190,9 @@ discord command ping [<player>]:
       stop
     set {_ping} to arg-1's ping
     reply with "**Ping of %arg-1%:** %{_ping}%ms"
+
+
+discord command time:
+  prefixes: {@prefixes}
+  trigger:
+    reply with "It is currently `%time in world ""world""%` in the overworld."
