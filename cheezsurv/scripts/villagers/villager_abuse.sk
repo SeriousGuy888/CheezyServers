@@ -14,7 +14,7 @@ on damage:
 
     leash victim to attacker
     send action bar "Custom villager leashing" to attacker
-    remove 1 from item amount of attacker's tool if gamemode of attacker is not creative
+    remove 1 of attacker's tool from attacker if gamemode of attacker is not creative
 
 command /ridevillager:
   trigger:
