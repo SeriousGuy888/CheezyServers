@@ -1,0 +1,32 @@
+{
+  "display": {
+    "title": {
+      "text": "Purges in the Police Force"
+    },
+    "description": {
+      "text": "Execute a naturally spawned iron golem by hanging. (Leash it and then nuke it)"
+    },
+    "icon": {
+      "item": "minecraft:bow"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "execution": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:iron_golem",
+          "nbt": "{PlayerCreated:0b,Leash:{}}"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "villager_meat:execution_by_hanging"
+}

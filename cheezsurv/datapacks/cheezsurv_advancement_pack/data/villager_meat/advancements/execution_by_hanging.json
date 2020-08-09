@@ -1,0 +1,32 @@
+{
+  "display": {
+    "title": {
+      "text": "Execution by Hanging"
+    },
+    "description": {
+      "text": "Execute a villager by hanging. (Leash the villager and then delete it)"
+    },
+    "icon": {
+      "item": "minecraft:lead"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "execution": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:villager",
+          "nbt": "{Leash:{}}"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "villager_meat:root"
+}
