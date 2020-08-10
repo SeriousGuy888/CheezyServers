@@ -1,7 +1,7 @@
 on join:
   teleport player to {spawn.location} if {spawn.location} is set
 
-on death:
+on respawn:
   teleport player to {spawn.location} if {spawn.location} is set
 
 command /spawn:
