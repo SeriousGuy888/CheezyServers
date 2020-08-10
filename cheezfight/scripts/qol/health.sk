@@ -1,0 +1,38 @@
+on damage:
+  attacker is player
+  wait 1 tick
+
+  set {_health} to (round(health of victim * 2)) / 2
+  set {_full_hearts} to floor({_health})
+  if mod({_health}, 1) is not 0:
+    set {_half_heart} to 1
+  else:
+    set {_half_heart} to 0
+  set {_max_health} to max health of victim
+  set {_empty_hearts} to {_max_health} - ({_full_hearts} + {_half_heart})
+
+  set {_health_str} to ""
+
+
+  if {_max_health} is less than 50:
+    while {_full_hearts} is more than 0:
+      set {_health_str} to "%{_health_str}%§4❤"
+      subtract 1 from {_full_hearts}
+    set {_health_str} to "%{_health_str}%§c❤" if {_half_heart} is 1
+    while {_empty_hearts} is more than 0:
+      set {_health_str} to "%{_health_str}%§7❤"
+      subtract 1 from {_empty_hearts}
+  else if {_max_health} is greater than or equal to 50:
+    set {_health_str} to "§c%{_health} * 2%§7/§4%{_max_health} * 2% §7HP" 
+
+  send action bar "%{_health_str}% §7| §4Damage Dealt: §c%final damage%§cHP" to attacker
+
+command /health [<player>]:
+  trigger:
+    if arg-1 is not set:
+      send "§c/health <online player>"
+      stop
+    set {_absorb} to "."
+    set {_absorb} to " §3as well as §e%absorption hearts of player / 2%§3 hearts or §e%absorption hearts of player%§3 HP of absorption."
+
+    send "§b%arg-1%§3 has §b%health of arg-1%§3 hearts or §b%(health of arg-1) * 2%§3 HP%{_absorb}%"
