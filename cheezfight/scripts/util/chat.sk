@@ -1,0 +1,11 @@
+on chat:
+  set the chat format to "%player's prefix%%player%%player's suffix%§8: §f%message%"
+
+command /clearchat:
+  trigger:
+    if executor does not have permission "cheez.chat.clear":
+      send "§cInsufficient permissions!"
+      stop
+    loop 200 times:
+      broadcast " "
+    broadcast "§3Chat cleared by §b%executor%"
