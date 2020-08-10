@@ -1,0 +1,17 @@
+on join:
+  teleport player to {spawn.location} if {spawn.location} is set
+
+on death:
+  teleport player to {spawn.location} if {spawn.location} is set
+
+command /spawn:
+  trigger:
+    teleport player to {spawn.location} if {spawn.location} is set
+
+command /setspawn:
+  trigger:
+    if player does not have permission "cheez.setspawn":
+      send "§cInsufficient permissions!"
+      stop
+    set {spawn.location} to player's location
+    send "§aSet spawn."
