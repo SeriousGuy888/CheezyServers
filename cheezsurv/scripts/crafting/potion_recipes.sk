@@ -46,8 +46,8 @@ on sneak toggle:
       if player's inventory cannot hold water bottle:
         {@invSpaceMsg}
         stop
-      remove 1 from item amount of player's offhand tool
-      remove 1 from item amount of player's tool
+      remove 1 of player's offhand tool from player
+      remove 1 of player's tool from player
       {@playSound}
       make console execute command "/give %player% potion{display:{Name:'{""text"":""{@blindnessNormal}"",""italic"":false}',Lore:['{""text"":""{@blindnessNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:15b,Amplifier:0b,Duration:{@blindnessNormalDuration}}],CustomPotionColor:{@blindnessColour}}"
   if player's offhand tool is potion:
@@ -56,8 +56,8 @@ on sneak toggle:
         if player's inventory cannot hold water bottle:
           {@invSpaceMsg}
           stop
-        remove 1 from item amount of player's offhand tool
-        remove 1 from item amount of player's tool
+        remove 1 of player's offhand tool from player
+        remove 1 of player's tool from player
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@blindnessSplash}"",""italic"":false}',Lore:['{""text"":""{@blindnessSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:15b,Amplifier:0b,Duration:{@blindnessSplashDuration}}],CustomPotionColor:{@blindnessColour}}"
 
@@ -67,8 +67,8 @@ on sneak toggle:
       if player's inventory cannot hold water bottle:
         {@invSpaceMsg}
         stop
-      remove 1 from item amount of player's offhand tool
-      remove 1 from item amount of player's tool
+      remove 1 of player's offhand tool from player
+      remove 1 of player's tool from player
       {@playSound}
       make console execute command "/give %player% potion{display:{Name:'{""text"":""{@witherNormal}"",""italic"":false}',Lore:['{""text"":""{@witherNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:20b,Amplifier:0b,Duration:{@witherNormalDuration}}],CustomPotionColor:{@witherColour}}"
   if player's offhand tool is potion:
@@ -77,8 +77,8 @@ on sneak toggle:
         if player's inventory cannot hold water bottle:
           {@invSpaceMsg}
           stop
-        remove 1 from item amount of player's offhand tool
-        remove 1 from item amount of player's tool
+        remove 1 of player's offhand tool from player
+        remove 1 of player's tool from player
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@witherSplash}"",""italic"":false}',Lore:['{""text"":""{@witherSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:20b,Amplifier:0b,Duration:{@witherSplashDuration}}],CustomPotionColor:{@witherColour}}"
 
@@ -88,8 +88,8 @@ on sneak toggle:
       if player's inventory cannot hold water bottle:
         {@invSpaceMsg}
         stop
-      remove 1 from item amount of player's offhand tool
-      remove 1 from item amount of player's tool
+      remove 1 of player's offhand tool from player
+      remove 1 of player's tool from player
       {@playSound}
       make console execute command "/give %player% potion{display:{Name:'{""text"":""{@nauseaNormal}"",""italic"":false}',Lore:['{""text"":""{@nauseaNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:9b,Amplifier:0b,Duration:{@nauseaNormalDuration}}],CustomPotionColor:{@nauseaColour}}"
   if player's offhand tool is potion:
@@ -98,8 +98,8 @@ on sneak toggle:
         if player's inventory cannot hold water bottle:
           {@invSpaceMsg}
           stop
-        remove 1 from item amount of player's offhand tool
-        remove 1 from item amount of player's tool
+        remove 1 of player's offhand tool from player
+        remove 1 of player's tool from player
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@nauseaSplash}"",""italic"":false}',Lore:['{""text"":""{@nauseaSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:9b,Amplifier:0b,Duration:{@nauseaSplashDuration}}],CustomPotionColor:{@nauseaColour}}"
   
@@ -109,8 +109,8 @@ on sneak toggle:
       if player's inventory cannot hold water bottle:
         {@invSpaceMsg}
         stop
-      remove 1 from item amount of player's offhand tool
-      remove 1 from item amount of player's tool
+      remove 1 of player's offhand tool from player
+      remove 1 of player's tool from player
       {@playSound}
       make console execute command "/give %player% potion{display:{Name:'{""text"":""{@hasteNormal}"",""italic"":false}',Lore:['{""text"":""{@hasteNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hasteNormalAmplifier}b,Duration:{@hasteNormalDuration}}],CustomPotionColor:{@hasteColour}}"
   if player's offhand tool is potion:
@@ -119,8 +119,8 @@ on sneak toggle:
         if player's inventory cannot hold water bottle:
           {@invSpaceMsg}
           stop
-        remove 1 from item amount of player's offhand tool
-        remove 1 from item amount of player's tool
+        remove 1 of player's offhand tool from player
+        remove 1 of player's tool from player
         {@playSound}
         make console execute command "/give %player% potion{display:{Name:'{""text"":""{@hastePotent}"",""italic"":false}',Lore:['{""text"":""{@hastePotent}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hastePotentAmplifier}b,Duration:{@hastePotentDuration}}],CustomPotionColor:{@hasteColour}}"
   if player's offhand tool is potion:
@@ -129,8 +129,8 @@ on sneak toggle:
         if player's inventory cannot hold water bottle:
           {@invSpaceMsg}
           stop
-        remove 1 from item amount of player's offhand tool
-        remove 1 from item amount of player's tool
+        remove 1 of player's offhand tool from player
+        remove 1 of player's tool from player
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@hasteSplash}"",""italic"":false}',Lore:['{""text"":""{@hasteSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hasteNormalAmplifier}b,Duration:{@hasteSplashDuration}}],CustomPotionColor:{@hasteColour}}"
   if player's offhand tool is potion:
@@ -139,8 +139,8 @@ on sneak toggle:
         if player's inventory cannot hold water bottle:
           {@invSpaceMsg}
           stop
-        remove 1 from item amount of player's offhand tool
-        remove 1 from item amount of player's tool
+        remove 1 of player's offhand tool from player
+        remove 1 of player's tool from player
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@hastePotentSplash}"",""italic"":false}',Lore:['{""text"":""{@hastePotentSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:{@hasteId}b,Amplifier:{@hastePotentAmplifier}b,Duration:{@hastePotentSplashDuration}}],CustomPotionColor:{@hasteColour}}"
 
@@ -150,8 +150,8 @@ on sneak toggle:
       if player's inventory cannot hold water bottle:
         {@invSpaceMsg}
         stop
-      remove 1 from item amount of player's offhand tool
-      remove 1 from item amount of player's tool
+      remove 1 of player's offhand tool from player
+      remove 1 of player's tool from player
       {@playSound}
       make console execute command "/give %player% potion{display:{Name:'{""text"":""{@hungerNormal}"",""italic"":false}',Lore:['{""text"":""{@hungerNormal}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:17b,Amplifier:0b,Duration:{@hungerNormalDuration}}],CustomPotionColor:{@hungerColour}}"
   if player's offhand tool is potion:
@@ -160,7 +160,7 @@ on sneak toggle:
         if player's inventory cannot hold water bottle:
           {@invSpaceMsg}
           stop
-        remove 1 from item amount of player's offhand tool
-        remove 1 from item amount of player's tool
+        remove 1 of player's offhand tool from player
+        remove 1 of player's tool from player
         {@playSound}
         make console execute command "/give %player% splash_potion{display:{Name:'{""text"":""{@hungerSplash}"",""italic"":false}',Lore:['{""text"":""{@hungerSplash}"",""color"":""gray"",""italic"":false}']},CustomPotionEffects:[{Id:17b,Amplifier:0b,Duration:{@hungerSplashDuration}}],CustomPotionColor:{@hungerColour}}"
