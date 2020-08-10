@@ -1,0 +1,48 @@
+command /addkit [<text>]:
+  aliases: /createkit, /kitcreate
+  executable by: players
+  trigger:
+    if player does not have permission "cheez.kits.admin":
+      send "§cRequired permission node: cheez.kits.admin"
+      stop
+    if arg-1 is not set:
+      send "§cSpecify a kit name!"
+      stop
+    set {_kitname} to arg-1 in lowercase
+    if {kit::%{_kitname}%::*} is set:
+      send "§cThis kit does already exists."
+      stop
+    loop all items in player's inventory:
+      add loop-item to {kit::%{_kitname}%::*}
+    add {_kitname} to {kits::*}
+    send "§aCreated kit %{_kitname}%"
+
+command /removekit [<text>]:
+  aliases: /delkit, /deletekit
+  executable by: players
+  trigger:
+    if player does not have permission "cheez.kits.admin":
+      send "§cRequired permission node: cheez.kits.admin"
+      stop
+    if arg-1 is not set:
+      send "§cSpecify a kit name!"
+      stop
+    set {_kitname} to arg-1 in lowercase
+    if {kit::%{_kitname}%::*} is not set:
+      send "§cThis kit does not exist."
+      stop
+    delete {kit::%arg-1%::*}
+    remove {_kitname} from {kits::*}
+    send "§aRemoved kit %{_kitname}%"
+
+command /kit [<text>]:
+  aliases: /kits
+  executable by: players
+  trigger:
+    set {_kitname} to arg-1 in lowercase
+    if {kit::%{_kitname}%::*} is not set:
+      send "§cAvailable kits: %{kits::*}%"
+      stop
+    clear player's inventory
+    loop {kit::%{_kitname}%::*}:
+      give player loop-value
