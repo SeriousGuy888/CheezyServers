@@ -1,0 +1,68 @@
+function timeToText(t: timespan) :: text:
+  # set {_w} to 0
+  set {_d} to 0
+  set {_h} to 0
+  set {_m} to 0
+  set {_s} to 0
+  # while {_t} > 1 week:
+  #   subtract 1 day from {_t}
+  #   add 1 to {_w}
+  while {_t} > 1 day:
+    subtract 1 day from {_t}
+    add 1 to {_d}
+  while {_t} > 1 hour:
+    subtract 1 hour from {_t}
+    add 1 to {_h}
+  while {_t} > 1 minute:
+    subtract 1 minute from {_t}
+    add 1 to {_m}
+  while {_t} > 1 second:
+    subtract 1 second from {_t}
+    add 1 to {_s}
+  
+  return "%{_d}% days, %{_h}%h%{_m}%m%{_s}%"
+
+command /stats <OfflinePlayer=%player%>:
+  trigger:
+    set {stats.%arg-1%.deaths} to 0 if {stats.%arg-1%.deaths} is not set
+    set {stats.%arg-1%.kills} to 0 if {stats.%arg-1%.kills} is not set
+
+    set {_kd} to {stats.%arg-1%.kills}/{stats.%arg-1%.deaths}
+    set {_kd} to "0/0" if "%{_kd}%" is "NaN"
+
+    send "§3§lStats of §b§l%arg-1%§3§l:"
+    send "§2Deaths: §a%{stats.%arg-1%.deaths}%"
+    send "§2Kills: §a%{stats.%arg-1%.kills}%"
+    send "§6K/D: §e%{_kd}%"
+
+    send "§2Playtime: §a%timeToText({playtime.%arg-1%})%§7<tooltip:*Only recalculates every time the player leaves; *While the default Minecraft playtime statistic exists, we do not use it as it requires the player to be online to access.>*<reset>"
+
+command /setstats <OfflinePlayer> <text> <number>:
+  permission: *
+  permission message: You cannot use this command because you are an illegal.
+  trigger:
+    set {stats.%arg-1%.%arg-2%} to arg-3
+    send "Set stat %arg-2% of %arg-1% to %arg-3%."
+    send "§7§o[%executor%§7§o: Set stat %arg-2%§7§o of %arg-1%§7§o to %arg-3%§7§o.]" to console if executor is not console
+    loop all players:
+      loop-player is op
+      loop-player is not executor 
+      send "§7§o[%executor%§7§o: Set stat %arg-2%§7§o of %arg-1%§7§o to %arg-3%§7§o.]" to loop-player
+
+on death of player:
+  set {stats.%victim%.deaths} to 0 if {stats.%victim%.deaths} is not set
+  add 1 to {stats.%victim%.deaths}
+
+  attacker is set
+  set {stats.%attacker%.kills} to 0 if {stats.%attacker%.kills} is not set
+  add 1 to {stats.%attacker%.kills}
+
+on join:
+  set {last_played.%player%.join} to now
+on quit:
+  set {last_played.%player%.leave} to now
+  add difference between {last_played.%player%.join} and {last_played.%player%.leave} to {playtime.%player%}
+
+command /lastplayed <offlineplayer=%player%>:
+  trigger:
+    send "%nl%§2§lLast Played §a§l%arg-1%%nl%%nl%§3§lLast Joined§b%nl%%{last_played.%arg-1%.join}%%nl%§b%difference between now and {last_played.%arg-1%.join}% §3ago%nl%%nl%§3§lLast Left%nl%§b%{last_played.%arg-1%.leave}%%nl%§b%difference between now and {last_played.%arg-1%.leave}% §3ago"
