@@ -83,6 +83,7 @@ command /balancetop <number=1>:
     send "§6§l§nCheezSurv Richest Players%nl%"
     loop {_high_to_low_list::*}:
       add 1 to {_ranking}
+      {bank.balance::%loop-value%} > 0
       set {_player} to "%loop-value%" parsed as offline player
       send "§7%{_ranking}%§7. §2%{_player}% §7→ §a%{bank.balance::%loop-value%}%§ac"
       if {_ranking} = 10:
