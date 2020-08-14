@@ -1,0 +1,29 @@
+function autoReplantApplyDurabilityDamage(p: player):
+  set {_lvl} to level of unbreaking of {_p}'s tool + 0 # get unbreaking level
+  set {_dmg_chance} to (100 / ({_lvl} + 1)) / 100 # https://minecraft.gamepedia.com/Unbreaking
+  if chance of {_dmg_chance}:
+    damage {_p}'s tool by 1
+
+on break:
+  player's gamemode is not creative or spectator
+  player's tool is hoe
+  if event-block is ripe wheat plant:
+    player has wheat seeds
+    remove 1 of wheat seeds from player
+    set event-block to wheat
+    autoReplantApplyDurabilityDamage(player)
+  if event-block is ripe carrot plant:
+    player has carrot
+    remove 1 of carrot from player
+    set event-block to carrot plant
+    autoReplantApplyDurabilityDamage(player)
+  if event-block is ripe potato plant:
+    player has potato
+    remove 1 of potato from player
+    set event-block to potato plant
+    autoReplantApplyDurabilityDamage(player)
+  if event-block is ripe beetroot plant:
+    player has beetroot seeds
+    remove 1 of beetroot seeds from player
+    set event-block to beetroot plant
+    autoReplantApplyDurabilityDamage(player)
