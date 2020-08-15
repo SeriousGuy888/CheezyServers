@@ -7,6 +7,7 @@ function autoReplantApplyDurabilityDamage(p: player):
 on break:
   player's gamemode is not creative or spectator
   player's tool is hoe
+  player's tool is enchanted with efficiency
   if event-block is ripe wheat plant:
     player has wheat seeds
     remove 1 of wheat seeds from player
