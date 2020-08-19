@@ -1,5 +1,5 @@
 options:
-  magicBoxName: §rMagic Box
+  magicBoxName: §bMagic Box
   magicBoxLore: §7Right click to redeem and use /magicbox to open.
 
 function openMagicBox(p: player):
@@ -52,7 +52,8 @@ command /magicbox:
 
 on right click:
   name of player's tool is "{@magicBoxName}"
-  remove 1 from item amount of player's tool
+  cancel event
+  remove 1 of player's tool from player
   add 1 to {magicboxes.%player%}
   send "§6Redeemed §e1§6 magic box. §e/magicbox"
 
