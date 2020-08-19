@@ -1,0 +1,21 @@
+command /storeitem <text>:
+  trigger:
+    player is op
+    add arg-1 to {stored_items::*}
+    set {stored_items.%arg-1%} to player's tool
+    if player's tool is air:
+      remove arg-1 from {stored_items::*}
+      delete {stored_items.%arg-1%}
+    send "§aSet item %arg-1%§a to your held item."
+
+command /getitem [<text>]:
+  trigger:
+    player is op
+    if arg-1 is not set:
+      send "%{stored_items::*}%"
+      stop
+    if {stored_items::*} does not contain arg-1:
+      send "§cItem not set."
+      stop
+    give player {stored_items.%arg-1%}
+    send "§aRetrieved stored item."
