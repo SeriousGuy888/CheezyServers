@@ -22,7 +22,7 @@ discord command list:
     set {_player.players} to "player" if number of all players is 1
 
     set {_msg} to a message builder
-    append line "**CHEEZSURV2 ONLINE MEMBERS**"
+    append line "**CHEEZSURV ONLINE MEMBERS**"
     append line "There %{_is.are}% `%number of all players%` %{_player.players}% online out of a maximum of `%max players count%`."
     append line "----------"
     append line "The members online are:"
