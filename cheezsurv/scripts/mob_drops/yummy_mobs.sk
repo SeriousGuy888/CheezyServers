@@ -2,7 +2,7 @@ options:
   dog: "§dDog Meat"
   bat: "§dBat Meat"
   villager: "§dVillager Meat"
-  trader: "§dTrader Meat"
+  trader: "§dWandering Trader Meat"
 
 on death of wolf:
   set {_drop_amount} to random number between 1 and 3
