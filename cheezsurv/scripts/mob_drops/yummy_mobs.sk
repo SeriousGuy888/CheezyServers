@@ -1,21 +1,26 @@
-# function getDropAmount(min: number, max: number, lootingLvl: number) :: number:
-#   set {_num} to random number between {_min} and {_max}
-#   # set {_looting_multiplier} to {_lootingLvl} + 1 * (random number between 1 and 1.5)
-
-#   set {_num} to {_num} #* {_looting_multiplier}
+options:
+  dog: "§dDog Meat"
+  bat: "§dBat Meat"
+  villager: "§dVillager Meat"
+  trader: "§dTrader Meat"
 
 on death of wolf:
   set {_drop_amount} to random number between 1 and 3
-  drop {_drop_amount} of steak named "§rDog Meat" with lore "§7§oExtremely nutricious." and "§7§oHoang's favourite food." at victim
-
-on death of villager:
-  set {_drop_amount} to random number between 2 and 4
-  drop {_drop_amount} of steak named "§rVillager Meat" with lore "§7§oIt's technically not cannibalism." and "§7§oStill though, why?" at victim
-
-on death of wandering trader:
-  set {_drop_amount} to random number between 2 and 4
-  drop {_drop_amount} of steak named "§rWandering Trader Meat" with lore "§7§oIt's technically not cannibalism." and "§7§o(Different from villager meat)" at victim
+  drop {_drop_amount} of steak named {@dog} with lore "§7§oExtremely nutricious." and "§7§oHoang's favourite food." at victim
 
 on death of bat:
   set {_drop_amount} to random number between 0 and 1
-  drop {_drop_amount} of cooked mutton named "§rBat Meat" with lore "§7§oHoang loves to eat bats!" at victim
+  drop {_drop_amount} of cooked mutton named {@bat} with lore "§7§oHoang loves to eat bats!" at victim
+
+on death of villager:
+  set {_drop_amount} to random number between 2 and 4
+  drop {_drop_amount} of steak named {@villager} with lore "§7§oIt's technically not cannibalism." and "§7§oStill though, why?" at victim
+
+on death of wandering trader:
+  set {_drop_amount} to random number between 2 and 4
+  drop {_drop_amount} of steak named {@trader} with lore "§7§oIt's technically not cannibalism." and "§7§o(Different from villager meat)" at victim
+
+on consume:
+  name of event-item is {@villager} or {@trader}
+  add 1 to player's hunger
+  add 3 to player's saturation
