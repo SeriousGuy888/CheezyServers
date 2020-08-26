@@ -1,0 +1,65 @@
+options:
+  combatLogTime: 15
+  exemptPerm: "combatlog.exempt"
+
+command /combatlog:
+  aliases: /combattag
+  trigger:
+    if {combatlog::*} contains player:
+      set {_last_tagged} to difference between {%player%.combatlog.time} and now
+      set {_remaining_time} to "{@combatLogTime} seconds" parsed as timespan
+      send "&cYou are tagged in combat for another &e%difference between {_last_tagged} and {_remaining_time}%"
+    else:
+      send "&aYou are not currently combat tagged."
+
+on unload:
+  delete {combatlog::*}
+  delete {kill.combat::*}
+
+
+on damage:
+  attacker is not victim
+  if {combatlog::*} doesn't contain attacker:
+    attacker doesn't have permission {@exemptPerm}
+    add attacker to {combatlog::*}
+    send "§cYou have been combat tagged!" to attacker
+  if {combatlog::*} doesn't contain victim:
+    victim doesn't have permission {@exemptPerm}
+    add victim to {combatlog::*}
+    send "§cYou have been combat tagged!" to victim
+  set {%attacker%.combatlog.time} to now
+  set {%victim%.combatlog.time} to now
+
+
+# on join:
+#   if {kill.combat::*} contains player:
+#     wait 1 second
+#     console command "/kill %player%"
+#     remove player from {kill.combat::*}
+
+
+on quit:
+  {combatlog::*} contains player
+  kill player
+  set {combatlog.nuking.%player%} to true
+  # loop player's inventory:
+  #   drop loop-value
+  # clear player's inventory
+  # add player to {kill.combat::*}
+  # remove player from {combatlog::*}
+
+
+on death of player:
+  if {combatlog.nuking.%player%} is true:
+    set death message to "%player% was killified for logging out in combat"
+    set {combatlog.nuking.%player%} to false
+  if {combatlog::*} contains player:
+    remove player from {combatlog::*}
+
+
+every 1 second:
+  loop {combatlog::*}:
+    set {_time_diff} to difference between {%loop-value%.combatlog.time} and now
+    if {_time_diff} > {@combatLogTime} seconds:
+      remove loop-value from {combatlog::*}
+      send "§aYou are no longer combat tagged." to loop-value
