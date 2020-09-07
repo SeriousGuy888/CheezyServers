@@ -131,7 +131,8 @@ every 5 ticks:
       if difference between now and {combat.shield_charge.%loop-player%.time} < {@shieldChargeCooldown}:
         send action bar "§5Shield Charge Cooldown: §d%difference between {@shieldChargeCooldown} and (difference between now and {combat.shield_charge.%loop-player%.time})%" to loop-player
       else:
-        send action bar "§5Shield Charge Ready" to loop-player
+        send action bar "§5Shield Charge Ready" to loop-player if loop-player's gliding state is false
+        send action bar "§4[X]§c You may not use shield charge while gliding." to loop-player if loop-player's gliding state is true
     else:
       {combat.enable_info_msg.combo.%loop-player%} is true
 
