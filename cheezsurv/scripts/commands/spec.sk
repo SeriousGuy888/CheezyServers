@@ -2,7 +2,6 @@ command /spec:
   executable by: players
   aliases: /sp
   trigger:
-    set {_success} to true
     if player's gamemode is survival:
       set {%player%.spec.loc} to player's location
       set player's gamemode to spectator
@@ -15,11 +14,6 @@ command /spec:
         send action bar "Deativated Spectator Mode" to player
       else if {%player%.spec.loc} is not set:
         send "§cYou are not in /spec spectator mode."
-        set {_success} to false
-    if {_success} is true:
-      loop all players:
-        {subspec.%loop-player%} is true
-        send "%player% used /sp" to loop-player
 
 command /dimension [<text>]:
   executable by: players
@@ -57,18 +51,6 @@ command /spectp <player>:
     loop all players:
       {subspec.%loop-player%} is true
       send "%player% used /sptp %arg-1%" to loop-player
-    
-# command /subscribespec:
-#   executable by: players
-#   aliases: /subsp, /subscribesp, /subspec
-#   trigger:
-#     set {subspec.%player%} to false if {subspec.%player%} is not set
-#     if {subspec.%player%} is false:
-#       set {subspec.%player%} to true
-#       send "§3Subscribed. You will be notified when people use /sp or /sptp"
-#     else if {subspec.%player%} is true:
-#       set {subspec.%player%} to false
-#       send "§3Unsubscribed."
 
 on join:
   {%player%.spec.loc} is set
