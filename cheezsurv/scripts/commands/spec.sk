@@ -11,6 +11,7 @@ command /spec:
         set player's gamemode to survival
         teleport player to {%player%.spec.loc}
         delete {%player%.spec.loc}
+        subtract 3 from y of player's velocity
         send action bar "Deativated Spectator Mode" to player
       else if {%player%.spec.loc} is not set:
         send "§cYou are not in /spec spectator mode."
