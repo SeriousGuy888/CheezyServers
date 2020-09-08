@@ -1,14 +1,14 @@
 options:
-  skeletonWeaponChance: 0%
+  skeletonWeaponChance: 25%
   skeletonArmourChance: 0%
-  skeletonCritChance: 40%
-  skeletonHealthLeechChance: 40%
+  skeletonCritChance: 30%
+  skeletonHealthLeechChance: 20%
 
   zombieGhostChance: 1%
   zombieWeaponChance: 0%
   zombieArmourChance: 0%
-  zombieCritChance: 40%
-  zombieHealthLeechChance: 40%
+  zombieCritChance: 30%
+  zombieHealthLeechChance: 20%
 
 on spawn:
   wait 1 tick
@@ -32,7 +32,6 @@ on spawn:
       
   if event-entity is zombie:
     if chance of {@zombieGhostChance}:
-    
       set helmet of event-entity to air
       set chestplate of event-entity to air
       set leggings of event-entity to air
@@ -75,6 +74,15 @@ on spawn:
               equip event-entity with diamond leggings of protection 3
               if chance of 25%:
                 enchant chestplate of event-entity with thorns 1
+    if spawn reason is reinforcements:
+      if chance of 25%:
+        equip event-entity with chainmail helmet
+        if chance of 50%:
+          enchant helmet of event-entity with protection 1
+      if chance of 25%:
+        equip event-entity with iron sword
+        if chance of 50%:
+          enchant tool of event-entity with sharpness 1
 
 on damage:
   if attacker is a skeleton:
