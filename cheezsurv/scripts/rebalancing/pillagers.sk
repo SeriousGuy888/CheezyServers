@@ -23,7 +23,7 @@ function spawnPillagers():
     loop 10 times:
       if {_valid} is false:
         set {_block} to a random element out of blocks in radius 32 of loop-player
-        block below {_block} is not air
+        block below {_block} is not transparent
         {_block} is air
         block above {_block} is air
         size of all players within 12 blocks of {_block} is 0
