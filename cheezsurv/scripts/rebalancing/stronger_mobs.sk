@@ -97,3 +97,6 @@ on damage:
       add 2 to damage
     if chance of {@zombieHealthLeechChance}:
       add final damage to attacker's health
+
+every 15 seconds:
+  shoot dragon fireball from all ender dragons
