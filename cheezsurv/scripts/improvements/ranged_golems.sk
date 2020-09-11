@@ -1,0 +1,91 @@
+options:
+  entityListClearInterval: 15 seconds
+  scanInterval: 7.5 seconds
+  arrowInterval: 1 second
+
+  rangedRadius: 16
+
+  upgradeSound: "block.anvil.use"
+  downgradeSound: "block.anvil.destroy"
+
+  reinforcedUpgradeHealth: 500
+
+function shootGolemArrow(g: entity):
+  shoot arrow from {_g}
+  set {_a} to shot arrow
+  add "ranged_golem_arrow" to scoreboard tags of {_a}
+
+every {@entityListClearInterval}:
+  delete {ranged_golems::*}
+
+every {@scanInterval}:
+  loop all iron golems:
+    loop-entity has scoreboard tag "ranged_golem"
+
+    loop entities in radius {@rangedRadius} around loop-entity:
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is pillager
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is vindicator
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is evoker
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is ravager
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is zombie
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is husk
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is skeleton
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is stray
+
+every {@arrowInterval}:
+  loop all iron golems:
+    loop-entity has scoreboard tag "ranged_golem"
+    size of {ranged_golems::%uuid of loop-entity%::*} > 0
+    shootGolemArrow(loop-entity)
+
+every second:
+  loop all players:
+    loop-player's target entity is an iron golem
+    loop-player's target entity has scoreboard tag "ranged_golem"
+
+    set {_str} to "§3This golem has the following upgrades: §b[Ranged]"
+    set {_str} to "%{_str}%§3, §b[Reinforced]" if loop-player's target entity has scoreboard tag "ranged_golem_upgrade_reinforced"
+
+    send action bar {_str} to loop-player
+
+on right click on iron golem:
+  if player's tool is dispenser:
+    event-entity doesn't have scoreboard tag "ranged_golem"
+    remove 1 of player's tool from player
+    add "ranged_golem" to scoreboard tags of event-entity
+    play sound {@upgradeSound} at event-entity
+    send "Upgraded iron golem to have ranged capabilities. Sneak right click with a torch to undo." to player
+  if player's tool is torch:
+    player is sneaking
+    event-entity has scoreboard tag "ranged_golem"
+    remove "ranged_golem" from scoreboard tags of event-entity
+    play sound {@downgradeSound} at event-entity
+    drop dispenser at iron golem
+    send "Removed ranged upgrade from iron golem; your dispenser has been refunded." to player
+  
+
+  event-entity has scoreboard tag "ranged_golem"
+  if player's tool is iron chestplate:
+    event-entity doesn't have scoreboard tag "ranged_golem_upgrade_reinforced"
+    remove 1 of player's tool from player
+    add "ranged_golem_upgrade_reinforced" to scoreboard tags of event-entity
+    set max health of event-entity to {@reinforcedUpgradeHealth} / 2
+    play sound {@upgradeSound} at event-entity
+    send "Added the reinforced upgrade to this iron golem." to player
+
+on damage:
+  victim is an iron golem
+  attacker is an iron golem
+  cancel event
+
+on damage:
+  attacker is an iron golem
+  victim is villager
+  cancel event
+
+on damage:
+  attacker is an iron golem
+  attacker has scoreboard tag "ranged_golem"
+  damage cause is attack
+  health of victim > 0
+  shootGolemArrow(attacker)
