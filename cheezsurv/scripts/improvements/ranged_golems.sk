@@ -13,6 +13,7 @@ options:
 function shootGolemArrow(g: entity):
   shoot arrow from {_g}
   set {_a} to shot arrow
+  ignite {_a} if {_g} has scoreboard tag "ranged_golem_upgrade_flame"
   add "ranged_golem_arrow" to scoreboard tags of {_a}
 
 every {@entityListClearInterval}:
@@ -45,6 +46,7 @@ every second:
 
     set {_str} to "§3This golem has the following upgrades: §b[Ranged]"
     set {_str} to "%{_str}%§3, §b[Reinforced]" if loop-player's target entity has scoreboard tag "ranged_golem_upgrade_reinforced"
+    set {_str} to "%{_str}%§3, §b[Flame]" if loop-player's target entity has scoreboard tag "ranged_golem_upgrade_flame"
 
     send action bar {_str} to loop-player
 
@@ -55,6 +57,7 @@ on right click on iron golem:
     add "ranged_golem" to scoreboard tags of event-entity
     play sound {@upgradeSound} at event-entity
     send "Upgraded iron golem to have ranged capabilities. Sneak right click with a torch to undo." to player
+    stop
   if player's tool is torch:
     player is sneaking
     event-entity has scoreboard tag "ranged_golem"
@@ -62,9 +65,12 @@ on right click on iron golem:
     play sound {@downgradeSound} at event-entity
     drop dispenser at iron golem
     send "Removed ranged upgrade from iron golem; your dispenser has been refunded." to player
+    stop
   
 
+
   event-entity has scoreboard tag "ranged_golem"
+
   if player's tool is iron chestplate:
     event-entity doesn't have scoreboard tag "ranged_golem_upgrade_reinforced"
     remove 1 of player's tool from player
@@ -72,6 +78,14 @@ on right click on iron golem:
     set max health of event-entity to {@reinforcedUpgradeHealth} / 2
     play sound {@upgradeSound} at event-entity
     send "Added the reinforced upgrade to this iron golem." to player
+    stop
+  if player's tool is flint and steel:
+    event-entity doesn't have scoreboard tag "ranged_golem_upgrade_flame"
+    remove 1 of player's tool from player
+    add "ranged_golem_upgrade_flame" to scoreboard tags of event-entity
+    play sound {@upgradeSound} at event-entity
+    send "Added the flaming arrow upgrade to this iron golem." to player
+    stop
 
 on damage:
   victim is an iron golem
