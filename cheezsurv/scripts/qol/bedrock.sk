@@ -1,0 +1,18 @@
+command /offhand:
+  aliases: /oh
+  executable by: players
+  trigger:
+    set {_i} to player's offhand tool
+    set player's offhand tool to player's tool
+    set player's tool to {_i}
+
+command /mount:
+  executable by: players
+  trigger:
+    set {_allowed} to false
+    set {_allowed} to true if player's target entity is boat
+    set {_allowed} to true if player's target entity is minecart
+    {_allowed} = true
+    player can visibly see player's target entity
+    distance between player's target entity and player <= 6
+    make player ride player's target entity
