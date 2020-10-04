@@ -37,6 +37,12 @@ every {@arrowInterval}:
   loop all iron golems:
     loop-entity has scoreboard tag "ranged_golem"
     size of {ranged_golems::%uuid of loop-entity%::*} > 0
+    set {_visible} to false
+    loop {ranged_golems::%uuid of loop-entity%::*}:
+      loop-entity-1 can visibly see loop-value-2
+      set {_visible} to true
+      stop loop
+    {_visible} = true
     shootGolemArrow(loop-entity)
 
 every second:
