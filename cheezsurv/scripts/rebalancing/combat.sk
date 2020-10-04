@@ -71,7 +71,7 @@ on damage:
     add {_combo_count_addend} to {combat.combo.%attacker%.count} if {combat.combo.%attacker%.count} + {_combo_count_addend} <= {@comboMax}
     play sound {@comboSound} to attacker
     add ({combat.combo.%attacker%.count} * {@comboDamageFactor}) / 2 to damage
-    set {combat.combo.%attacker%.dmg} to final damage
+    set {combat.combo.%attacker%.dmg} to final damage * 2
   
   if {combat.combo.%attacker%.victim} = victim:
     set {combat.combo.%attacker%.time} to now
