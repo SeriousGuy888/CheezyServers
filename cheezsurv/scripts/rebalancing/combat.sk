@@ -46,9 +46,17 @@ on damage:
   else if victim is not blocking:
     damage cause != thorns
     {combat.combo.%victim%.time} is set
-    clearCombo(victim)
+
+    if final damage <= 3:
+      set {_degrade_by} to floor(final damage + 1)
+      subtract {_degrade_by} from {combat.combo.%victim%.count}
+      set {_m} to "§cCombo degraded by %abs({_degrade_by})% §cfrom taking damage! §7(/togglecombatmessage)"
+    else:
+      clearCombo(victim)
+      set {_m} to "§cCombo cleared due to taking damage! §7(/togglecombatmessage)"
+    
     set {combat.enable_info_msg.chat.%victim%} to true if {combat.enable_info_msg.chat.%victim%} is not set
-    send "§cCombo cancelled from taking damage! §7(/togglecombatmessage)" to victim if {combat.enable_info_msg.chat.%victim%} is true
+    send {_m} to victim if {combat.enable_info_msg.chat.%victim%} is true
 
 on damage:
   attacker is player
