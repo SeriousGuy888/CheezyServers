@@ -9,8 +9,6 @@ on right click on stair:
         set {_o} to type of clicked block
         spawn 1 armor stand at location 0.25 below and 0.2 in front of event-block
         set {_s} to last spawned entity
-        add "{NoGravity:1}" to nbt of {_s}
-        add "{Invisible:1}" to nbt of {_s}
         set {_l} to location of player
         make player ride {_s}
         wait 1 tick
