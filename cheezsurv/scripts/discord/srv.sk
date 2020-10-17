@@ -1,0 +1,33 @@
+options:
+  botName: Cheezy
+  discordChannelId: %{config.discord_chat}%
+  discordConsoleChannelId: %{config.discord_console}%
+  chatPrefix: §3[§lD§3]
+  discrimCol: <##4f4fdb>
+  nameCol: §9
+  colonCol: §7
+  msgCol: §b
+
+on chat:
+  send "%player%: %message%" to channel with id "{@discordChannelId}" with "{@botName}"
+
+on guild message received by "{@botName}":
+  if discord id of event-channel = "{@discordChannelId}":
+    broadcast "{@chatPrefix} {@nameCol}%event-user%{@discrimCol}§o##%discriminator of event-user%{@colonCol}: {@msgCol}%event-message%"
+  if discord id of event-channel = "{@discordConsoleChannelId}":
+    make console execute command "%event-message%"
+
+on join:
+  send ":door: **%player% joined**" to channel with id "{@discordChannelId}" with "{@botName}"
+on quit:
+  send ":door: **%player% left**" to channel with id "{@discordChannelId}" with "{@botName}"
+
+on death of player:
+  send ":skull: **%death message%**" to channel with id "{@discordChannelId}" with "{@botName}"
+
+on skript start:
+  wait 10 seconds
+  send ":globe_with_meridians: **Server Startup**" to channel with id "{@discordChannelId}" with "{@botName}"
+on skript stop:
+  delete {dsrv.idempotency::*}
+  send ":globe_with_meridians: **Server Shutdown**" to channel with id "{@discordChannelId}" with "{@botName}"
