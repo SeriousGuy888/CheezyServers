@@ -54,7 +54,7 @@ discord command link [<text>]:
   prefixes: {@prefixes}
   trigger:
     if arg-1 is not set:
-      reply with "s2!link <Linking Code>%nl%`Obtain a linking code by running /link in game`"
+      reply with "link <Linking Code>%nl%`Obtain a linking code by running /link in game`"
       stop
 
     set {_code} to arg-1
@@ -72,15 +72,15 @@ discord command link [<text>]:
         append line "**Linking Info**"
         append line "---"
         append line "Minecraft Account: `%{discord_link.player.%{_code}%}%`"
-        append line "Discord Account: `%id of author of event-message%`"
+        append line "Discord Account: `%discord id of author of event-message%`"
         append line "Linking Code: `%{discord_link.code.%{discord_link.player.%{_code}%}%}%`"
         append line "Linking Code Creation Timestamp: `%{discord_link.code.%{discord_link.player.%{_code}%}%.created}%`"
         reply with {_msg}
 
-        set {discord_link.link.player.%{discord_link.player.%{_code}%}%} to id of author of event-message
-        set {discord_link.link.discord.%id of author of event-message%} to {discord_link.player.%{_code}%}
+        set {discord_link.link.player.%{discord_link.player.%{_code}%}%} to discord id of author of event-message
+        set {discord_link.link.discord.%discord id of author of event-message%} to {discord_link.player.%{_code}%}
 
-        reply with "Successfully linked Minecraft Account `%{discord_link.link.discord.%id of author of event-message%}%` to Discord ID `%{discord_link.link.player.%{discord_link.player.%{_code}%}%}%`"
+        reply with "Successfully linked Minecraft Account `%{discord_link.link.discord.%discord id of author of event-message%}%` to Discord ID `%{discord_link.link.player.%{discord_link.player.%{_code}%}%}%`"
 
         remove {_code} from {discord_link.codes_in_use::*}
         delete {discord_link.code.%{discord_link.player.%{_code}%}%}
@@ -90,14 +90,14 @@ discord command link [<text>]:
 discord command unlink:
   prefixes: {@prefixes}
   trigger:
-    if {discord_link.link.discord.%id of author of event-message%} is not set:
+    if {discord_link.link.discord.%discord id of author of event-message%} is not set:
       reply with "This Discord ID is not linked!"
       stop
     
-    set {_player} to {discord_link.link.player.%{discord_link.link.discord.%id of author of event-message%}%}
+    set {_player} to {discord_link.link.player.%{discord_link.link.discord.%discord id of author of event-message%}%}
 
-    delete {discord_link.link.player.%{discord_link.link.discord.%id of author of event-message%}%}
-    delete {discord_link.link.discord.%id of author of event-message%}
+    delete {discord_link.link.player.%{discord_link.link.discord.%discord id of author of event-message%}%}
+    delete {discord_link.link.discord.%discord id of author of event-message%}
 
     reply with "Successfully unlinked your Discord ID with Minecraft."
     send "Your Discord ID was unlinked through Discord." to {_player}

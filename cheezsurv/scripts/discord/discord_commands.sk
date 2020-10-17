@@ -41,8 +41,8 @@ discord command stats [<OfflinePlayer>]:
     set {_link_defaulted} to false
 
     if arg-1 is not set:
-      if {discord_link.link.discord.%id of author of event-message%} is set:
-        set {_p} to {discord_link.link.discord.%id of author of event-message%}
+      if {discord_link.link.discord.%discord id of author of event-message%} is set:
+        set {_p} to {discord_link.link.discord.%discord id of author of event-message%}
         set {_link_defaulted} to true
       else:
         reply with {@specifyPlayer}
@@ -72,8 +72,8 @@ discord command balance [<OfflinePlayer>]:
     set {_link_defaulted} to false
 
     if arg-1 is not set:
-      if {discord_link.link.discord.%id of author of event-message%} is set:
-        set {_p} to {discord_link.link.discord.%id of author of event-message%}
+      if {discord_link.link.discord.%discord id of author of event-message%} is set:
+        set {_p} to {discord_link.link.discord.%discord id of author of event-message%}
         set {_link_defaulted} to true
       else:
         reply with {@specifyPlayer}
@@ -151,8 +151,8 @@ discord command stocklist [<OfflinePlayer>]:
     set {_link_defaulted} to false
 
     if arg-1 is not set:
-      if {discord_link.link.discord.%id of author of event-message%} is set:
-        set {_p} to {discord_link.link.discord.%id of author of event-message%}
+      if {discord_link.link.discord.%discord id of author of event-message%} is set:
+        set {_p} to {discord_link.link.discord.%discord id of author of event-message%}
         set {_link_defaulted} to true
       else:
         reply with {@specifyPlayer}
@@ -192,8 +192,8 @@ discord command lastplayed [<OfflinePlayer>]:
     set {_link_defaulted} to false
 
     if arg-1 is not set:
-      if {discord_link.link.discord.%id of author of event-message%} is set:
-        set {_p} to {discord_link.link.discord.%id of author of event-message%}
+      if {discord_link.link.discord.%discord id of author of event-message%} is set:
+        set {_p} to {discord_link.link.discord.%discord id of author of event-message%}
         set {_link_defaulted} to true
       else:
         reply with {@specifyPlayer}
@@ -228,7 +228,7 @@ discord command ping [<player>]:
   prefixes: {@prefixes}
   trigger:
     if arg-1 is not set:
-      reply with "s2!ping <player>"
+      reply with "ping <player>"
       stop
     set {_ping} to arg-1's ping
     reply with "**Ping of %arg-1%:** %{_ping}%ms"
