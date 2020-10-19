@@ -86,7 +86,7 @@ command /balancetop <number=1>:
       {bank.balance::%loop-value%} > 0
       set {_player} to "%loop-value%" parsed as offline player
       send "§7%{_ranking}%§7. §2%{_player}% §7→ §a%{bank.balance::%loop-value%}%§ac"
-      if {_ranking} = 10:
+      if {_ranking} = 25:
         stop loop
       add 1 to {_total_players}
     # send "%nl%§7There are a total of §a%{_total_players}% §7registered accounts"

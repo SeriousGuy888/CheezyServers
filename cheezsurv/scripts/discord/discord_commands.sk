@@ -125,7 +125,7 @@ discord command balancetop [<OfflinePlayer>]:
       replace all "*" with "\*" in {_player}
 
       append line "`%{_ranking}%.` %{_player}% → %{bank.balance::%loop-value%}% coins"
-      if {_ranking} = 10:
+      if {_ranking} = 25:
         stop loop
       add 1 to {_total_players}
     
