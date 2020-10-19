@@ -13,7 +13,7 @@ options:
   shieldChargeEffective: 0.67 seconds
   shieldChargeRadius: 1.5
   shieldChargeCooldown: 10 seconds
-  shieldChargeHungerCost: 3
+  shieldChargeHungerCost: 1
   shieldChargeSaturationCost: 5
   shieldChargeDamage: 5
   shieldChargeForce: 2
@@ -99,7 +99,7 @@ on left click:
   player's facing is not up or down
   player's glider state is false
 
-  if player's hunger <= 3:
+  if player's hunger <= {@shieldChargeHungerCost}:
     player's gamemode is not creative
     send "§cInsufficient hunger! §7(/togglecombatmessage)" if {combat.enable_info_msg.chat.%player%} is true
     stop
