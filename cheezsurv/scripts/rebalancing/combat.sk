@@ -6,6 +6,7 @@ options:
   comboDamageFactor: 0.25
   comboMax: 32
   comboBasicMin: 4
+  comboWeaknessThreshold: 3
   maxDistance: 6
   excludedMobs: ender dragon, ender crystal
 
@@ -80,6 +81,9 @@ on damage:
     add {_combo_count_addend} to {combat.combo.%attacker%.count} if {combat.combo.%attacker%.count} + {_combo_count_addend} <= {@comboMax}
     play sound {@comboSound} to attacker
     add ({combat.combo.%attacker%.count} * {@comboDamageFactor}) / 2 to damage
+    if {combat.combo.%attacker%.count} >= {@comboWeaknessThreshold}:
+      if active potion effects of victim does not contain "weak":
+        apply weakness to victim for 2 seconds
     set {combat.combo.%attacker%.dmg} to final damage * 2
   
   if {combat.combo.%attacker%.victim} = victim:
