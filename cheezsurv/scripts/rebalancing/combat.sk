@@ -18,6 +18,7 @@ options:
   shieldChargeDamage: 5
   shieldChargeForce: 2
   shieldChargeMaxYVel: 0.05
+  shieldChargeStunEffect: apply slowness 2 to loop-entity-2 for 3 seconds
 
 function clearCombo(p: player):
   delete {combat.combo.%{_p}%.time}
@@ -128,6 +129,8 @@ every tick:
       loop-entity-2 is not loop-player
       metadata "shield_charge_damaged_by_%loop-player%" of loop-entity-2 is not true
       make loop-player damage loop-entity-2 by {@shieldChargeDamage}
+      # if active potion effects of loop-entity-2 does not contain "slow":
+      {@shieldChargeStunEffect}
       play sound {@shieldChargeSound} to loop-player
       set metadata "shield_charge_damaged_by_%loop-player%" of loop-entity-2 to true
 
