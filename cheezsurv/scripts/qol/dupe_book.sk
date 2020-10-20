@@ -1,0 +1,32 @@
+command /duplicatebook:
+  aliases: /dupebook
+  trigger:
+    if player's tool is not writable book:
+      send "§cPlace a book and quill in your main hand and offhand to start."
+      stop
+    if player's offhand tool is not writable book:
+      send "§cPlace a book and quill in your main hand and offhand to start."
+      stop
+    set metadata "duping_book" of player to true
+    send "§6Type §econfirm §6in the chat to continue. Your offhand book will be §lwiped §6and its contents will be replaced with that of your main hand book. Cancel by typing §ecancel§6."
+
+on chat:
+  set metadata "duping_book" of player to true
+  cancel event
+  if message in lower case is "confirm":
+    if player's tool is not writable book:
+      send "§cCancelled! You must have book and quills in both hands!"
+      clear metadata "duping_book" of player
+      stop
+    if player's offhand tool is not writable book:
+      send "§cCancelled! You must have book and quills in both hands!"
+      clear metadata "duping_book" of player
+      stop
+    set player's offhand tool to player's tool
+    send "§eSuccessfully copied your main hand book to your offhand book."
+    clear metadata "duping_book" of player
+  else if message in lower case is "cancel":
+    send "§eCancelled."
+    clear metadata "duping_book" of player
+  else:
+    send "§6Please type §econfirm §6or §ecancel§6."
