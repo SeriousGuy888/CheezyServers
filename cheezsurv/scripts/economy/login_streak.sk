@@ -1,5 +1,5 @@
 options:
-  perReward: 1 day
+  perReward: 23.75 hours
   loseStreak: 2 days
   reward: 0.1
   rewardAddend: 0.01
@@ -8,17 +8,26 @@ on join:
   if {login_streak::%player%.date} is not set:
     set {login_streak::%player%.date} to {@perReward} ago
   if difference between now and {login_streak::%player%.date} >= {@perReward}:
-    if difference between now and {login_streak::%player%.date} >= {@loseStreak}:
-      if {login_streak::%player%.streak} > 1:
-        send "§6You lost your §e%{login_streak::%player%.streak}% §6day login streak!"
-      set {login_streak::%player%.streak} to 0
+    make player execute command "/claimdailyreward"
 
-    add 1 to {login_streak::%player%.streak}
+command /claimdailyreward:
+  trigger:
+    if {login_streak::%player%.date} is not set:
+      set {login_streak::%player%.date} to {@perReward} ago
+    if difference between now and {login_streak::%player%.date} >= {@perReward}:
+      if difference between now and {login_streak::%player%.date} >= {@loseStreak}:
+        if {login_streak::%player%.streak} > 1:
+          send "§6You lost your §e%{login_streak::%player%.streak}% §6day login streak!"
+        set {login_streak::%player%.streak} to 0
 
-    set {_reward} to {@reward}
-    add ({@rewardAddend} * ({login_streak::%player%.streak} - 1)) to {_reward}
+      add 1 to {login_streak::%player%.streak}
 
-    add {_reward} to {bank.balance::%player%}
-    logEconomyAction("`%player%` received `%{_reward}%` coins for their `%{login_streak::%player%.streak}%` day login streak")
-    send "§6You have received §e%{_reward}% §ecoins §6for your §e%{login_streak::%player%.streak}% §6day login streak."
-    set {login_streak::%player%.date} to now
+      set {_reward} to {@reward}
+      add ({@rewardAddend} * ({login_streak::%player%.streak} - 1)) to {_reward}
+
+      add {_reward} to {bank.balance::%player%}
+      logEconomyAction("`%player%` received `%{_reward}%` coins for their `%{login_streak::%player%.streak}%` day login streak")
+      send "§6You have received §e%{_reward}% §ecoins §6for your §e%{login_streak::%player%.streak}% §6day login streak."
+      set {login_streak::%player%.date} to now
+    else:
+      send "§cYou claimed your last reward %difference between now and {login_streak::%player%.date}% §cago. You must wait at least %""{@perReward}"" parsed as time span%."
