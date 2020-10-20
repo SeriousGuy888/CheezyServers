@@ -11,7 +11,7 @@ command /duplicatebook:
     send "§6Type §econfirm §6in the chat to continue. Your offhand book will be §lwiped §6and its contents will be replaced with that of your main hand book. Cancel by typing §ecancel§6."
 
 on chat:
-  set metadata "duping_book" of player to true
+  metadata "duping_book" of player is true
   cancel event
   if message in lower case is "confirm":
     if player's tool is not writable book:
