@@ -96,7 +96,8 @@ discord command balancetop [<OfflinePlayer>]:
   trigger:
     set {_msg} to a message builder
     append line {@linkDefaultedMsg} if {_link_defaulted} is true
-    append line "**__CheezSurv Richest Players__**%nl%"
+    append line "**__CheezSurv Richest Players__**"
+    append line "*Values are rounded. Use `bal` for exact values. (Totally not because billzo doesn't know how to sort numbers.)*%nl%"
 
     loop {bank.balance::*}:
       add 1 to {_size}
@@ -125,7 +126,7 @@ discord command balancetop [<OfflinePlayer>]:
       replace all "_" with "\_" in {_player}
       replace all "*" with "\*" in {_player}
 
-      append line "`%{_ranking}%.` %{_player}% → %{bank.balance::%loop-value%}% coins"
+      append line "`%{_ranking}%.` %{_player}% → %goodifyNumber({bank.balance::%loop-value%})% coins"
       if {_ranking} = 25:
         stop loop
       add 1 to {_total_players}

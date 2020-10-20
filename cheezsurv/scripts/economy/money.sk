@@ -34,8 +34,28 @@ every 5 seconds:
 
   loop all players:
     set {bank.balance::%loop-player%} to 0 if {bank.balance::%loop-player%} is not set
+
 function logEconomyAction(a: text):
   set {economy.logs.pending} to "%{economy.logs.pending}%%nl%[%now%] %{_a}%"
+
+
+function repeat(s: string, n: integer) :: string:
+  set {_r} to ""
+  loop {_n} times:
+    set {_r} to "%{_r}%%{_s}%"
+  return {_r}
+
+function approxifyNumber(n: number) :: text:
+  set {_data} to "Q,18|q,15|T,12|B,9|M,6|K,3"
+  loop split {_data} at "|":
+    set {_s::*} to split loop-value at ","
+    {_n} >= 10 ^ {_s::2} parsed as number
+    return "%{_n} / 10 ^ {_s::2} parsed as number%%{_s::1}%"
+  return "%{_n}%"
+
+function goodifyNumber(n: number) :: text:
+  set {_r} to approxifyNumber(round({_n}))
+  return "%{_r}%"
 
 
 
@@ -80,12 +100,13 @@ command /balancetop <number=1>:
       subtract 1 from {_n}
     wait 1 tick
     set {_total_players} to 0
-    send "§6§l§nCheezSurv Richest Players%nl%"
+    send "§6§l§nCheezSurv Richest Players"
+    send "§7§oValues are rounded. Use /bal for exact values.%nl%"
     loop {_high_to_low_list::*}:
       add 1 to {_ranking}
       {bank.balance::%loop-value%} > 0
       set {_player} to "%loop-value%" parsed as offline player
-      send "§7%{_ranking}%§7. §2%{_player}% §7→ §a%{bank.balance::%loop-value%}%§ac"
+      send "§7%{_ranking}%§7. §2%{_player}% §7→ §a%goodifyNumber({bank.balance::%loop-value%})%§a coins"
       if {_ranking} = 25:
         stop loop
       add 1 to {_total_players}
