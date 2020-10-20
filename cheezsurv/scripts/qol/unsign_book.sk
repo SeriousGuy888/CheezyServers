@@ -1,0 +1,15 @@
+command /unsign:
+  trigger:
+    if player's tool is not written book:
+      send "§cYou are not holding a signed book!"
+      stop
+    if author of player's tool != "%player%":
+      send "§cYou may only unlock books that were signed by you!"
+      stop
+    set {_pages::*} to pages of player's tool
+    set {_book} to new written book
+    loop {_pages::*}:
+      add page with data "a" to {_book}
+    set author of {_book} to "a"
+    
+    open {_book} to player
