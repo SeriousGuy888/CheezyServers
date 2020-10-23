@@ -12,8 +12,8 @@ command /getitem [<text>]:
     if arg-1 is not set:
       send "%indices of {stored_items::*}%"
       stop
-    if indices of {stored_items::*} does not contain arg-1:
-      send "§cItem not set."
-      stop
+    # if indices of {stored_items::*} does not contain arg-1:
+    #   send "§cItem not set."
+    #   stop
     give player {stored_items::%arg-1%}
     send "§aRetrieved stored item."
