@@ -1,0 +1,9 @@
+on right click:
+  player's tool is wooden axe
+  name of player's tool is "§eGavel §7(Right Click)"
+  cancel event
+  loop all players in radius 32 around player:
+    send action bar "§6%player% §6is using their explosive gavel." to loop-player
+    play sound "entity.generic.explode" to loop-player
+    wait 5 ticks
+    play sound "entity.generic.explode" to loop-player
