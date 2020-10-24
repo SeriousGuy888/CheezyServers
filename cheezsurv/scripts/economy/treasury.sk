@@ -6,7 +6,7 @@ every 5 seconds:
   set {treasury.logs.pending} to ""
 
 function logTreasuryAction(a: text):
-  set {treasury.logs.pending} to "%{treasury.logs.pending}%%nl%[%now% UTC] %{_a}%"
+  set {treasury.logs.pending} to "%{treasury.logs.pending}%%nl%[%now%] %{_a}%"
 
 function withdrawFromTreasury(p: player, a: number):
   format slot 4 of {_p} with lime stained glass pane named "§a[✓]" with lore "§rI confirm that I am not" and "§rembezzling public funds." to be unstealable
