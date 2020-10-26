@@ -29,8 +29,21 @@ command /checkafk <Player>:
     if {%arg-1%.afk} is false:
       send "§7%arg-1%§7 is not AFK!"
       stop
-    
     send "§7%arg-1%§7 is AFK for reason %{%arg-1%.afk.reason}%"
+
+on chat:
+  loop all players:
+    if message in lowercase contains loop-player's name in lowercase:
+      add loop-player to {_mentioned::*} if {_mentioned::*} does not contain loop-player
+    if {%loop-player%.nick} is set:
+      if message in lowercase contains {%loop-player%.nick} in lowercase:
+        add loop-player to {_mentioned::*} if {_mentioned::*} does not contain loop-player
+  loop {_mentioned::*}:
+    send action bar "§bYou have been mentioned in chat by %player%" to loop-value
+    play sound "block.note_block.pling" to loop-value
+    if {%loop-value%.afk} is true:
+      wait 1 tick
+      send "§b%loop-value%§b is currently AFK."
 
 on quit:
   if {%player%.afk} is true:
