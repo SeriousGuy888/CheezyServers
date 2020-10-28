@@ -19,41 +19,37 @@ command /drugglez:
 
 command /drugeffects <player=%player%>:
   trigger:
-    # if {drug_max_health.%arg-1%} is not set:
+    # if {drugs.max_health::%arg-1%} is not set:
     #   send "§7%arg-1% §7is not experiencing druggle effects on their max health."
     #   stop
-    send "%arg-1%'s max health is at %{drug_max_health.%arg-1%} otherwise ""default""% and will wear off in %{drug_max_health.%arg-1%.timer} otherwise ""-1""% seconds."
-    send "%arg-1%'s absorption will wear off in %{drug_absorption.%arg-1%.timer} otherwise ""-1""% seconds."
+    send "%arg-1%'s max health is at %{drugs.max_health::%arg-1%} otherwise ""default""% and will wear off in %{drugs.max_health::%arg-1%.timer} otherwise ""-1""% seconds."
+    send "%arg-1%'s absorption will wear off in %{drugs.absorption::%arg-1%.timer} otherwise ""-1""% seconds."
 
 every second in world "world":
   loop all players:
-    if {drug_max_health.%loop-player%} is not set:
-      # max health of loop-player < 10
-      # set max health of loop-player to 10
+    if {drugs.max_health::%loop-player%} is not set:
       continue
-    if {drug_max_health.%loop-player%.timer} <= 0:
-      delete {drug_max_health.%loop-player%.timer}
-      delete {drug_max_health.%loop-player%}
-      set max health of loop-player to 10
+    if {drugs.max_health::%loop-player%.timer} <= 0:
+      delete {drugs.max_health::%loop-player%.timer}
+      delete {drugs.max_health::%loop-player%}
       continue
-    remove 1 from {drug_max_health.%loop-player%.timer}
-    if max health of loop-player > {drug_max_health.%loop-player%}:
-      set max health of loop-player to {drug_max_health.%loop-player%}
+    subtract 1 from {drugs.max_health::%loop-player%.timer}
+    if health of loop-player > {drugs.max_health::%loop-player%}:
+      set health of loop-player to {drugs.max_health::%loop-player%}
   
   loop all players:
-    if {drug_absorption.%loop-player%.timer} = 0:
+    if {drugs.absorption::%loop-player%.timer} = 0:
       set absorption hearts of loop-player to 0
-    if {drug_absorption.%loop-player%.timer} < -1:
-      set {drug_absorption.%loop-player%.timer} to -1
+    if {drugs.absorption::%loop-player%.timer} < -1:
+      set {drugs.absorption::%loop-player%.timer} to -1
       continue
-    remove 1 from {drug_absorption.%loop-player%.timer}
+    subtract 1 from {drugs.absorption::%loop-player%.timer}
 
 
-
-on death:
-  set {drug_max_health.%player%.timer} to 0
-  set {drug_absorption.%player%.timer} to 0
-    
+on heal:
+  event-entity is player
+  health of event-entity >= {drugs.max_health::%event-entity%}
+  cancel event
 
 
 on right click:
@@ -64,13 +60,19 @@ on right click:
     apply strength 3 to player for {@cocaineDuration} seconds
     apply haste 3 to player for {@cocaineDuration} seconds
 
-    set {drug_max_health.%player%} to 8
-    add {@cocaineDuration} to {drug_max_health.%player%.timer}
+    set {drugs.max_health::%player%} to 8
+    add {@cocaineDuration} to {drugs.max_health::%player%.timer}
 
     set absorption hearts of player to 4
-    add {@cocaineDuration} to {drug_absorption.%player%.timer}
+    add {@cocaineDuration} to {drugs.absorption::%player%.timer}
+
+    set metadata "druggifying" of player to "cocaine"
+    subtract 4 from player's health
 
     send "§eAdded {@cocaineDuration} seconds to the effects of the cocaine." to player
+
+    wait 5 seconds
+    delete metadata "druggifying" of player
 
   if player's tool is {@weed}:
     cancel event
@@ -84,10 +86,27 @@ on right click:
       apply mining fatigue 1 to player for {@weedDuration} seconds
     apply nausea 1 to player for 3 seconds
 
-    set {drug_max_health.%player%} to 9
-    add {@weedDuration} to {drug_max_health.%player%.timer}
+    set {drugs.max_health::%player%} to 9
+    add {@weedDuration} to {drugs.max_health::%player%.timer}
 
     set absorption hearts of player to 2
-    add {@weedDuration} to {drug_absorption.%player%.timer}
+    add {@weedDuration} to {drugs.absorption::%player%.timer}
 
     send "§eAdded {@weedDuration} seconds to the effects of the marijuana." to player
+
+
+on death:
+  if metadata "druggifying" of player = "cocaine":
+    set death message to "%player% overdosed on cocaine"
+  set {drugs.max_health::%player%.timer} to 0
+  set {drugs.absorption::%player%.timer} to 0
+
+
+command /undruggify <player=%player%>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    set {drugs.max_health::%arg-1%.timer} to 1
+    set {drugs.absorption::%arg-1%.timer} to 1
+    make console execute command "/effect clear %arg-1%"
