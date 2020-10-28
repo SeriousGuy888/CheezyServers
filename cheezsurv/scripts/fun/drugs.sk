@@ -5,6 +5,29 @@ options:
   cocaineDuration: 45
   weedDuration: 30
 
+function purchaseDrugs(p: player, stock_id: string, amt: number, i: item):
+  if {bank.balance::%{_p}%} < {_price}:
+    send "§cInsufficient funds!" to {_p}
+    stop
+  if {_p}'s inventory cannot hold {_i}:
+    send "§cInsufficient inventory space!" to {_p}
+    stop
+  if {_amt} > {drugs.shop.stock::%{_stock_id}%}:
+    send "§cInsufficient stock!" to {_p}
+    stop
+  
+  set {_price} to {drugs.shop.price::%{_stock_id}%} otherwise 123456789
+
+  subtract {_price} from {bank.balance::%{_p}%}
+  add {_price} to {treasury.balance}
+  subtract {_amt} from {drugs.shop.stock::%{_stock_id}%}
+
+  give {_amt} of {_i} to {_p}
+
+  make {_p} execute command "/drugshop"
+  send "§aYou have purchased %{_amt}% §aof %{_stock_id}% §aand paid %{_price}% §acoins to the treasury." to {_p}
+  logEconomyAction("`%{_p}%` purchased `%{_amt}%` of druggle `%{_stock_id}%` for `%{_price}%` coins from the treasury")
+
 command /drugglez:
   executable by: players
   trigger:
@@ -17,11 +40,56 @@ command /drugglez:
     format slot 0 of player with {@cocaine} to run [give player 64 of {@cocaine}]
     format slot 1 of player with {@weed} to run [give player 64 of {@weed}]
 
+command /drugshopstock [<text>] [<integer>]:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    
+    if arg-1 is not set:
+      loop {drugs.shop.stock::*}:
+        send "%loop-index% - %loop-value%"
+    else:
+      if arg-2 is not set:
+        send "%arg-1% - %{drugs.shop.stock::%arg-1%}%"
+      else:
+        set {drugs.shop.stock::%arg-1%} to arg-2
+        send "set stock of %arg-1% to %arg-2%"
+command /drugshopprice [<text>] [<integer>]:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    
+    if arg-1 is not set:
+      loop {drugs.shop.price::*}:
+        send "%loop-index% - %loop-value%"
+    else:
+      if arg-2 is not set:
+        send "%arg-1% - %{drugs.shop.price::%arg-1%}%"
+      else:
+        set {drugs.shop.price::%arg-1%} to arg-2
+        send "set price of %arg-1% to %arg-2%"
+
+
+command /drugshop:
+  trigger:
+    open chest with 3 rows named "the government's shady alley" to player
+    wait 1 tick
+
+    loop 27 times:
+      format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
+    loop 9 times:
+      format slot (loop-number + 18 - 1) of player with gray stained glass pane named " " to be unstealable
+      if loop-number = 5:
+        format slot (loop-number + 18 - 1) of player with sunflower named "§6Balance" with lore "§e%{bank.balance::%player%}%§ec" to be unstealable
+
+    format slot 0 of player with sugar named "§fCocaine" with lore "§6Cost: §e%{drugs.shop.price::cocaine}%§ec", "§6Stock: §e%{drugs.shop.stock::cocaine}%", "", and "§3ID: §bcocaine" to run [purchaseDrugs(player, "cocaine", 1, {@cocaine})]
+    format slot 1 of player with tall grass named "§aMarijuana" with lore "§6Cost: §e%{drugs.shop.price::weed}%§ec", "§6Stock: §e%{drugs.shop.stock::weed}%", "", and "§3ID: §bweed" to run [purchaseDrugs(player, "weed", 1, {@weed})]
+
+
 command /drugeffects <player=%player%>:
   trigger:
-    # if {drugs.max_health::%arg-1%} is not set:
-    #   send "§7%arg-1% §7is not experiencing druggle effects on their max health."
-    #   stop
     send "%arg-1%'s max health is at %{drugs.max_health::%arg-1%} otherwise ""default""% and will wear off in %{drugs.max_health::%arg-1%.timer} otherwise ""-1""% seconds."
     send "%arg-1%'s absorption will wear off in %{drugs.absorption::%arg-1%.timer} otherwise ""-1""% seconds."
 
