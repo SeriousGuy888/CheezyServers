@@ -40,7 +40,7 @@ command /drugglez:
     format slot 0 of player with {@cocaine} to run [give player 64 of {@cocaine}]
     format slot 1 of player with {@weed} to run [give player 64 of {@weed}]
 
-command /drugshopstock [<text>] [<integer>]:
+command /drugshopstock [<text>] [<number>]:
   trigger:
     if player is not op:
       send "§cInsufficient permissions!"
@@ -55,7 +55,7 @@ command /drugshopstock [<text>] [<integer>]:
       else:
         set {drugs.shop.stock::%arg-1%} to arg-2
         send "set stock of %arg-1% to %arg-2%"
-command /drugshopprice [<text>] [<integer>]:
+command /drugshopprice [<text>] [<number>]:
   trigger:
     if player is not op:
       send "§cInsufficient permissions!"
