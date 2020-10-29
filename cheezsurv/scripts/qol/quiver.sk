@@ -13,7 +13,7 @@ command /quiver <offlineplayer=%player%>:
     set {quiver.edit.%player%} to {_p}
     play sound "item.armor.equip_generic" to player
     send action bar "§aOpening %{_p}%§a's quiver..." to player
-    wait 1 tick
+    # wait 1 tick
 
     add {quiver.inventory::%{_p}%::*} to current inventory of player
 on inventory close:
