@@ -25,9 +25,12 @@ on death of villager:
       set {villager_death_messages.current} to "%{_villager_name}% was %random element out of {_murder_variations::*}% by %{_attacker_name}%"
     else:
       set {villager_death_messages.current} to "%{_villager_name}% %random element out of {_died_variations::*}% from %damage cause%"
+  
+  set {_nloc::*} to nearestLocation(location of victim) split at "|"
+  set {villager_death_messages.current} to "%{villager_death_messages.current}% §7§o[%round({_nloc::2} parsed as number)%§7§om from %{_nloc::1} in uppercase%]"
 
 
-  send ":skull: **%{villager_death_messages.current}% at %floor(x-coordinate of victim)% %floor(y-coordinate of victim)% %floor(z-coordinate of victim)% in %world of victim% [ID: %{villagerid::%victim's uuid%}%]**" to channel with id "{@discordChannelId}" with "Cheezy"
+  send ":skull: **%uncoloured {villager_death_messages.current}% at %floor(x-coordinate of victim)% %floor(y-coordinate of victim)% %floor(z-coordinate of victim)% in %world of victim% [ID: %{villagerid::%victim's uuid%}%]**" to channel with id "{@discordChannelId}" with "Cheezy"
   loop all players:
     set {villager_death_messages.subscribed.%loop-player%} to true if {villager_death_messages.subscribed.%loop-player%} is not set
     {villager_death_messages.subscribed.%loop-player%} is true

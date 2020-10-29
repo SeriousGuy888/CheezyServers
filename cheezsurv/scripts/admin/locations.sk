@@ -1,0 +1,67 @@
+# returns the name of the nearest defined location point
+function nearestLocation(l: location) :: string:
+  loop {locations::*}:
+    set {_locs::%loop-index%} to loop-value if "%world of loop-value%" = "%world of {_l}%"
+  
+  if {_locs::*} is not set:
+    return "Error: No locations defined in the same world."
+
+  set {_nearest} to ""
+  set {_nearest_distance} to 60000000
+
+  loop {_locs::*}:
+    if distance between {_l} and loop-value < {_nearest_distance}:
+      set {_nearest} to loop-index
+      set {_nearest_distance} to distance between {_l} and loop-value
+  
+  # i know this is a garbage but whatever
+  return "%{_nearest}%|%{_nearest_distance}%"
+
+command /setloc <text>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    if arg-1 contains "|":
+      send "§cDisallowed character!"
+      stop
+    if arg-1 contains " ":
+      send "§cDisallowed character!"
+      stop
+    set {locations::%arg-1%} to player's location
+    send "§2Set loc §a%arg-1% §2to your location."
+
+command /delloc <text>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    delete {locations::%arg-1%}
+    send "§2Deleted loc §a%arg-1%§2."
+
+command /tploc <text>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    teleport player to {locations::%arg-1%}
+    send "§2Teleported to loc §a%arg-1%§2."
+
+command /nearestloc:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permissions!"
+      stop
+    set {_loc_info::*} to nearestLocation(player's location) split by "|" 
+    send "§2§l%{_loc_info::1} in uppercase% §7- §a%{_loc_info::2}%§am away"
+
+command /locations [<text>]:
+  aliases: /locs
+  trigger:
+    set {_search_terms::*} to arg-1 otherwise "" split at "|"
+    send "%nl%%nl%§2§lSERVER LOCATIONS%nl%§a§nSearch Term:§a %arg-1%%nl%"
+    loop {locations::*}:
+      loop {_search_terms::*}:
+        if loop-index-1 contains loop-value-2:
+          send "§2%loop-index-1% §7- §a%loop-value-1's x-coordinate%§a, %loop-value-1's y-coordinate%§a, %loop-value-1's z-coordinate% §ain %world of loop-value-1%"
+          continue

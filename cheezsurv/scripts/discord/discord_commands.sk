@@ -220,6 +220,23 @@ discord command playtime:
     reply with "merged into stats command"
 
 
+discord command locations [<text>]:
+  prefixes: {@prefixes}
+  aliases: locs
+  trigger:
+    set {_search_terms::*} to arg-1 otherwise "" split at "|"
+
+    set {_msg} to a message builder
+    append line "**SERVER LOCATIONS**%nl%__Search Term:__ %arg-1%%nl%"
+    loop {locations::*}:
+      loop {_search_terms::*}:
+        if loop-index-1 contains loop-value-2:
+          append line "`%loop-index-1%` → %loop-value-1's x-coordinate%, %loop-value-1's y-coordinate%, %loop-value-1's z-coordinate% in %world of loop-value-1%"
+          continue
+    
+    reply with {_msg}
+
+
 discord command tps:
   prefixes: {@prefixes}
   trigger:
