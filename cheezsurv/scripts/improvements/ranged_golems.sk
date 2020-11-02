@@ -27,11 +27,15 @@ every {@scanInterval}:
       add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is pillager
       add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is vindicator
       add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is evoker
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is illusioner
       add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is ravager
       add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is zombie
       add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is husk
       add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is skeleton
       add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is stray
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is witch
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is spider
+      add loop-entity-2 to {ranged_golems::%uuid of loop-entity-1%::*} if type of loop-entity-2 is cave spider
 
 every {@arrowInterval}:
   loop all iron golems:
