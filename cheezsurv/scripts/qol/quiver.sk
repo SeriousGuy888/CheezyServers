@@ -47,6 +47,7 @@ command /togglequiver:
 
 on shoot:
   shooter's gamemode is not creative
+  shooter's gamemode is not spectator
   projectile is {@allowedEntities} 
   
   if {quiver.enabled.%shooter%} is not set:
