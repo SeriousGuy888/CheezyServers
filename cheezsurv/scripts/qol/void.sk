@@ -1,15 +1,15 @@
 every 10 ticks in world "world":
   loop all players:
-    loop-player's world is "world_the_end"
-    loop-player's y-coordinate < -32
-    teleport loop-player to location(loop-player's x-coordinate, 1000, loop-player's z-coordinate, world "world")
+    if loop-player's world is "world_the_end":
+      loop-player's y-coordinate < -32
+      teleport loop-player to location(loop-player's x-coordinate, 968, loop-player's z-coordinate, world "world")
     
-    loop-player's world is "world"
-    loop-player's y-coordinate > 1000
-    teleport loop-player to location(loop-player's x-coordinate, 0, loop-player's z-coordinate, world "world_the_end")
+    if loop-player's world is "world":
+      loop-player's y-coordinate > 1000
+      teleport loop-player to location(loop-player's x-coordinate, 0, loop-player's z-coordinate, world "world_the_end")
 
-on damage:
-  victim is player
-  victim's world is "world_the_end"
-  damage cause is void
-  cancel event
+# on damage:
+#   victim is player
+#   victim's world is "world_the_end"
+#   damage cause is void
+#   cancel event
