@@ -57,6 +57,7 @@ every second:
     send action bar {_str} to loop-player
 
 on right click on iron golem:
+  player's gamemode is not spectator
   if player's tool is dispenser:
     event-entity doesn't have scoreboard tag "ranged_golem"
     remove 1 of player's tool from player
