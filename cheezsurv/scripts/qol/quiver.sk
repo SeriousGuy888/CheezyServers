@@ -2,7 +2,7 @@ options:
   allowedItems: arrow or tipped arrow or spectral arrow
   allowedEntities: arrow or spectral arrow # tipped arrows share an entity id with arrows
 
-command /quiver <offlineplayer=%player%>:
+command /quiver <offlineplayer=%player%> [<text>]:
   aliases: /q
   trigger:
     set {_p} to arg-1
@@ -13,22 +13,32 @@ command /quiver <offlineplayer=%player%>:
     set {quiver.edit.%player%} to {_p}
     play sound "item.armor.equip_generic" to player
     send action bar "§aOpening %{_p}%§a's quiver..." to player
-    # wait 1 tick
+    if arg-2 starts with "-n":
+      player is op
+      set {quiver.edit.%player%.no_save} to true
+      send action bar "§aOpening %{_p}%§a's quiver in no save mode..." to player
+    wait 1 tick
 
     add {quiver.inventory::%{_p}%::*} to current inventory of player
 on inventory close:
   {quiver.edit.%player%} is set
-  send action bar "§aClosing and saving %{quiver.edit.%player%}%§a's quiver..." to player
   play sound "item.armor.equip_generic" to player
 
-  delete {quiver.inventory::%{quiver.edit.%player%}%::*}
-  loop items in current inventory of player:
-    if loop-item is {@allowedItems}:
-      add loop-item to {quiver.inventory::%{quiver.edit.%player%}%::*}
-    else:
-      set {_item_name} to "%type of loop-item%"
-      send "§cYou may not store a [§o%{_item_name} in uppercase%§c] in a quiver!"
-      drop loop-item at player
+  if {quiver.edit.%player%.no_save} is true:
+    send action bar "§aClosing %{quiver.edit.%player%}%§a's quiver without saving..." to player
+    delete {quiver.edit.%player%.no_save}
+  else:
+    send action bar "§aClosing and saving %{quiver.edit.%player%}%§a's quiver..." to player
+
+    delete {quiver.inventory::%{quiver.edit.%player%}%::*}
+    loop items in current inventory of player:
+      if loop-item is {@allowedItems}:
+        add loop-item to {quiver.inventory::%{quiver.edit.%player%}%::*}
+      else:
+        set {_item_name} to "%type of loop-item%"
+        send "§cYou may not store a [§o%{_item_name} in uppercase%§c] in a quiver!"
+        drop loop-item at player
+  
   delete {quiver.edit.%player%}
 
 
