@@ -90,7 +90,7 @@ on shoot:
 
       # give 1 of loop-value to shooter # for some reason this gives two arrows
       drop 1 of loop-value at shooter # and this only drops one arrow because skript is garbage
-      send action bar "Resupplied 1  from your quiver. (/togglequiver)" to shooter
+      send action bar "Resupplied 1 %1 of loop-value% from your quiver. (/togglequiver)" to shooter
 
       stop loop # do not ducking remove this you idot or itll crash the server
   else:
