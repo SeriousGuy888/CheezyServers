@@ -1,0 +1,87 @@
+options:
+  moneyPickaxe: "§6Money Pickaxe"
+  moneyPickaxe1: "§6Money Pickaxe I"
+  moneyPickaxe2: "§6Money Pickaxe II"
+
+function customCraft(p: player, ingredients: items, i: item):
+  loop {_ingredients::*}:
+    loop {_p}'s inventory:
+      set {_s} to loop-value-2
+      add "%{_s}%" to {_i::*}
+    if {_i::*} does not contain "%loop-value%":
+      if {_p} does not have loop-value:
+        send "§cYou are missing %loop-value%§c!" to {_p}
+        stop
+
+  loop {_ingredients::*}:
+    remove loop-value from {_p}
+
+  if {_p}'s inventory cannot hold {_i}:
+    send "§cInsufficient inventory space!" to {_p}
+    stop
+  give {_i} to {_p}
+
+  # send "§aCrafted %{_i}%§a." to {_p}
+  play sound "block.smithing_table.use" to {_p}
+
+on right click on crafting table:
+  player is sneaking
+  player's tool is air
+
+  wait 1 tick
+  open chest with 4 rows named "CheezSurv Custom Crafting" to player
+  wait 1 tick
+
+  loop 27 times:
+    format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
+  loop 9 times:
+    format slot (loop-number + 27 - 1) of player with gray stained glass pane named " " to be unstealable
+    if loop-number = 5:
+      format slot (loop-number + 27 - 1) of player with crafting table named "§6Return to Regular Crafting" to run [open crafting table to player]
+
+  format slot 0 of player with iron pickaxe named {@moneyPickaxe1} with lore "§e32 Gold Blocks", "§e3 Iron Ingots", and "§e2 Sticks" to run [customCraft(player, (32 gold block, 3 iron ingot, 2 stick), (iron pickaxe named {@moneyPickaxe1} with lore "Affects iron ore, gold ore, and nether gold ore.", "Autosmelts iron ore, gold ore, and nether gold ore", "Will drop up to 2 extra ores.", "Stacks with fortune, inhibited by silk touch.", "Can be upgraded.", "", "§7Crafted by: %player%"))]
+
+  format slot 1 of player with diamond pickaxe named {@moneyPickaxe2} with lore "§eTier I Money Pickaxe" and "§e4 Diamonds" to run [customCraft(player, (iron pickaxe named {@moneyPickaxe1}, 4 diamonds), (diamond pickaxe named {@moneyPickaxe2} with lore "Affects all of Tier I + diamond ore, emerald ore, and quartz ore.", "Autosmelts iron ore, gold ore, and nether gold ore.", "Will drop up to 2 extra ores.", "Stacks with fortune, inhibited by silk touch.", "You may upgrade to netherite in a smithing table.", "", "§7Crafted by: %player%"))]
+
+on break:
+  player's gamemode is not creative or spectator
+
+  name of player's tool contains {@moneyPickaxe}
+
+  level of silk touch of player's tool is not set
+  set {_for} to level of fortune of player's tool + 0
+  set {_mult} to random integer between 1 and ({_for} + 3)
+  set {_xp} to random integer between 2 and 5
+
+  add 1 to damage of player's tool
+
+  if past event-block is iron ore or gold ore or nether gold ore:
+    spawn {_xp} of xp at event-block
+    if past event-block is iron ore:
+      cancel event
+      set event-block to air
+      drop {_mult} of iron ingot at event-block
+    if past event-block is gold ore:
+      cancel event
+      set event-block to air
+      drop {_mult} of gold ingot at event-block
+    if past event-block is nether gold ore:
+      cancel event
+      set event-block to air
+      drop {_mult} of gold ingot at event-block
+
+  if name of player's tool is {@moneyPickaxe2}:
+    if past event-block is iron ore or gold ore or nether gold ore or diamond ore or emerald ore:
+      spawn {_xp} of xp at event-block
+      if past event-block is diamond ore:
+        cancel event
+        set event-block to air
+        drop {_mult} of diamond at event-block
+      if past event-block is emerald ore:
+        cancel event
+        set event-block to air
+        drop {_mult} of emerald at event-block
+      if past event-block is quartz ore:
+        cancel event
+        set event-block to air
+        drop {_mult} of quartz at event-block
