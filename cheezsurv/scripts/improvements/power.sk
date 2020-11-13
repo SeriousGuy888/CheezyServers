@@ -73,15 +73,21 @@ on place:
 
 on break:
   if {power.generators::%event-world%::*} contains event-location:
+    cancel event
+    set event-block to air
     remove event-location from {power.generators::%event-world%::*}
     send "§eRemoved combustion generator!"
     drop 1 of {@genItem} named "{@genName}" at event-location
   if {power.batteries::%event-world%::*} contains event-location:
+    cancel event
+    set event-block to air
     send "§eRemoved battery!"
     drop 1 of {@battItem} named "{@battName}" with lore "§7%{power.batteries::%event-world%::%event-location%.power}%" and "§7Power Stored" at event-location
     delete {power.batteries::%event-world%::%event-location%.power}
     remove event-location from {power.batteries::%event-world%::*}
   if {power.chairs::%event-world%::*} contains event-location:
+    cancel event
+    set event-block to air
     send "§eRemoved electric chair!"
     drop 1 of {@chairItem} named "{@chairName}" at event-location
     delete {power.chairs::%event-world%::%event-location%.active}
