@@ -7,6 +7,7 @@ options:
   chairItem: smooth quartz stairs
 
   batteryMaxPower: 100
+  genPowerPerItem: 3
 
 
 
@@ -20,10 +21,13 @@ function noMoveElecComps(m: blocks) :: boolean:
 function consumePower(w: world, l: location, amt: number):
   loop blocks in radius 1 around {_l}: # search for adjacent batteries
     {power.batteries::%{_w}%::*} contains location of loop-block
-    if {power.batteries::%{_w}%::%location of loop-block%.power} + 0 < {@batteryMaxPower}:
+    if {power.batteries::%{_w}%::%location of loop-block%.power} > {_amt}:
+      subtract {_p} from {power.batteries::%{_w}%::%location of loop-block%.power}
       add loop-block to {_b::*}
   loop {_b::*}:
     subtract {_amt} / size of {_b::*} from {power.batteries::%{_w}%::%location of loop-value%.power}
+    if {power.batteries::%{_w}%::%location of loop-value%.power} + 0 > {@batteryMaxPower}:
+      set {power.batteries::%{_w}%::%location of loop-value%.power} to {@batteryMaxPower}
     show 5 portal above location of loop-value
 
     
@@ -54,8 +58,13 @@ on place:
   if event-block is {@battItem}:
     name of player's tool is "{@battName}"
     send "§ePlaced battery!"
+    set {_start_power} to uncoloured line 1 of lore of player's tool
+    if {_start_power} is set:
+      set {_start_power} to {_start_power} parsed as number
+    else:
+      set {_start_power} to 0
     add event-location to {power.batteries::%event-world%::*}
-    set {power.batteries::%event-world%::%event-location%.power} to 0
+    set {power.batteries::%event-world%::%event-location%.power} to {_start_power}
   if event-block is {@chairItem}:
     name of player's tool is "{@chairName}"
     send "§ePlaced electric chair!"
@@ -68,34 +77,33 @@ on break:
     send "§eRemoved combustion generator!"
     drop 1 of {@genItem} named "{@genName}" at event-location
   if {power.batteries::%event-world%::*} contains event-location:
+    send "§eRemoved battery!"
+    drop 1 of {@battItem} named "{@battName}" with lore "§7%{power.batteries::%event-world%::%event-location%.power}%" and "§7Power Stored" at event-location
     delete {power.batteries::%event-world%::%event-location%.power}
     remove event-location from {power.batteries::%event-world%::*}
-    send "§eRemoved battery!"
-    drop 1 of {@battItem} named "{@battName}" at event-location
   if {power.chairs::%event-world%::*} contains event-location:
-    delete {power.chairs::%event-world%::%event-location%.active}
-    remove event-location from {power.chairs::%event-world%::*}
     send "§eRemoved electric chair!"
     drop 1 of {@chairItem} named "{@chairName}" at event-location
+    delete {power.chairs::%event-world%::%event-location%.active}
+    remove event-location from {power.chairs::%event-world%::*}
 
 on smelt:
   {power.generators::%event-world%::*} contains event-location
   wait 1 tick
   set result of event-block to air
-  consumePower(event-world, event-location, -1)
+  consumePower(event-world, event-location, -{@genPowerPerItem})
 
 every second:
   loop worlds:
     loop {power.chairs::%loop-world%::*}:
       {power.chairs::%loop-world%::%loop-value-2%.active} is true
-      set {_p} to 1.5
+      set {_p} to 4
       loop blocks in radius 1 around loop-value-2:
         {power.batteries::%loop-world%::*} contains location of loop-block
         if {power.batteries::%loop-world%::%location of loop-block%.power} > {_p}:
-          subtract {_p} from {power.batteries::%loop-world%::%location of loop-block%.power}
-          show 15 portal above location of loop-value-2
+          consumePower(loop-world, location of loop-block, {_p})
           loop entities in radius 0.75 around block above loop-value-2:
-            damage loop-entity by 5
+            damage loop-entity by 7.5
 
 on right click on {@battItem}:
   player is not sneaking
