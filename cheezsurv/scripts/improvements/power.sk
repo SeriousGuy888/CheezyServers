@@ -31,65 +31,67 @@ on place:
   if event-block is {@genItem}:
     name of player's tool is "{@genName}"
     send "§ePlaced combustion generator!"
-    add event-location to {power.generators::*}
+    add event-location to {power.generators::%event-world%::*}
   if event-block is {@battItem}:
     name of player's tool is "{@battName}"
     send "§ePlaced battery!"
-    add event-location to {power.batteries::*}
+    add event-location to {power.batteries::%event-world%::*}
   if event-block is {@chairItem}:
     name of player's tool is "{@chairName}"
     send "§ePlaced electric chair!"
-    add event-location to {power.chairs::*}
+    add event-location to {power.chairs::%event-world%::*}
 
 on break:
   if {power.generators::*} contains event-location:
-    remove event-location from {power.generators::*}
+    remove event-location from {power.generators::%event-world%::*}
     send "§eRemoved combustion generator!"
     drop 1 of {@genItem} named "{@genName}" at event-location
   if {power.batteries::*} contains event-location:
     delete {power.batteries::%event-location%.power}
-    remove event-location from {power.batteries::*}
+    remove event-location from {power.batteries::%event-world%::*}
     send "§eRemoved battery!"
     drop 1 of {@battItem} named "{@battName}" at event-location
   if {power.chairs::*} contains event-location:
-    remove event-location from {power.chairs::*}
+    remove event-location from {power.chairs::%event-world%::*}
     send "§eRemoved electric chair!"
     drop 1 of {@chairItem} named "{@chairName}" at event-location
 
 on smelt:
-  {power.generators::*} contains event-location
+  {power.generators::%event-world%::*} contains event-location
   wait 1 tick
   set result of event-block to air
   loop blocks in radius 1: # search for adjacent batteries
-    {power.batteries::*} contains location of loop-block
-    if {power.batteries::%location of loop-block%.power} + 0 < {@batteryMaxPower}:
-      add 1 to {power.batteries::%location of loop-block%.power}
+    {power.batteries::%event-world%::*} contains location of loop-block
+    if {power.batteries::%event-world%::%location of loop-block%.power} + 0 < {@batteryMaxPower}:
+      add 1 to {power.batteries::%event-world%::%location of loop-block%.power}
       show 5 portal above location of loop-block
 
 every second:
-  loop {power.chairs::*}:
-    set {_p} to 1.5
-    loop blocks in radius 1 around loop-value:
-      {power.batteries::*} contains location of loop-block
-      if {power.batteries::%location of loop-block%.power} > {_p}:
-        subtract {_p} from {power.batteries::%location of loop-block%.power}
-        show 15 portal above location of loop-value-1
-        loop entities in radius 0.5 around block above loop-value-1:
-          damage loop-entity by 2
+  loop worlds:
+    loop {power.chairs::%loop-world%::*}:
+      set {_p} to 1.5
+      loop blocks in radius 1 around loop-value-2:
+        {power.batteries::%loop-world%::*} contains location of loop-block
+        if {power.batteries::%loop-world%::%location of loop-block%.power} > {_p}:
+          subtract {_p} from {power.batteries::%loop-world%::%location of loop-block%.power}
+          show 15 portal above location of loop-value-2
+          loop entities in radius 0.75 around block above loop-value-2:
+            damage loop-entity by 2
 
 on right click on {@battItem}:
   player is not sneaking
-  {power.batteries::*} contains event-location
-  if {power.batteries::%event-location%.power} > {@batteryMaxPower}:
-    set {power.batteries::%event-location%.power} to {@batteryMaxPower}
-  send "§e§lBattery Power: §e%{power.batteries::%event-location%.power}%"
+  {power.batteries::%event-world%::*} contains event-location
+  if {power.batteries::%event-world%::%event-location%.power} > {@batteryMaxPower}:
+    set {power.batteries::%event-world%::%event-location%.power} to {@batteryMaxPower}
+  send "§e§lBattery Power: §e%{power.batteries::%event-world%::%event-location%.power}%"
 
 
 function noMoveElecComps(m: blocks) :: boolean:
   loop {_m::*}:
-    return true if {power.generators::*} contains loop-value's location
-    return true if {power.batteries::*} contains loop-value's location
-    return true if {power.chairs::*} contains loop-value's location
+    loop worlds:
+      return true if {power.generators::%loop-world%::*} contains loop-value-1's location
+      return true if {power.batteries::%loop-world%::*} contains loop-value-1's location
+      return true if {power.chairs::%loop-world%::*} contains loop-value-1's location
 
 on piston extend:
   cancel event if noMoveElecComps(moved blocks) is true
