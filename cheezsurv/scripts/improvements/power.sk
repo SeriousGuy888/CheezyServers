@@ -109,7 +109,15 @@ every second:
         if {power.batteries::%loop-world%::%location of loop-block%.power} > {_p}:
           consumePower(loop-world, location of loop-block, {_p})
           loop entities in radius 0.75 around block above loop-value-2:
+            if loop-entity is player:
+              set metadata "power_electric_chair" of loop-entity to true
             damage loop-entity by 7.5
+            wait 5 ticks
+            set metadata "power_electric_chair" of loop-entity to false
+
+on death of player:
+  metadata "power_electric_chair" of player is true
+  set death message to "%player% was electrocuted"
 
 on right click on {@battItem}:
   player is not sneaking
