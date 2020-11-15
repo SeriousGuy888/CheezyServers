@@ -8,21 +8,18 @@ on right click on stair:
       set {_o} to type of clicked block
       spawn minecart at location 0 above and 0 in front of event-block
       set {_s} to last spawned entity
-      set {_l} to location of player
       make player ride {_s}
-      wait 1 tick
       set metadata "sitting" of player to true
-      while check [player's vehicle is {_s}]->[{_o} is type of clicked block]:
-        wait 1 tick
-      set {_k} to method "remove" from {_s}
-      set pitch of {_l} to player's pitch
-      set yaw of {_l} to player's yaw
-      teleport player to {_l}
+      set metadata "chair" of {_s} to true
  
+on damage:
+  metadata "chair" of victim is true
+  cancel event
 
 on dismount:
   metadata "sitting" of player is true
   kill player's vehicle
+  delete metadata "sitting" of player
 
 command /chair:
   trigger:
