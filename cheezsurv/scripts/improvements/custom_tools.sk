@@ -44,7 +44,7 @@ on right click on crafting table:
 
   format slot 1 of player with diamond pickaxe named {@moneyPickaxe2} with lore "§eTier I Money Pickaxe" and "§e4 Diamonds" to run [customCraft(player, (iron pickaxe named {@moneyPickaxe1}, 4 diamonds), (diamond pickaxe named {@moneyPickaxe2} with lore "Affects all of Tier I + diamond ore, emerald ore, and quartz ore.", "Autosmelts iron ore, gold ore, and nether gold ore.", "Will drop up to 2 extra ores.", "Stacks with fortune, inhibited by silk touch.", "You may upgrade to netherite in a smithing table.", "", "§7Crafted by: %player%"))]
 
-  format slot 8 of player with compass named {@playerTrackerCompass} with lore "§e4 Iron Ingots", "§e1 Redstone", and "§e2 Eyes of Ender" to run [customCraft(player, (4 iron ingot, 1 redstone dust, 2 ender eye), (compass named {@playerTrackerCompass} with lore "Right click to choose a player to track", "", "§7Crafted by: %player%"))]
+  format slot 8 of player with shiny compass named {@playerTrackerCompass} with lore "§e4 Iron Ingots", "§e1 Redstone", and "§e2 Eyes of Ender" to run [customCraft(player, (4 iron ingot, 1 redstone dust, 2 ender eye), (shiny compass named {@playerTrackerCompass} with lore "Right click to choose a player to track"))]
 
 
 on right click with compass:
