@@ -2,6 +2,7 @@ options:
   moneyPickaxe: "§6Money Pickaxe"
   moneyPickaxe1: "§6Money Pickaxe I"
   moneyPickaxe2: "§6Money Pickaxe II"
+  playerTrackerCompass: "§6Player Tracker Compass"
 
 function customCraft(p: player, ingredients: items, i: item):
   loop {_ingredients::*}:
@@ -42,6 +43,54 @@ on right click on crafting table:
   format slot 0 of player with iron pickaxe named {@moneyPickaxe1} with lore "§e32 Gold Blocks", "§e3 Iron Ingots", and "§e2 Sticks" to run [customCraft(player, (32 gold block, 3 iron ingot, 2 stick), (iron pickaxe named {@moneyPickaxe1} with lore "Affects iron ore, gold ore, and nether gold ore.", "Autosmelts iron ore, gold ore, and nether gold ore", "Will drop up to 2 extra ores.", "Stacks with fortune, inhibited by silk touch.", "Can be upgraded.", "", "§7Crafted by: %player%"))]
 
   format slot 1 of player with diamond pickaxe named {@moneyPickaxe2} with lore "§eTier I Money Pickaxe" and "§e4 Diamonds" to run [customCraft(player, (iron pickaxe named {@moneyPickaxe1}, 4 diamonds), (diamond pickaxe named {@moneyPickaxe2} with lore "Affects all of Tier I + diamond ore, emerald ore, and quartz ore.", "Autosmelts iron ore, gold ore, and nether gold ore.", "Will drop up to 2 extra ores.", "Stacks with fortune, inhibited by silk touch.", "You may upgrade to netherite in a smithing table.", "", "§7Crafted by: %player%"))]
+
+  format slot 8 of player with compass named {@playerTrackerCompass} with lore "§e4 Iron Ingots", "§e1 Redstone", and "§e2 Eyes of Ender" to run [customCraft(player, (4 iron ingot, 1 redstone dust, 2 ender eye), (compass named {@playerTrackerCompass} with lore "Right click to choose a player to track", "", "§7Crafted by: %player%"))]
+
+
+on right click with compass:
+  name of player's tool is {@playerTrackerCompass}
+  if {tracking_compass::%player%} is not set:
+    set metadata "tracking_compass_select" of player to true
+    send "§aSend the name of the tracking target in chat now or type §ecancel§a to cancel."
+  else:
+    delete {tracking_compass::%player%}
+    send "§aStopped tracking player."
+    set player's compass target to spawn of world "world"
+on chat:
+  metadata "tracking_compass_select" of player is true
+  cancel event
+  if name of player's tool is not {@playerTrackerCompass}:
+    send "§cYou must hold the compass!"
+    set metadata "tracking_compass_select" of player to false
+    stop
+  if message in lowercase is "cancel":
+    send "§cCancelled."
+    set metadata "tracking_compass_select" of player to false
+    stop
+  set {_p} to message parsed as player
+  if {_p} is not set:
+    send "§cNo player online by that name."
+    set metadata "tracking_compass_select" of player to false
+    stop
+  set {tracking_compass::%player%} to {_p}
+  set player's compass target to location of {_p}
+  send "§aNow tracking %{_p}%§a. Right click again to remove target."
+  set metadata "tracking_compass_select" of player to false
+every 30 ticks:
+  loop all players:
+    {tracking_compass::%loop-player%} is set
+    if {tracking_compass::%loop-player%} is not online:
+      send action bar "§c%{tracking_compass::%loop-player%}% §4is offline!" to loop-player
+      set loop-player's compass target to spawn of world "world"
+      stop
+    if "%loop-player's world%" != "%{tracking_compass::%loop-player%}'s world%":
+      send action bar "§c%{tracking_compass::%loop-player%}% §4is not in the same world!" to loop-player
+      set loop-player's compass target to spawn of world "world"
+      stop
+    set loop-player's compass target to location of {tracking_compass::%loop-player%}
+    send action bar "§3Currently tracking §b%{tracking_compass::%loop-player%}%" to loop-player
+
+
 
 on break:
   player's gamemode is not creative or spectator
