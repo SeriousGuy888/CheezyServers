@@ -79,7 +79,7 @@ on chat:
 every 30 ticks:
   loop all players:
     {tracking_compass::%loop-player%} is set
-    if {tracking_compass::%loop-player%} is not online:
+    if {tracking_compass::%loop-player%} is offline:
       send action bar "§c%{tracking_compass::%loop-player%}% §4is offline!" to loop-player
       set loop-player's compass target to spawn of world "world"
       stop
