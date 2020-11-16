@@ -26,4 +26,4 @@ on right click with compass:
     if {_deg} is less than 325:
       set {_dir} to "northwest"
 
-  send "§3You are facing §b%{_dir}%§3.%nl%§3Your exact direction is §b%{_deg}% §3degrees.%nl%§2Your coordinates are §b%player's x-coordinate%§3, §b%player's y-coordinate%§3, §b%player's z-coordinate%§2.%nl%%nl%§a§oClick twice to be sure. Sometimes, this repeats the previous calculation for some reason."
+  send "§3You are facing §b%{_dir}%§3.%nl%§3Your exact compass bearing is §b%{_deg}% §3degrees.%nl%§2Your coordinates are §b%player's x-coordinate%§3, §b%player's y-coordinate%§3, §b%player's z-coordinate%§2."
