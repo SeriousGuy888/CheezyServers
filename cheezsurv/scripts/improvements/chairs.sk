@@ -9,15 +9,20 @@ on right click on stair:
       spawn minecart at location 0 above and 0 in front of event-block
       set {_s} to last spawned entity
       make player ride {_s}
-      set metadata "sitting" of player to true
+      set metadata "sitting" of player to location of clicked block
       set metadata "chair" of {_s} to true
  
-on damage:
-  metadata "chair" of victim is true
+on left click:
+  metadata "chair" of clicked entity is true
   cancel event
 
+on break:
+  loop all players:
+    metadata "sitting" of loop-player is location of event-block
+    make loop-player dismount
+
 on dismount:
-  metadata "sitting" of player is true
+  metadata "sitting" of player is set
   kill player's vehicle
   delete metadata "sitting" of player
 
