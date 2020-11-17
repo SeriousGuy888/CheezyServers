@@ -1,12 +1,14 @@
 on right click on stair:
   set {chairs.%player%} to true if {chairs.%player%} is not set
   {chairs.%player%} is true
+
+  block above clicked block is transparent
+  "%type of clicked block%" does not contain "top"
   
   if player is not sneaking:
     if player's vehicle is not set:
       cancel event
-      set {_o} to type of clicked block
-      spawn minecart at location 0 above and 0 in front of event-block
+      spawn minecart at location 0 above and 0 in front of clicked block
       set {_s} to last spawned entity
       make player ride {_s}
       set metadata "sitting" of player to location of clicked block
