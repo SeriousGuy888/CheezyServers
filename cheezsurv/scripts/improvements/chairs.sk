@@ -26,6 +26,15 @@ on dismount:
   kill player's vehicle
   delete metadata "sitting" of player
 
+on quit:
+  metadata "sitting" of player is set
+  make player dismount
+
+on skript stop:
+  loop all players:
+    metadata "sitting" of loop-player is set
+    make loop-player dismount
+
 command /chair:
   trigger:
     set {chairs.%player%} to true if {chairs.%player%} is not set
