@@ -2,7 +2,6 @@ on right click on stair:
   set {chairs.%player%} to true if {chairs.%player%} is not set
   {chairs.%player%} is true
 
-  block above clicked block is transparent
   "%type of clicked block%" does not contain "top"
   
   if player is not sneaking:
