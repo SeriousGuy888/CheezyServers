@@ -10,6 +10,7 @@ on script load:
   # add "inflation lol" to {propaganda::*}
   # add "billzo does a stupid and makes it possible for hoang and liam to break the economy" to {propaganda::*}
 
+  add """I constantly go to nightclubs. There's nothing I like more."" -Jasper 2020" to {propaganda::*}
   add """It didn't have water because I didn't place water."" -Liam 2020" to {propaganda::*}
   add "The actionlogger is logging your actions." to {propaganda::*}
   add """I think communism was good"" -Liam 2020" to {propaganda::*}
