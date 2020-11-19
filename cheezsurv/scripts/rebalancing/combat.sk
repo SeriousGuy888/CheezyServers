@@ -98,6 +98,9 @@ on damage:
     set {combat.combo.%attacker%.basic_buildup} to 0
 
 on left click:
+  set {combat.shield_charge.%player%.enabled} to true if {combat.shield_charge.%player%.enabled} is not set
+  {combat.shield_charge.%player%.enabled} is true
+
   player's tool is shield
   player's gamemode is not spectator
   player's facing is not up or down
@@ -195,6 +198,17 @@ command /togglecombatinfo [<text>]:
     else if {combat.enable_info_msg.%{_opt}%.%player%} is true:
       set {combat.enable_info_msg.%{_opt}%.%player%} to false
       send "§6Combat info option §e%{_opt}% §6turned §coff§6."
+
+command /toggleshieldcharge:
+  aliases: /toggleshieldbash
+  trigger:
+    set {combat.shield_charge.%player%.enabled} to true if {combat.shield_charge.%player%.enabled} is not set
+    if {combat.shield_charge.%player%.enabled} is true:
+      set {combat.shield_charge.%player%.enabled} to false
+      send "§6Enabled shield charges."
+    else if {combat.shield_charge.%player%.enabled} is false:
+      set {combat.shield_charge.%player%.enabled} to true
+      send "§6Disabled shield charges."
 
 command /togglecombatmessage:
   aliases: /togglecombatmsg
