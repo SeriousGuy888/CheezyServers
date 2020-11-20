@@ -3,3 +3,5 @@ on damage:
   event-projectile is firework
   attacker is player
   set damage to damage * 2
+  if victim is armor stand:
+    cancel event
