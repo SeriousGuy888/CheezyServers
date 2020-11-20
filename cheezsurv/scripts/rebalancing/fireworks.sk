@@ -1,0 +1,4 @@
+on damage:
+  damage cause is entity explosion
+  attacker is player
+  set damage to damage * 2
