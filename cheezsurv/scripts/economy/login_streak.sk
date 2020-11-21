@@ -1,8 +1,8 @@
 options:
   perReward: 23.75 hours
   loseStreak: 2 days
-  reward: 0.1
-  rewardAddend: 0.01
+  reward: 1
+  rewardAddend: 0.1
 
 on join:
   if {login_streak::%player%.date} is not set:
