@@ -1,8 +1,0 @@
-command /..ab:
-  trigger:
-    player is op
-    loop all entities in radius 10 around player:
-      stop if ("cow", "sheep", "pig", "chicken", "rabbit") does not contain "%type of loop-entity%"
-      if chance of 10%:
-        make console execute command "/data merge entity %uuid of loop-entity% {InLove:1200}"
-        send uuid of loop-entity
