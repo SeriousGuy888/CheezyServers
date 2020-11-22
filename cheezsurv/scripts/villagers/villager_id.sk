@@ -7,12 +7,18 @@ options:
   idVersion: 5
   idAssignedParticleEffect: show 15 happy villager above location of loop-entity
 
+  lastNames: ("Trumpet", "Snowman", "Toothbrush", "Smith", "Duck", "Ass", "Bass", "Bypass", "Class", "Crass", "Grass", "Mass", "Pass", "Gas", "Jackass", "Nervegas", "Trespass", "Pompeii", "Trump", "Biden", "Sandals", "Blunt", "Elchapo", "Pie", "Garfield")
+  firstNames: ("Aary", "Barry", "Berry", "Birch", "Blackberry", "Blackcherry", "Blueberry", "Cary", "Carry", "Cranberry", "Dairy", "Earring", "Fairy", "Ferry", "Gary", "Glary", "Hairy", "Harry", "Jerry", "Kerosene", "Larry", "Mary", "Merry", "Parry", "Quarry", "Raspberry", "Scary", "Sherry", "Sorry", "Terry", "Very", "Wary", "Blunt")
+
 function generateVillagerId(l: number) :: text:
   set {_c::*} to "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "a", "b", "c", "d", "e", and "f"
   set {_r} to ""
   loop {_l} times:
     set {_r} to "%{_r}%%random element of {_c::*}%"
   return {_r}
+
+function nameVillager(e: entity, first: string, last: string):
+  set name of {_e} to "%{_first}% %{_last}%"
 
 on script load:
   set {_old_id_formats::*} to "villager_", "2-v-", "3-villager-", and "vil-v4-"
@@ -33,9 +39,13 @@ every {@idAssignmentInterval}:
     
 
     if loop-entity's name is not set:
-      set name of loop-entity to "{@namePrefix}%{villagerid::%loop-entity's uuid%}%"
-    if loop-entity's name starts with "{@namePrefix}":
-      set name of loop-entity to "{@namePrefix}%{villagerid::%loop-entity's uuid%}%"
+      set {_l} to random element out of {@lastNames}
+      set {_f} to random element out of {@firstNames}
+      set name of loop-entity to "%{_f}% %{_l}%"
+    else if loop-entity's name starts with "{@namePrefix}":
+      set {_l} to random element out of {@lastNames}
+      set {_f} to random element out of {@firstNames}
+      set name of loop-entity to "%{_f}% %{_l}%"
 
 every {@legacyCodeUpdateInterval}:
   loop all entities:
@@ -57,3 +67,17 @@ command /villagerid:
     set {_villagerId} to {villagerid::%targeted entity's uuid%} otherwise "[unassigned]"
     set {_villagerName} to display name of targeted entity otherwise "§2this villager"
     send "%nl%§2The entity ID number of §a%{_villagerName}% §2is%nl%§a%{_villagerId}%%nl%%nl%§2The current ID number iteration is §av{@idVersion}§2. Do not record this villager's ID unless it is prefixed with §a{@idPrefix}§2. If it is not prefixed properly, please wait up to {@legacyCodeUpdateInterval} for it to be automatically converted to the current ID iteration.%nl%"
+
+on breed:
+  event-entity is villager
+  set {_fl} to last element of (name of breeding father split at " ")
+  set {_ml} to last element of (name of breeding mother split at " ")
+  
+  set {_l} to {_fl}
+  set {_l} to {_ml} if chance of 50%
+
+  if {_fl} = {_ml}:
+    set {_l} to "%{_fl}%-%{_ml}%"
+
+  set {_f} to random element out of {@firstNames}
+  set name of event-entity to "%{_f}% %{_l}%"
