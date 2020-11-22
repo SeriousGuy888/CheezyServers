@@ -82,6 +82,9 @@ on breed:
 
   if {_fl} = {_ml}:
     set {_l} to "%{_fl}%-%{_ml}%"
+  
+  if length of {_l} > 64:
+    set {_l} to "%first 51 characters of {_l}%-verylongname"
 
   set {_f} to random element out of {@firstNames}
   set name of event-entity to "%{_f}% %{_l}%"
