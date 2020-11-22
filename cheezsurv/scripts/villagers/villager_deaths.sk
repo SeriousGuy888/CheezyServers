@@ -36,8 +36,6 @@ on death of villager:
     {villager_death_messages.subscribed.%loop-player%} is true
     send "%{villager_death_messages.current}%" to loop-player
   
-  # delete {villagerid::%victim's uuid%}
-  
 command /villagerdeathmessages:
   aliases: /villdeathmsgs, /vdm
   trigger:
