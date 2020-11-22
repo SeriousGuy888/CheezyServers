@@ -39,10 +39,13 @@ every {@idAssignmentInterval}:
     
 
     if loop-entity's name is not set:
-      set {_l} to random element out of {@lastNames}
-      set {_f} to random element out of {@firstNames}
-      set name of loop-entity to "%{_f}% %{_l}%"
-    else if loop-entity's name starts with "{@namePrefix}":
+      set {_assign_new_name} to true
+    if loop-entity's name starts with "{@namePrefix}":
+      set {_assign_new_name} to true
+    if loop-entity's name is "rename":
+      set {_assign_new_name} to true
+
+    if {_assign_new_name} is true:
       set {_l} to random element out of {@lastNames}
       set {_f} to random element out of {@firstNames}
       set name of loop-entity to "%{_f}% %{_l}%"
