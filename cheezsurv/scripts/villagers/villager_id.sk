@@ -75,6 +75,7 @@ on breed:
   
   set {_l} to {_fl}
   set {_l} to {_ml} if chance of 50%
+  set {_l} to "%{_fl}%-%{_ml}%" if chance of 10%
 
   if {_fl} = {_ml}:
     set {_l} to "%{_fl}%-%{_ml}%"
