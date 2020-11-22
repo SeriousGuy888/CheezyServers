@@ -18,6 +18,7 @@ on script load:
   add """Okay someone send me hentai."" -Lucas 2020" to {propaganda::*}
   add "The actionlogger is logging your actions." to {propaganda::*}
   add """I think communism was good"" -Liam 2020" to {propaganda::*}
+  add """Genocide's a smart idea."" -Jasper 2020" to {propaganda::*}
   add """Allah the Pinata"" -Hoang 2020" to {propaganda::*}
   add """I am very high."" -Lucas 2020" to {propaganda::*}
   add "Ever tried to shear a bee?" to {propaganda::*}
