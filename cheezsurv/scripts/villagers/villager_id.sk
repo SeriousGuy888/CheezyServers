@@ -7,8 +7,8 @@ options:
   idVersion: 5
   idAssignedParticleEffect: show 15 happy villager above location of loop-entity
 
-  lastNames: ("Trumpet", "Snowman", "Toothbrush", "Smith", "Duck", "Ass", "Bass", "Bypass", "Class", "Crass", "Grass", "Mass", "Pass", "Gas", "Jackass", "Nervegas", "Trespass", "Pompeii", "Trump", "Biden", "Sandals", "Blunt", "Elchapo", "Pie", "Garfield", "INbred", "Hrrm")
-  firstNames: ("Aary", "Barry", "Berry", "Birch", "Blackberry", "Blackcherry", "Blueberry", "Cary", "Carry", "Cranberry", "Dairy", "Earring", "Fairy", "Ferry", "Gary", "Glary", "Hairy", "Harry", "Jerry", "Kerosene", "Larry", "Mary", "Merry", "Parry", "Quarry", "Raspberry", "Scary", "Sherry", "Sorry", "Terry", "Very", "Wary", "Blunt")
+  lastNames: ("Trumpet", "Snowman", "Toothbrush", "Smith", "Duck", "Ass", "Bass", "Bypass", "Class", "Crass", "Grass", "Mass", "Pass", "Gas", "Jackass", "Nervegas", "Trespass", "Pompeii", "Trump", "Biden", "Sandals", "Blunt", "Elchapo", "Pie", "Garfield", "Inbred", "Hrrm", "Hrrrm", "Hurm", "Hurrm", "Herrm", "Claus", "Candycane")
+  firstNames: ("Aary", "Barry", "Berry", "Birch", "Blackberry", "Blackcherry", "Blueberry", "Cary", "Carry", "Cranberry", "Dairy", "Earring", "Fairy", "Ferry", "Gary", "Gerry", "Glary", "Hairy", "Harry", "Jerry", "Karen", "Kerosene", "Larry", "Mary", "Merry", "Parry", "Quarry", "Raspberry", "Scary", "Sherry", "Sorry", "Terry", "Very", "Wary", "Yeri", "Blunt")
 
 function generateVillagerId(l: number) :: text:
   set {_c::*} to "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "a", "b", "c", "d", "e", and "f"
