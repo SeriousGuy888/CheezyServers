@@ -1,0 +1,145 @@
+options:
+  spellbookName: "§5Spellbook"
+  spellbookLore: "§dRight click with a stick with this" and "§dthis in your offhand to cast spells."
+  wandName: "§5Magic Stick"
+
+  shieldSpellDuration: 2
+
+function holdingWand(p: player) :: boolean:
+  if name of {_p}'s tool is {@wandName}:
+    return true
+  else:
+    return false
+
+function hasSpellbook(p: player) :: boolean:
+  if name of {_p}'s offhand tool is {@spellbookName}:
+    return true
+  else:
+    return false
+
+
+function takeXp(p: player, amt: integer):
+  make console execute command "/xp add %player% -%abs(amt)% points"
+
+
+function quickswapShieldSpell(p: player):
+  set {_spell_before_swap} to metadata "sel_magic_spell" of {_p}
+  if {_spell_before_swap} is "shield":
+    set metadata "sel_magic_spell" of {_p} to metadata "prev_sel_magic_spell" of {_p}
+    set metadata "prev_sel_magic_spell" of {_p} to "shield"
+  else:
+    set metadata "prev_sel_magic_spell" of {_p} to metadata "sel_magic_spell" of {_p}
+    set metadata "sel_magic_spell" of {_p} to "shield"
+
+function selectSpell(p: player, s: string):
+  set {_spell_before_swap} to metadata "sel_magic_spell" of {_p}
+  if {_spell_before_swap} is "shield":
+    quickswapShieldSpell({_p})
+  set metadata "sel_magic_spell" of {_p} to {_s}
+  send "§3Selected spell changed from §b%{_spell_before_swap}%§3 to §b%{_s}%§3." to {_p}
+
+function castSpell(p: player, s: string, proj: entity):
+  if {_s} is "shield":
+    apply glowing to {_p} for {@shieldSpellDuration} seconds
+    set metadata "magic_shield" of {_p} to now
+    show 100 totem at {_p}
+    send action bar "§bShield against magic active for the next {@shieldSpellDuration} seconds." to {_p}
+  if {_s} is "damage":
+    send action bar "§bUsed generic damage spell." to {_p}
+
+
+
+command /getmagicitem <text>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permission!"
+      stop
+    if arg-1 is "spellbook":
+      give player shiny book named {@spellbookName} with lore {@spellbookLore}
+    if arg-1 is "wand":
+      give player shiny stick named {@wandName}
+
+
+on right click:
+  player's gamemode is not spectator
+  if holdingWand(player):
+    if hasSpellbook(player):
+      if player is not sneaking:
+        quickswapShieldSpell(player)
+        set {_spell} to metadata "sel_magic_spell" of player
+        set {_prev_spell} to metadata "prev_sel_magic_spell" of player
+        send "§3Quickswapped spells from §b%{_prev_spell}%§3 to §b%{_spell}%§3. Sneak-right-click to open spell menu."
+      else:
+        open chest with 4 rows named "Spell Menu" to player
+        wait 1 tick
+        loop 36 times:
+          format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
+        loop 9 times:
+          format slot (loop-number + 27 - 1) of player with gray stained glass pane named " " to be unstealable
+          if loop-number = 5:
+            format slot (loop-number + 27 - 1) of player with red stained glass pane named "§cCancel" to close
+
+        format slot 0 of player with tipped arrow named "§fGeneric Damaging Beam" with lore "§aCost: idk" to run [selectSpell(player, "damage")]
+    else:
+      send "§cYou need to hold a spellbook in your offhand to open the spell menu!"
+  else if name of player's tool is {@spellbookLore}:
+    send "§cHold this book in your offhand with a magic stick in your mainhand to open the spell menu."
+  else if hasSpellbook(player):
+    send "§cHold a magic stick in your mainhand to open the spell menu."
+
+on left click:
+  player's gamemode is not spectator
+  if holdingWand(player):
+    if hasSpellbook(player):
+      if metadata "sel_magic_spell" of player is not set:
+        send "§cSelect a spell!"
+        stop
+      set metadata "using_magic_spell" of player to metadata "sel_magic_spell" of player
+      shoot snowball from player
+      delete metadata "using_magic_spell" of player
+    else:
+      send "§cYou need to hold a spellbook in your offhand to cast spells!"
+
+on shoot:
+  shooter is player
+  metadata "using_magic_spell" of shooter is set
+  set {_spell} to metadata "using_magic_spell" of shooter
+  set metadata "spell_projectile" of projectile to {_spell}
+
+  if {_spell} is "shield":
+    cancel event
+  castSpell(shooter, {_spell}, projectile)
+
+
+
+on projectile hit:
+  metadata "spell_projectile" of projectile is set
+  set {_spell} to metadata "spell_projectile" of shooter
+
+  # show 1 flash at projectile
+
+
+on damage:
+  projectile is set # because damage cause is projectile doesnt work
+  metadata "spell_projectile" of projectile is set
+  cancel event
+  set {_spell} to metadata "spell_projectile" of projectile
+
+  # show 100 totem at projectile
+  if {_spell} is "damage":
+    if metadata "magic_shield" of victim is set:
+      set {_shield_timestamp} to metadata "magic_shield" of victim
+      if difference between now and {_shield_timestamp} < {@shieldSpellDuration} seconds:
+        send action bar "§cStruck by generic damage curse cast by %attacker%§c!" to victim
+        send action bar "§cStruck %victim%§c with generic damage curse!" to attacker
+        stop
+    make attacker damage victim by 5
+    send action bar "§cStruck by generic damage curse cast by %attacker%§c!" to victim
+    send action bar "§cStruck %victim%§c with generic damage curse!" to attacker
+
+
+every 5 ticks:
+  loop all entities:
+    loop-entity is snowball
+    metadata "spell_projectile" of loop-entity is set
+    show 20 flame at loop-entity
