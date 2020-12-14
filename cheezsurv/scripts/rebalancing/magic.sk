@@ -2,8 +2,57 @@ options:
   spellbookName: "§5Spellbook"
   spellbookLore: "§dRight click with a stick with this" and "§dthis in your offhand to cast spells."
   wandName: "§5Magic Stick"
+  wandLore: "§dRight click to quickly swap to shield charm." and "§dSneak right click to open spell menu."
 
-  shieldSpellDuration: 2
+  maxMana: 100
+  spellRange: 100
+
+  shieldSpellDuration: 3
+  damageSpellDamage: 5
+
+
+
+variables:
+  {magic.spell_costs.shield} = 10
+
+  {magic.spell_costs.disarm} = 15
+  {magic.spell_costs.armour_swap} = 20
+  {magic.spell_costs.freeze} = 25
+
+  {magic.spell_costs.damage} = 15
+  {magic.spell_costs.burn} = 20
+
+
+
+function getSpellUnlocked(p: player, s: string) :: boolean:
+  return {magic.spells::%{_p}%.%{_s}%}
+function setSpellUnlocked(p: player, s: string, v: boolean):
+  set {magic.spells::%{_p}%.%{_s}%} to {_v}
+function spellItem(p: player, i: itemtype, s: string) :: itemtype:
+  if getSpellUnlocked({_p}, {_s}) is true:
+    return {_i}
+  else:
+    return iron bars
+
+
+function selectSpell(p: player, s: string):
+  if getSpellUnlocked({_p}, {_s}) is not true:
+    if level of {_p} >= {magic.spell_costs.%{_s}%}:
+      addXpLevels({_p}, 0 - {magic.spell_costs.%{_s}%})
+      setSpellUnlocked({_p}, {_s}, true)
+      send "§a%{magic.spell_costs.%{_s}%}% §2XP levels spent to unlock the spell §a%{_s}%§2." to {_p}
+      make {_p} execute command "/spellmenu"
+    else:
+      send "§c%{magic.spell_costs.%{_s}%}% §4XP levels are required to unlock this spell!" to {_p}
+    stop
+
+  set {_spell_before_swap} to metadata "sel_magic_spell" of {_p}
+  if {_spell_before_swap} is "shield":
+    quickswapShieldSpell({_p})
+  set metadata "sel_magic_spell" of {_p} to {_s}
+  send "§3Selected spell changed from §b%{_spell_before_swap}%§3 to §b%{_s}%§3." to {_p}
+  close {_p}'s inventory
+
 
 function holdingWand(p: player) :: boolean:
   if name of {_p}'s tool is {@wandName}:
@@ -18,9 +67,21 @@ function hasSpellbook(p: player) :: boolean:
     return false
 
 
-function takeXp(p: player, amt: integer):
-  make console execute command "/xp add %player% -%abs(amt)% points"
+function applyManaDamageMultiplier(dmg: number, mana: number) :: number:
+  return {_dmg} * ({_mana} / 50)
 
+function getMana(p: player) :: number:
+  return {magic.mana::%{_p}%}
+function setMana(p: player, amt: number):
+  set {magic.mana::%{_p}%} to {_amt}
+function addMana(p: player, amt: number):
+  add {_amt} to {magic.mana::%{_p}%}
+function notEnoughMana(p: player, amt: number):
+  send action bar "§d%{_amt}%§5 mana is required!" to {_p}
+
+function spellParticles(par: string, uuid: string, len: number, amt: number):
+  loop {_len} times:
+    make console execute command "/execute at %{_uuid}% anchored eyes run particle %{_par}% ^-%loop-number% ^ ^ 0 0 0 1 %{_amt}%"
 
 function quickswapShieldSpell(p: player):
   set {_spell_before_swap} to metadata "sel_magic_spell" of {_p}
@@ -31,21 +92,84 @@ function quickswapShieldSpell(p: player):
     set metadata "prev_sel_magic_spell" of {_p} to metadata "sel_magic_spell" of {_p}
     set metadata "sel_magic_spell" of {_p} to "shield"
 
-function selectSpell(p: player, s: string):
-  set {_spell_before_swap} to metadata "sel_magic_spell" of {_p}
-  if {_spell_before_swap} is "shield":
-    quickswapShieldSpell({_p})
-  set metadata "sel_magic_spell" of {_p} to {_s}
-  send "§3Selected spell changed from §b%{_spell_before_swap}%§3 to §b%{_s}%§3." to {_p}
 
-function castSpell(p: player, s: string, proj: entity):
+function addXpLevels(p: player, amt: number):
+  make console execute command "/xp add %{_p}% %{_amt}% levels"
+
+function shieldSpellRemaining(p: player) :: timespan:
+  if metadata "magic_shield" of {_p} is set:
+    set {_time} to metadata "magic_shield" of {_p}
+    set {_diff} to difference between {_time} and now
+    set {_remaining} to difference between {_diff} and {@shieldSpellDuration} seconds
+    if {_remaining} > 0 seconds:
+      return {_remaining}
+    else:
+      return 0 seconds
+
+function castSpell(p: player, s: string):
+  set {_mana_req} to {magic.spell_costs.%{_s}%}
+  if getMana({_p}) < {_mana_req}:
+    notEnoughMana({_p}, {_mana_req})
+    stop
+
   if {_s} is "shield":
     apply glowing to {_p} for {@shieldSpellDuration} seconds
     set metadata "magic_shield" of {_p} to now
     show 100 totem at {_p}
-    send action bar "§bShield against magic active for the next {@shieldSpellDuration} seconds." to {_p}
-  if {_s} is "damage":
-    send action bar "§bUsed generic damage spell." to {_p}
+    addMana({_p}, 0 - {_mana_req})
+    stop
+  
+  if shieldSpellRemaining({_p}) > 0 seconds:
+    delete metadata "magic_shield" of {_p}
+    send "§3Your shield charm was broken as you casted another spell while it was active." to {_p}
+  shoot snowball from {_p}
+
+
+  send action bar "§5Casted spell §d%{_s}%§5." to {_p}
+  addMana({_p}, 0 - {_mana_req})
+
+
+
+on join: # default spells unlocked for all players
+  setSpellUnlocked(player, "shield", true)
+  setSpellUnlocked(player, "damage", true)
+
+command /unlockspell <player> <string> [<string>]:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permission!"
+      stop
+    set {_v} to true
+    set {_v} to false if arg-3 is set
+    setSpellUnlocked(arg-1, arg-2, {_v})
+    send "ok"
+
+command /mana <number> <player=%player%>:
+  trigger:
+    if player is not op:
+      send "§cInsufficient permission!"
+      stop
+    setMana(arg-2, arg-1)
+    
+command /spellmenu:
+  trigger:
+    stop if holdingWand(player) is not true
+    stop if hasSpellbook(player) is not true
+
+    open chest with 4 rows named "Spell Menu" to player
+    wait 1 tick
+    loop 36 times:
+      format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
+    loop 9 times:
+      format slot (loop-number + 27 - 1) of player with red stained glass pane named "§cCancel" to close
+
+    wait 1 tick
+    format slot 0 of player with spellItem(player, totem of undying, "shield") named "§5Shield Charm" with lore "§dCost: %{magic.spell_costs.shield}%" to run [send "§dThis spell is not selected from the menu. Right click with your magic stick to toggle the spell." to player]
+    format slot 9 of player with spellItem(player, stick, "disarm") named "§5Disarming Jinx" with lore "§dCost: %{magic.spell_costs.disarm}%" to run [selectSpell(player, "disarm")]
+    format slot 10 of player with spellItem(player, iron chestplate, "armour_swap") named "§5Armour Swap Jinx" with lore "§dCost: %{magic.spell_costs.armour_swap}%" to run [selectSpell(player, "armour_swap")]
+    format slot 11 of player with spellItem(player, ice, "freeze") named "§5Freezing Jinx" with lore "§dCost: %{magic.spell_costs.freeze}%" to run [selectSpell(player, "freeze")]
+    format slot 18 of player with spellItem(player, bread, "damage") named "§5Pain" with lore "§dBasic damage spell dealing {@damageSpellDamage} damage.", "§dCost: %{magic.spell_costs.damage}%" to run [selectSpell(player, "damage")]
+    format slot 19 of player with spellItem(player, fire charge, "burn") named "§5Inflammation" with lore "§dCost: %{magic.spell_costs.burn}%" to run [selectSpell(player, "burn")]
 
 
 
@@ -57,35 +181,27 @@ command /getmagicitem <text>:
     if arg-1 is "spellbook":
       give player shiny book named {@spellbookName} with lore {@spellbookLore}
     if arg-1 is "wand":
-      give player shiny stick named {@wandName}
+      give player shiny stick named {@wandName} with lore {@wandLore}
 
 
 on right click:
   player's gamemode is not spectator
   if holdingWand(player):
     if hasSpellbook(player):
+      cancel event
       if player is not sneaking:
         quickswapShieldSpell(player)
         set {_spell} to metadata "sel_magic_spell" of player
         set {_prev_spell} to metadata "prev_sel_magic_spell" of player
-        send "§3Quickswapped spells from §b%{_prev_spell}%§3 to §b%{_spell}%§3. Sneak-right-click to open spell menu."
+        send "§3Quickswapped spells from §b%{_prev_spell}%§3 to §b%{_spell}%§3."
       else:
-        open chest with 4 rows named "Spell Menu" to player
-        wait 1 tick
-        loop 36 times:
-          format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
-        loop 9 times:
-          format slot (loop-number + 27 - 1) of player with gray stained glass pane named " " to be unstealable
-          if loop-number = 5:
-            format slot (loop-number + 27 - 1) of player with red stained glass pane named "§cCancel" to close
-
-        format slot 0 of player with tipped arrow named "§fGeneric Damaging Beam" with lore "§aCost: idk" to run [selectSpell(player, "damage")]
+        make player execute command "/spellmenu"
     else:
-      send "§cYou need to hold a spellbook in your offhand to open the spell menu!"
+      send "§cYou need to hold a spellbook in your offhand to open the switch spells!"
   else if name of player's tool is {@spellbookLore}:
-    send "§cHold this book in your offhand with a magic stick in your mainhand to open the spell menu."
+    send action bar "§cHold this book in your offhand with a magic stick in your mainhand to open the spell menu." to player
   else if hasSpellbook(player):
-    send "§cHold a magic stick in your mainhand to open the spell menu."
+    send action bar "§cHold a magic stick in your mainhand to open the spell menu." to player
 
 on left click:
   player's gamemode is not spectator
@@ -94,8 +210,10 @@ on left click:
       if metadata "sel_magic_spell" of player is not set:
         send "§cSelect a spell!"
         stop
+      cancel event
       set metadata "using_magic_spell" of player to metadata "sel_magic_spell" of player
-      shoot snowball from player
+      set {_spell} to metadata "using_magic_spell" of player
+      castSpell(player, {_spell})
       delete metadata "using_magic_spell" of player
     else:
       send "§cYou need to hold a spellbook in your offhand to cast spells!"
@@ -105,10 +223,7 @@ on shoot:
   metadata "using_magic_spell" of shooter is set
   set {_spell} to metadata "using_magic_spell" of shooter
   set metadata "spell_projectile" of projectile to {_spell}
-
-  if {_spell} is "shield":
-    cancel event
-  castSpell(shooter, {_spell}, projectile)
+  set metadata "spell_projectile_spawn_loc" of projectile to location of shooter
 
 
 
@@ -116,8 +231,18 @@ on projectile hit:
   metadata "spell_projectile" of projectile is set
   set {_spell} to metadata "spell_projectile" of shooter
 
-  # show 1 flash at projectile
+  if block is set:
+    show 1 flash at projectile
 
+
+
+
+on item spawn: # disarming jinx
+  metadata "magically_disarmed" of event-entity is set
+  set {_disarmer} to metadata "magically_disarmed" of event-entity
+  set {_item} to event-item
+  set {_vector} to vector between {_item} and {_disarmer}
+  push {_item} {_vector} with force 5
 
 on damage:
   projectile is set # because damage cause is projectile doesnt work
@@ -125,21 +250,71 @@ on damage:
   cancel event
   set {_spell} to metadata "spell_projectile" of projectile
 
-  # show 100 totem at projectile
+
+  if metadata "magic_shield" of victim is set:
+    set {_shield_timestamp} to metadata "magic_shield" of victim
+    if difference between now and {_shield_timestamp} < {@shieldSpellDuration} seconds:
+      stop
+
+  if {_spell} is "disarm":
+    chance of 90%
+    drop victim's tool
+    set victim's tool to air
+    set metadata "magically_disarmed" of victim to attacker
+  if {_spell} is "armour_swap":
+    set {_h} to helmet of victim
+    if chance of 1/3:
+      set helmet of victim to chestplate of victim
+      set chestplate of victim to {_h}
+    else if chance of 1/2:
+      set helmet of victim to leggings of victim
+      set leggings of victim to {_h}
+    else:
+      set helmet of victim to boots of victim
+      set boots of victim to {_h}
+  if {_spell} is "freeze":
+    # add attacker to {_p::*}
+    # add victim to {_p::*}
+    apply slowness 3 to victim for 2 seconds
+    loop blocks in radius 3 around victim:
+      chance of 80%
+      loop-block is air
+      make all players see loop-block as ice
   if {_spell} is "damage":
-    if metadata "magic_shield" of victim is set:
-      set {_shield_timestamp} to metadata "magic_shield" of victim
-      if difference between now and {_shield_timestamp} < {@shieldSpellDuration} seconds:
-        send action bar "§cStruck by generic damage curse cast by %attacker%§c!" to victim
-        send action bar "§cStruck %victim%§c with generic damage curse!" to attacker
-        stop
-    make attacker damage victim by 5
-    send action bar "§cStruck by generic damage curse cast by %attacker%§c!" to victim
-    send action bar "§cStruck %victim%§c with generic damage curse!" to attacker
+    make attacker damage victim by applyManaDamageMultiplier({@damageSpellDamage}, getMana(attacker) + {magic.spell_costs.damage})
+  if {_spell} is "burn":
+    make attacker damage victim by 0.0001
+    ignite victim for 20 seconds
 
+  send action bar "§4Struck by §c%{_spell}% §4spell cast by §c%attacker%§4!" to victim
+  send action bar "§4Struck §c%victim%§4 with §c%{_spell}% §4spell!" to attacker
 
-every 5 ticks:
+every 1 second:
+  loop all players:
+    addMana(loop-player, 1)
+    setMana(loop-player, {@maxMana}) if getMana(loop-player) > {@maxMana}
+    if holdingWand(loop-player):
+      set {_time} to metadata "magic_shield" of loop-player
+      set {_diff} to difference between {_time} and now
+      if {_diff} < {@shieldSpellDuration} seconds:
+        send action bar "§3Shielded from magic damage for §b%shieldSpellRemaining(loop-player)%§3." to loop-player
+      else:
+        set {_spell} to metadata "sel_magic_spell" of loop-player
+        send action bar "§6§l⭐ Spell: §e%{_spell}% §8| §5§l🔥 Mana: §d%getMana(loop-player)%§5/{@maxMana} §8| §4§l⚔ DMG Mult: §c%applyManaDamageMultiplier(1, getMana(loop-player))%" to loop-player
+
+every 3 ticks:
   loop all entities:
     loop-entity is snowball
     metadata "spell_projectile" of loop-entity is set
-    show 20 flame at loop-entity
+    set {_spell} to metadata "spell_projectile" of loop-entity
+    set {_spawn_loc} to  metadata "spell_projectile_spawn_loc" of loop-entity
+    if distance between {_spawn_loc} and location of loop-entity > {@spellRange}:
+      kill loop-entity
+      continue
+    
+    if {_spell} is "damage":
+      spellParticles("crit", uuid of loop-entity, 15, 5)
+    else if {_spell} is "burn":
+      spellParticles("flame", uuid of loop-entity, 15, 5)
+    else:
+      spellParticles("end_rod", uuid of loop-entity, 15, 5)
