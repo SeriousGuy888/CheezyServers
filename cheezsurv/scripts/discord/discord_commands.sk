@@ -60,7 +60,30 @@ discord command stats [<OfflinePlayer>]:
     append line "⌛ Playtime: %timeToText({playtime.%{_p}%})%"
     append line "📅 Login Streak: %{login_streak::%{_p}%.streak}%"
     append line "  "
-    # append line "*\*Playtime and stat tracking was reset May 27th, 2020*"
+
+    set {_m_lvl} to floor({magic.xp::%{_p}%.level})
+    set {_m_pts} to floor({magic.xp::%{_p}%.points})
+    set {_m_to_next_lvl} to floor(getMagicXpToLevelUp({_m_lvl}))
+
+    set {_m_progress_len} to 20
+    set {_m_progress_percent} to (({_m_pts} / {_m_to_next_lvl}) * 10) * 10
+    set {_m_progress_progress_bar} to round(({_m_pts} / {_m_to_next_lvl}) * {_m_progress_len})
+
+    set {_m_progress_bar_str} to "(["
+    loop {_m_progress_progress_bar} times:
+      set {_m_progress_bar_str} to "%{_m_progress_bar_str}%="
+    set {_m_progress_bar_str} to "%{_m_progress_bar_str}%]"
+    loop {_m_progress_len} - {_m_progress_progress_bar} times:
+      set {_m_progress_bar_str} to "%{_m_progress_bar_str}%-"
+    set {_m_progress_bar_str} to "%{_m_progress_bar_str}%)"
+
+    append line "✨ Magic XP"
+    append line "```css"
+    append line "                Level: %{_m_lvl}%"
+    append line "%{_m_progress_percent}%%% %{_m_progress_bar_str}% %{_m_pts}%/%{_m_to_next_lvl}% pts"
+    append line "```"
+
+    append line "  "
     append line "*\*Playtime only recalculates every time the player leaves*"
     append line "*\*While the default Minecraft playtime statistic exists, we do not use it as it requires the player to be online to access.*"
     reply with {_msg}

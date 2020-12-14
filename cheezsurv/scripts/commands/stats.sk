@@ -26,14 +26,18 @@ command /stats <OfflinePlayer=%player%>:
   trigger:
     set {stats.%arg-1%.deaths} to 0 if {stats.%arg-1%.deaths} is not set
     set {stats.%arg-1%.murders} to 0 if {stats.%arg-1%.murders} is not set
-
     set {_kd} to {stats.%arg-1%.murders}/{stats.%arg-1%.deaths}
     set {_kd} to "0/0" if "%{_kd}%" is "NaN"
-
     send "§3§lStats of §b§l%arg-1%§3§l:"
-    send "§2Deaths: §a%{stats.%arg-1%.deaths}%"
-    send "§2Murders: §a%{stats.%arg-1%.murders}%"
-    send "§6K/D: §e%{_kd}%"
+    send "§4Deaths: §c%{stats.%arg-1%.deaths}%"
+    send "§4Murders: §c%{stats.%arg-1%.murders}%"
+    send "§4K/D: §c%{_kd}%%nl%"
+
+    set {_m_lvl} to floor({magic.xp::%arg-1%.level})
+    set {_m_pts} to floor({magic.xp::%arg-1%.points})
+    set {_m_to_next_lvl} to floor(getMagicXpToLevelUp({_m_lvl}))
+    send "§5Magic Level: §d%{_m_lvl}%"
+    send "§5Magic XP: §d%{_m_pts}%§d/%{_m_to_next_lvl}%%nl%"
 
     send "§2Playtime: §a%timeToText({playtime.%arg-1%})%§7<tooltip:*Only recalculates every time the player leaves; *While the default Minecraft playtime statistic exists, we do not use it as it requires the player to be online to access.>*<reset>"
     send "§2Login Streak: §a%{login_streak::%arg-1%.streak}%"
