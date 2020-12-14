@@ -154,7 +154,6 @@ command /mana <number> <player=%player%>:
 command /spellmenu:
   trigger:
     stop if holdingWand(player) is not true
-    stop if hasSpellbook(player) is not true
 
     open chest with 4 rows named "Spell Menu" to player
     wait 1 tick
@@ -187,36 +186,26 @@ command /getmagicitem <text>:
 on right click:
   player's gamemode is not spectator
   if holdingWand(player):
-    if hasSpellbook(player):
-      cancel event
-      if player is not sneaking:
-        quickswapShieldSpell(player)
-        set {_spell} to metadata "sel_magic_spell" of player
-        set {_prev_spell} to metadata "prev_sel_magic_spell" of player
-        send "§3Quickswapped spells from §b%{_prev_spell}%§3 to §b%{_spell}%§3."
-      else:
-        make player execute command "/spellmenu"
+    cancel event
+    if player is not sneaking:
+      quickswapShieldSpell(player)
+      set {_spell} to metadata "sel_magic_spell" of player
+      set {_prev_spell} to metadata "prev_sel_magic_spell" of player
+      send "§3Quickswapped spells from §b%{_prev_spell}%§3 to §b%{_spell}%§3."
     else:
-      send "§cYou need to hold a spellbook in your offhand to open the switch spells!"
-  else if name of player's tool is {@spellbookLore}:
-    send action bar "§cHold this book in your offhand with a magic stick in your mainhand to open the spell menu." to player
-  else if hasSpellbook(player):
-    send action bar "§cHold a magic stick in your mainhand to open the spell menu." to player
+      make player execute command "/spellmenu"
 
 on left click:
   player's gamemode is not spectator
   if holdingWand(player):
-    if hasSpellbook(player):
-      if metadata "sel_magic_spell" of player is not set:
-        send "§cSelect a spell!"
-        stop
-      cancel event
-      set metadata "using_magic_spell" of player to metadata "sel_magic_spell" of player
-      set {_spell} to metadata "using_magic_spell" of player
-      castSpell(player, {_spell})
-      delete metadata "using_magic_spell" of player
-    else:
-      send "§cYou need to hold a spellbook in your offhand to cast spells!"
+    if metadata "sel_magic_spell" of player is not set:
+      send "§cSelect a spell!"
+      stop
+    cancel event
+    set metadata "using_magic_spell" of player to metadata "sel_magic_spell" of player
+    set {_spell} to metadata "using_magic_spell" of player
+    castSpell(player, {_spell})
+    delete metadata "using_magic_spell" of player
 
 on shoot:
   shooter is player
