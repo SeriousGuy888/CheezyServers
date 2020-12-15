@@ -18,6 +18,7 @@ options:
 
 variables:
   {magic.spell_costs::shield} = 10
+  {magic.spell_costs::hunger} = 2
 
   {magic.spell_costs::disarm} = 15
   {magic.spell_costs::repulse} = 20
@@ -229,6 +230,12 @@ function castSpell(p: player, s: string):
     set metadata "magic_shield" of {_p} to now
     show 100 totem at {_p}
     addMana({_p}, 0 - {_mana_req})
+    delete metadata "using_magic_spell" of {_p}
+    stop
+  if {_s} is "hunger":
+    remove 0.5 from hunger of {_p}
+    addMana({_p}, 0 - {_mana_req})
+    delete metadata "using_magic_spell" of {_p}
     stop
   
   set metadata "casting_spell" of {_p} to {_s}
@@ -324,6 +331,7 @@ command /spellmenu:
 
     wait 1 tick
     format slot 0 of player with spellItem(player, totem of undying, "shield") named "§5Shield Charm" with lore "§dCost: %{magic.spell_costs::shield}%" to run [send "§dThis spell is not selected from the menu. Right click with your magic stick to toggle the spell." to player]
+    format slot 1 of player with spellItem(player, rotten flesh, "hunger") named "§5Burn Calories" with lore "§dSubtracts 1 from your hunger bar so you can eat some beets.", "§dCost: %{magic.spell_costs::hunger}%" to run [selectSpell(player, "hunger")]
     format slot 9 of player with spellItem(player, stick, "disarm") named "§5Disarming Jinx" with lore "§dCost: %{magic.spell_costs::disarm}%" to run [selectSpell(player, "disarm")]
     format slot 10 of player with spellItem(player, piston, "repulse") named "§5Repulsing Spell" with lore "§dCost: %{magic.spell_costs::repulse}%" to run [selectSpell(player, "repulse")]
     format slot 11 of player with spellItem(player, iron chestplate, "armour_swap") named "§5Armour Swap Jinx" with lore "§dCost: %{magic.spell_costs::armour_swap}%" to run [selectSpell(player, "armour_swap")]
