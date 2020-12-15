@@ -6,6 +6,7 @@ options:
 
 
   spellRange: 100
+  spellFireDelay: 7 # 7/10 seconds
   beetrootRegenTime: 60
   beetrootMultiplier: 16
 
@@ -214,6 +215,10 @@ function shieldSpellRemaining(p: player) :: timespan:
 
 
 function castSpell(p: player, s: string):
+  if metadata "casting_spell" of {_p} is set:
+    send action bar "§cYou are already casting a spell!" to {_p}
+    stop
+
   set {_mana_req} to applyManaCostMultiplier({_p}, {magic.spell_costs.%{_s}%})
   if getMana({_p}) < {_mana_req}:
     notEnoughMana({_p}, {_mana_req})
@@ -226,13 +231,26 @@ function castSpell(p: player, s: string):
     addMana({_p}, 0 - {_mana_req})
     stop
   
+  set metadata "casting_spell" of {_p} to {_s}
+  addMana({_p}, 0 - {_mana_req})
+  fireSpell({_p})
+
+function fireSpell(p: player):
+  set {_s} to metadata "casting_spell" of {_p}
+  loop {@spellFireDelay} times:
+    show 5 end rod at {_p}
+    send action bar "§5Casting spell §d%{_s}% §5in §d%({@spellFireDelay} - loop-number) / 10% §5seconds..." to {_p}
+    wait 0.1 seconds
+
   if shieldSpellRemaining({_p}) is set:
     delete metadata "magic_shield" of {_p}
-    # send "§3Your shield charm was broken as you casted another spell while it was active." to {_p}
   shoot snowball from {_p}
-  addMana({_p}, 0 - {_mana_req})
 
   send action bar "§5Casted spell §d%{_s}%§5." to {_p}
+  delete metadata "casting_spell" of {_p}
+  delete metadata "using_magic_spell" of {_p}
+
+
 
 
 function getMagicItem(name: string) :: item:
@@ -347,7 +365,6 @@ on left click:
     set metadata "using_magic_spell" of player to metadata "sel_magic_spell" of player
     set {_spell} to metadata "using_magic_spell" of player
     castSpell(player, {_spell})
-    delete metadata "using_magic_spell" of player
 
 on shoot:
   shooter is player
@@ -401,9 +418,10 @@ on damage:
 
   if metadata "magic_shield" of victim is set:
     set {_shield_timestamp} to metadata "magic_shield" of victim
-    if difference between now and {_shield_timestamp} < {@shieldSpellDuration} seconds:
-      addMana(victim, -5)
-      stop
+    difference between now and {_shield_timestamp} < {@shieldSpellDuration} seconds
+    addMana(victim, -5)
+    send "§dSpell blocked by shield charm" to victim and attacker
+    stop
 
   make attacker damage victim by 0.0001
   set {_dmg} to 0
