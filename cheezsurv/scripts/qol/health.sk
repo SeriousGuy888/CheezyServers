@@ -1,5 +1,6 @@
 on damage:
   attacker is player
+  {health.damage_indicators::%attacker%} is true
   wait 1 tick
 
   set {_health} to (round(health of victim * 2)) / 2
@@ -26,6 +27,17 @@ on damage:
     set {_health_str} to "§c%{_health} * 2%§7/§4%{_max_health} * 2% §7HP" 
 
   send action bar "%{_health_str}% §7| §4Damage Dealt: §c%final damage * 2%§cHP" to attacker
+
+on join:
+  set {health.damage_indicators::%player%} to true
+command /toggledamageindicators:
+  trigger:
+    if {health.damage_indicators::%player%} is false:
+      set {health.damage_indicators::%player%} to true
+      send "§aEnabled damage indicators."
+    else:
+      set {health.damage_indicators::%player%} to false
+      send "§cDisabled damage indicators."
 
 command /health [<player>]:
   trigger:
