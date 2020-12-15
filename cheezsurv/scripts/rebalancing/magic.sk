@@ -317,7 +317,11 @@ command /mana <number> <player=%player%>:
       send "§cInsufficient permission!"
       stop
     setMana(arg-2, arg-1)
-    
+
+command /spell <string>:
+  trigger:
+    selectSpell(player, arg-1)
+
 command /spellmenu:
   trigger:
     stop if holdingWand(player) is not true
