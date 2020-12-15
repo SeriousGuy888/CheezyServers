@@ -437,9 +437,11 @@ on damage:
       loop-block is air
       make all players see loop-block as ice
   if {_spell} is "damage":
+    victim is not armor stand
     set {_dmg} to calcMagicDamage(attacker, victim, {@damageSpellDamage})
     make attacker damage victim by {_dmg}
   if {_spell} is "burn":
+    victim is not armor stand
     ignite victim for 20 seconds
   if {_spell} is "combust":
     set {_force} to applyDefenceMultiplier(victim, 2)
