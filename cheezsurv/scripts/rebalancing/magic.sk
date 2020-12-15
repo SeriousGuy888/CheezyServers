@@ -5,7 +5,7 @@ options:
 
 
   spellRange: 100
-  beetrootRegenTime: 120
+  beetrootRegenTime: 60
   beetrootMultiplier: 16
 
   shieldSpellDuration: 3
@@ -16,7 +16,6 @@ options:
 
 variables:
   {magic.spell_costs::shield} = 10
-  {magic.spell_costs::absorption} = 15
 
   {magic.spell_costs::disarm} = 15
   {magic.spell_costs::repulse} = 20
@@ -219,21 +218,18 @@ function castSpell(p: player, s: string):
     notEnoughMana({_p}, {_mana_req})
     stop
 
-  addMana({_p}, 0 - {_mana_req})
   if {_s} is "shield":
     apply glowing to {_p} for {@shieldSpellDuration} seconds
     set metadata "magic_shield" of {_p} to now
     show 100 totem at {_p}
-    stop
-  if {_s} is "absorption":
-    apply absorption 5 to {_p} for 2.5 seconds
-    apply regeneration to {_p} for 5 seconds
+    addMana({_p}, 0 - {_mana_req})
     stop
   
   if shieldSpellRemaining({_p}) is set:
     delete metadata "magic_shield" of {_p}
     # send "§3Your shield charm was broken as you casted another spell while it was active." to {_p}
   shoot snowball from {_p}
+  addMana({_p}, 0 - {_mana_req})
 
 
   send action bar "§5Casted spell §d%{_s}%§5." to {_p}
@@ -300,7 +296,6 @@ command /spellmenu:
 
     wait 1 tick
     format slot 0 of player with spellItem(player, totem of undying, "shield") named "§5Shield Charm" with lore "§dCost: %{magic.spell_costs::shield}%" to run [send "§dThis spell is not selected from the menu. Right click with your magic stick to toggle the spell." to player]
-    format slot 1 of player with spellItem(player, golden apple, "absorption") named "§5Breathing Room" with lore "§dCost: %{magic.spell_costs::absorption}%" to run [selectSpell(player, "absorption")]
     format slot 9 of player with spellItem(player, stick, "disarm") named "§5Disarming Jinx" with lore "§dCost: %{magic.spell_costs::disarm}%" to run [selectSpell(player, "disarm")]
     format slot 10 of player with spellItem(player, piston, "repulse") named "§5Repulsing Spell" with lore "§dCost: %{magic.spell_costs::repulse}%" to run [selectSpell(player, "repulse")]
     format slot 11 of player with spellItem(player, iron chestplate, "armour_swap") named "§5Armour Swap Jinx" with lore "§dCost: %{magic.spell_costs::armour_swap}%" to run [selectSpell(player, "armour_swap")]
