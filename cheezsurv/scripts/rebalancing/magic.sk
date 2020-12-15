@@ -2,6 +2,7 @@ options:
   spellbookName: "§5Spellbook"
   wandName: "§5Magic Stick"
   wandLore: "§dRight click to quickly swap to shield charm." and "§dSneak right click to open spell menu."
+  wandCoreName: "§5Magic Stick Core"
 
 
   spellRange: 100
@@ -231,8 +232,17 @@ function castSpell(p: player, s: string):
   shoot snowball from {_p}
   addMana({_p}, 0 - {_mana_req})
 
-
   send action bar "§5Casted spell §d%{_s}%§5." to {_p}
+
+
+function getMagicItem(name: string) :: item:
+  if {_name} is "spellbook":
+    return shiny book named {@spellbookName} with lore "§7While in offhand:", "§ax%getSpellbookManaCostMultiplier()% Mana Cost",  "§ax%getSpellbookDamageMultiplier()% Attack", "§cx%getSpellbookManaRegenMultiplier()% Mana Regen Rate", "§cx%getSpellbookDefenceMultiplier()% Magic Defence"
+  if {_name} is "wand":
+    return shiny stick named {@wandName} with lore {@wandLore}
+  if {_name} is "wand_core":
+    return shiny blaze rod named {@wandCoreName} with lore "§dCombine with stick to make magic stick."
+
 
 
 on consume:
@@ -303,7 +313,7 @@ command /spellmenu:
     format slot 18 of player with spellItem(player, bread, "damage") named "§5Pain" with lore "§dBasic damage spell dealing {@damageSpellDamage} damage.", "§dCost: %{magic.spell_costs::damage}%" to run [selectSpell(player, "damage")]
     format slot 19 of player with spellItem(player, fire charge, "burn") named "§5Inflammation" with lore "§dCost: %{magic.spell_costs::burn}%" to run [selectSpell(player, "burn")]
     format slot 20 of player with spellItem(player, tnt, "combust") named "§5Combustion" with lore "§dCost: %{magic.spell_costs::combust}%" to run [selectSpell(player, "combust")]
-    format slot 27 of player with spellItem(player, bone, "kill_dog") named "§5Canine Carnage" with lore "§dFor killing dogs. Does literally nothing else.", "§dCost: %{magic.spell_costs::kill_dog}%" to run [selectSpell(player, "kill_dog")]
+    format slot 27 of player with spellItem(player, bone, "kill_dog") named "§5Canine Carnage" with lore "§dFor killing dogs. Does literally nothing else.", "§dCost: %{magic.spell_costs::kill_dog}%" to run [send "§ccurrently disabled because its broken and i dont know why"] # selectSpell(player, "kill_dog")
 
 
 
@@ -312,10 +322,7 @@ command /getmagicitem <text>:
     if player is not op:
       send "§cInsufficient permission!"
       stop
-    if arg-1 is "spellbook":
-      give player shiny book named {@spellbookName} with lore "§7While in offhand:", "§ax%getSpellbookManaCostMultiplier()% Mana Cost",  "§ax%getSpellbookDamageMultiplier()% Attack", "§cx%getSpellbookManaRegenMultiplier()% Mana Regen Rate", "§cx%getSpellbookDefenceMultiplier()% Magic Defence"
-    if arg-1 is "wand":
-      give player shiny stick named {@wandName} with lore {@wandLore}
+    give player getMagicItem(arg-1)
 
 
 on right click:
@@ -440,9 +447,9 @@ on damage:
     victim is wolf
     set {_dmg} to calcMagicDamage(attacker, victim, 42)
     make attacker damage victim by {_dmg}
-    set {_add_xp} to 0.5
+    set {_add_xp} to 0
 
-  set {_add_xp} to {_add_xp} * {magic.spell_costs.%{_spell}%} / 10
+  set {_add_xp} to {_add_xp} * {magic.spell_costs::%{_spell}%} / 10
   addMagicXp(attacker, {_add_xp})
   play sound "block.note_block.pling" at volume 0.1 to attacker
   send action bar "§5Struck §d%victim%§5 with §d%{_spell}% §5spell! (§d%{_dmg}% §dDMG§5) (§d+%{_add_xp}% §dMagic XP§5)" to attacker
@@ -474,3 +481,40 @@ every 3 ticks:
     if distance between {_spawn_loc} and location of loop-entity > {@spellRange}:
       kill loop-entity
       continue
+
+
+
+# this is so garbage but skript is garbage
+# so i have to do the custom crafting
+# like this
+on sneak toggle:
+  player is sneaking
+  if player's tool is nether star or lapis lazuli:
+    if item amount of player's tool >= 4:
+      if player's offhand tool is lapis lazuli or nether star:
+        if item amount of player's offhand tool >= 4:
+          remove 4 from item amount of player's tool
+          remove 4 from item amount of player's offhand tool
+          set {_i} to getMagicItem("wand_core")
+        else:
+          stop
+    else:
+      stop
+  if player's tool is stick:
+    if player's tool is not enchanted:
+      if name of player's offhand tool is {@wandCoreName}:
+        remove 1 from item amount of player's tool
+        remove 1 from item amount of player's offhand tool
+        set {_i} to getMagicItem("wand")
+  if name of player's tool is {@wandCoreName}:
+    if player's offhand tool is stick:
+      if player's offhand tool is not enchanted:
+        remove 1 from item amount of player's tool
+        remove 1 from item amount of player's offhand tool
+        set {_i} to getMagicItem("wand")
+  
+  {_i} is set
+  if player's inventory can hold {_i}:
+    give player {_i}
+  else:
+    drop {_i} at player
