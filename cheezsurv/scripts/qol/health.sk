@@ -29,7 +29,7 @@ on damage:
   send action bar "%{_health_str}% §7| §4Damage Dealt: §c%final damage * 2%§cHP" to attacker
 
 on join:
-  set {health.damage_indicators::%player%} to true
+  set {health.damage_indicators::%player%} to true if {health.damage_indicators::%player%} is not set
 command /toggledamageindicators:
   trigger:
     if {health.damage_indicators::%player%} is false:
