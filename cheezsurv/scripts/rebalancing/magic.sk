@@ -178,7 +178,7 @@ function applyManaCostMultiplier(p: player, cost: number) :: number:
 function getSpellbookManaRegenMultiplier() :: number:
   return 0.75
 function applyManaRegenMultiplier(p: player, cost: number) :: number:
-  set {_mult} to (log({magic.xp::%{_p}%.level} + 2.155) * 3) * 0.1
+  set {_mult} to (log({magic.xp::%{_p}%.level} + 2.155) * 3) * 0.25
   if hasSpellbook({_p}):
     set {_mult} to {_mult} * getSpellbookManaRegenMultiplier()
   if metadata "mana_beetroot_bonus" of {_p} is set:
