@@ -5,6 +5,9 @@ options:
 
 
   spellRange: 100
+  beetrootRegenTime: 120
+  beetrootMultiplier: 16
+
   shieldSpellDuration: 3
   damageSpellDamage: 5
   maxMagicXpLevelChangeAtOnce: 10
@@ -13,6 +16,7 @@ options:
 
 variables:
   {magic.spell_costs::shield} = 10
+  {magic.spell_costs::absorption} = 15
 
   {magic.spell_costs::disarm} = 15
   {magic.spell_costs::repulse} = 20
@@ -23,15 +27,18 @@ variables:
   {magic.spell_costs::burn} = 20
   {magic.spell_costs::combust} = 50
 
+  {magic.spell_costs::kill_dog} = 75
+
+
   {magic.leveling_constants.base} = 1.02      # magic number that does the exponenting or something idk
   {magic.leveling_constants.const} = 50      # base amount of xp needed for leveling up to level 1
 
 
 
 function getSpellUnlocked(p: player, s: string) :: boolean:
-  return {magic.spells::%{_p}%.%{_s}%}
+  return {magic.spells::%{_p}%::%{_s}%}
 function setSpellUnlocked(p: player, s: string, v: boolean):
-  set {magic.spells::%{_p}%.%{_s}%} to {_v}
+  set {magic.spells::%{_p}%::%{_s}%} to {_v}
 function spellItem(p: player, i: itemtype, s: string) :: itemtype:
   if getSpellUnlocked({_p}, {_s}) is true:
     return {_i}
@@ -41,10 +48,10 @@ function spellItem(p: player, i: itemtype, s: string) :: itemtype:
 
 function selectSpell(p: player, s: string):
   if getSpellUnlocked({_p}, {_s}) is not true:
-    if level of {_p} >= {magic.spell_costs.%{_s}%}:
-      addXpLevels({_p}, 0 - {magic.spell_costs.%{_s}%})
+    if level of {_p} >= {magic.spell_costs::%{_s}%}:
+      addXpLevels({_p}, 0 - {magic.spell_costs::%{_s}%})
       setSpellUnlocked({_p}, {_s}, true)
-      send "§a%{magic.spell_costs.%{_s}%}% §2XP levels spent to unlock the spell §a%{_s}%§2." to {_p}
+      send "§a%{magic.spell_costs::%{_s}%}% §2XP levels spent to unlock the spell §a%{_s}%§2." to {_p}
       make {_p} execute command "/spellmenu"
     else:
       send "§c%{magic.spell_costs.%{_s}%}% §4XP levels are required to unlock this spell!" to {_p}
@@ -169,9 +176,13 @@ function applyManaCostMultiplier(p: player, cost: number) :: number:
 function getSpellbookManaRegenMultiplier() :: number:
   return 0.75
 function applyManaRegenMultiplier(p: player, cost: number) :: number:
-  set {_mult} to log({magic.xp::%{_p}%.level} + 2.155) * 3
+  set {_mult} to (log({magic.xp::%{_p}%.level} + 2.155) * 3) * 0.1
   if hasSpellbook({_p}):
     set {_mult} to {_mult} * getSpellbookManaRegenMultiplier()
+  if metadata "mana_beetroot_bonus" of {_p} is set:
+    set {_time} to metadata "mana_beetroot_bonus" of {_p}
+    if difference between {_time} and now < {@beetrootRegenTime} seconds:
+      set {_mult} to {_mult} * {@beetrootMultiplier} # beetroot soup multiplier
   return {_cost} * {_mult}
 
 
@@ -208,11 +219,15 @@ function castSpell(p: player, s: string):
     notEnoughMana({_p}, {_mana_req})
     stop
 
+  addMana({_p}, 0 - {_mana_req})
   if {_s} is "shield":
     apply glowing to {_p} for {@shieldSpellDuration} seconds
     set metadata "magic_shield" of {_p} to now
     show 100 totem at {_p}
-    addMana({_p}, 0 - {_mana_req})
+    stop
+  if {_s} is "absorption":
+    apply absorption 5 to {_p} for 2.5 seconds
+    apply regeneration to {_p} for 5 seconds
     stop
   
   if shieldSpellRemaining({_p}) is set:
@@ -221,9 +236,18 @@ function castSpell(p: player, s: string):
   shoot snowball from {_p}
 
 
-  addMana({_p}, 0 - {_mana_req})
   send action bar "§5Casted spell §d%{_s}%§5." to {_p}
 
+
+on consume:
+  event-item is beetroot soup or beetroot
+  if event-item is beetroot soup:
+    set metadata "mana_beetroot_bonus" of player to now
+    send "§5Your §dx{@beetrootMultiplier} §5beetroot mana regen bonus has been refreshed until §d{@beetrootRegenTime} §5seconds from now."
+  if event-item is beetroot:
+    addMana(player, 10)
+    capMana(player)
+    send "§d+10 Mana"
 
 
 on join: # default spells unlocked for all players
@@ -267,22 +291,24 @@ command /spellmenu:
   trigger:
     stop if holdingWand(player) is not true
 
-    open chest with 4 rows named "Spell Menu" to player
+    open chest with 6 rows named "Spell Menu" to player
     wait 1 tick
-    loop 36 times:
+    loop 54 times:
       format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
     loop 9 times:
-      format slot (loop-number + 27 - 1) of player with red stained glass pane named "§cCancel" to close
+      format slot (loop-number + 45 - 1) of player with red stained glass pane named "§cCancel" to close
 
     wait 1 tick
     format slot 0 of player with spellItem(player, totem of undying, "shield") named "§5Shield Charm" with lore "§dCost: %{magic.spell_costs::shield}%" to run [send "§dThis spell is not selected from the menu. Right click with your magic stick to toggle the spell." to player]
+    format slot 1 of player with spellItem(player, golden apple, "absorption") named "§5Breathing Room" with lore "§dCost: %{magic.spell_costs::absorption}%" to run [selectSpell(player, "absorption")]
     format slot 9 of player with spellItem(player, stick, "disarm") named "§5Disarming Jinx" with lore "§dCost: %{magic.spell_costs::disarm}%" to run [selectSpell(player, "disarm")]
     format slot 10 of player with spellItem(player, piston, "repulse") named "§5Repulsing Spell" with lore "§dCost: %{magic.spell_costs::repulse}%" to run [selectSpell(player, "repulse")]
     format slot 11 of player with spellItem(player, iron chestplate, "armour_swap") named "§5Armour Swap Jinx" with lore "§dCost: %{magic.spell_costs::armour_swap}%" to run [selectSpell(player, "armour_swap")]
     format slot 12 of player with spellItem(player, ice, "freeze") named "§5Freezing Jinx" with lore "§dCost: %{magic.spell_costs::freeze}%" to run [selectSpell(player, "freeze")]
-    format slot 18 of player with spellItem(player, bread, "damage") named "§5Pain" with lore "§dBasic damage spell dealing {@damageSpellDamage} damage.", "§dCost: %{magic.spell_costs.damage}%" to run [selectSpell(player, "damage")]
+    format slot 18 of player with spellItem(player, bread, "damage") named "§5Pain" with lore "§dBasic damage spell dealing {@damageSpellDamage} damage.", "§dCost: %{magic.spell_costs::damage}%" to run [selectSpell(player, "damage")]
     format slot 19 of player with spellItem(player, fire charge, "burn") named "§5Inflammation" with lore "§dCost: %{magic.spell_costs::burn}%" to run [selectSpell(player, "burn")]
     format slot 20 of player with spellItem(player, tnt, "combust") named "§5Combustion" with lore "§dCost: %{magic.spell_costs::combust}%" to run [selectSpell(player, "combust")]
+    format slot 27 of player with spellItem(player, bone, "kill_dog") named "§5Canine Carnage" with lore "§dFor killing dogs. Does literally nothing else.", "§dCost: %{magic.spell_costs::kill_dog}%" to run [selectSpell(player, "kill_dog")]
 
 
 
@@ -332,7 +358,11 @@ on shoot:
   set {_particle_count} to 15
   set {_particle_size} to 1.3
   if {_spell} is "disarm": # elargbs
-    spellParticles(shooter, {_beam_length}, {_particle_count}, 0.42, 0.64, 1, {_particle_size})
+    spellParticles(shooter, {_beam_length}, {_particle_count}, 0, 1, 1, {_particle_size})
+  if {_spell} is "repulse":
+    spellParticles(shooter, {_beam_length}, {_particle_count}, 1, 0.5, 0.5, {_particle_size})
+  if {_spell} is "freeze":
+    spellParticles(shooter, {_beam_length}, {_particle_count}, 0.58, 0.78, 0.86, {_particle_size})
   else if {_spell} is "damage":
     spellParticles(shooter, {_beam_length}, {_particle_count}, 0.95, 0.07, 0.07, {_particle_size})
   else if {_spell} is "burn" or "combust":
@@ -374,6 +404,7 @@ on damage:
 
   make attacker damage victim by 0.0001
   set {_dmg} to 0
+  set {_add_xp} to 1
 
   if {_spell} is "disarm":
     chance of applyDamageMultiplier(attacker, 1/3)
@@ -404,14 +435,19 @@ on damage:
       make all players see loop-block as ice
   if {_spell} is "damage":
     set {_dmg} to calcMagicDamage(attacker, victim, {@damageSpellDamage})
-    make attacker damage victim by {_dmg_after_def}
+    make attacker damage victim by {_dmg}
   if {_spell} is "burn":
     ignite victim for 20 seconds
   if {_spell} is "combust":
     set {_force} to applyDefenceMultiplier(victim, 2)
     create safe explosion of force {_force} at victim
+  if {_spell} is "kill_dog":
+    victim is wolf
+    set {_dmg} to calcMagicDamage(attacker, victim, 42)
+    make attacker damage victim by {_dmg}
+    set {_add_xp} to 0.5
 
-  set {_add_xp} to {magic.spell_costs.%{_spell}%} / 10
+  set {_add_xp} to {_add_xp} * {magic.spell_costs.%{_spell}%} / 10
   addMagicXp(attacker, {_add_xp})
   play sound "block.note_block.pling" at volume 0.1 to attacker
   send action bar "§5Struck §d%victim%§5 with §d%{_spell}% §5spell! (§d%{_dmg}% §dDMG§5) (§d+%{_add_xp}% §dMagic XP§5)" to attacker
@@ -423,9 +459,8 @@ every second:
     addMana(loop-player, applyManaRegenMultiplier(loop-player, {_add_mana}))
     capMana(loop-player)
 
-every 2 seconds:
+every 1.5 seconds:
   loop all players:
-
     if holdingWand(loop-player):
       set {_time} to metadata "magic_shield" of loop-player
       set {_diff} to difference between {_time} and now
