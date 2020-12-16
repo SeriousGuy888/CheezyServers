@@ -249,11 +249,14 @@ function fireSpell(p: player):
     send action bar "§5Casting spell §d%{_s}% §5in §d%({@spellFireDelay} - loop-number) / 10% §5seconds..." to {_p}
     wait 0.1 seconds
 
-  if shieldSpellRemaining({_p}) is set:
-    delete metadata "magic_shield" of {_p}
-  shoot snowball from {_p}
+  if holdingWand({_p}):
+    if shieldSpellRemaining({_p}) is set:
+      delete metadata "magic_shield" of {_p}
+    shoot snowball from {_p}
+    send action bar "§5Casted spell §d%{_s}%§5." to {_p}
+  else:
+    send action bar "§5You need to hold your magic stick to cast spells!" to {_p}
 
-  send action bar "§5Casted spell §d%{_s}%§5." to {_p}
   delete metadata "casting_spell" of {_p}
   delete metadata "using_magic_spell" of {_p}
 
