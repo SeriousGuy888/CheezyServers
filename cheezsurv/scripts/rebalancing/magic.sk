@@ -348,7 +348,7 @@ command /spellmenu:
     format slot 18 of player with spellItem(player, bread, "damage") named "§5Pain" with lore "§dBasic damage spell dealing {@damageSpellDamage} damage.", "§dCost: %{magic.spell_costs::damage}%" to run [selectSpell(player, "damage")]
     format slot 19 of player with spellItem(player, fire charge, "burn") named "§5Inflammation" with lore "§dCost: %{magic.spell_costs::burn}%" to run [selectSpell(player, "burn")]
     format slot 20 of player with spellItem(player, tnt, "combust") named "§5Combustion" with lore "§dCost: %{magic.spell_costs::combust}%" to run [selectSpell(player, "combust")]
-    format slot 27 of player with spellItem(player, bone, "kill_dog") named "§5Canine Carnage" with lore "§dFor killing dogs. Does literally nothing else.", "§dCost: %{magic.spell_costs::kill_dog}%" to run [send "§ccurrently disabled because its broken and i dont know why"] # selectSpell(player, "kill_dog")
+    format slot 27 of player with spellItem(player, bone, "kill_dog") named "§5Canine Carnage" with lore "§dFor killing dogs. Does literally nothing else.", "§dCost: %{magic.spell_costs::kill_dog}%" to run [selectSpell(player, "kill_dog")]
 
 
 
