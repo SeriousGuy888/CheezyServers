@@ -22,6 +22,7 @@ variables:
 
   {magic.spell_costs::disarm} = 15
   {magic.spell_costs::repulse} = 20
+  {magic.spell_costs::kidnap} = 22
   {magic.spell_costs::armour_swap} = 20
   {magic.spell_costs::freeze} = 25
 
@@ -341,8 +342,9 @@ command /spellmenu:
     format slot 1 of player with spellItem(player, rotten flesh, "hunger") named "§5Burn Calories" with lore "§dSubtracts 1 from your hunger bar so you can eat some beets.", "§dCost: %{magic.spell_costs::hunger}%" to run [selectSpell(player, "hunger")]
     format slot 9 of player with spellItem(player, stick, "disarm") named "§5Disarming Jinx" with lore "§dCost: %{magic.spell_costs::disarm}%" to run [selectSpell(player, "disarm")]
     format slot 10 of player with spellItem(player, piston, "repulse") named "§5Repulsing Spell" with lore "§dCost: %{magic.spell_costs::repulse}%" to run [selectSpell(player, "repulse")]
-    format slot 11 of player with spellItem(player, iron chestplate, "armour_swap") named "§5Armour Swap Jinx" with lore "§dCost: %{magic.spell_costs::armour_swap}%" to run [selectSpell(player, "armour_swap")]
-    format slot 12 of player with spellItem(player, ice, "freeze") named "§5Freezing Jinx" with lore "§dCost: %{magic.spell_costs::freeze}%" to run [selectSpell(player, "freeze")]
+    format slot 11 of player with spellItem(player, sticky piston, "kidnap") named "§5Kidnapping Spell" with lore "§dCost: %{magic.spell_costs::kidnap}%" to run [selectSpell(player, "kidnap")]
+    format slot 12 of player with spellItem(player, iron chestplate, "armour_swap") named "§5Armour Swap Jinx" with lore "§dCost: %{magic.spell_costs::armour_swap}%" to run [selectSpell(player, "armour_swap")]
+    format slot 13 of player with spellItem(player, ice, "freeze") named "§5Freezing Jinx" with lore "§dCost: %{magic.spell_costs::freeze}%" to run [selectSpell(player, "freeze")]
     format slot 18 of player with spellItem(player, bread, "damage") named "§5Pain" with lore "§dBasic damage spell dealing {@damageSpellDamage} damage.", "§dCost: %{magic.spell_costs::damage}%" to run [selectSpell(player, "damage")]
     format slot 19 of player with spellItem(player, fire charge, "burn") named "§5Inflammation" with lore "§dCost: %{magic.spell_costs::burn}%" to run [selectSpell(player, "burn")]
     format slot 20 of player with spellItem(player, tnt, "combust") named "§5Combustion" with lore "§dCost: %{magic.spell_costs::combust}%" to run [selectSpell(player, "combust")]
@@ -450,6 +452,9 @@ on damage:
   if {_spell} is "repulse":
     set {_force} to applyDamageMultiplier(attacker, 3)
     push victim (direction from attacker to victim) at force {_force}
+  if {_spell} is "kidnap":
+    set {_force} to applyDamageMultiplier(attacker, 3)
+    push victim (direction from victim to attacker) at force {_force}
   if {_spell} is "armour_swap":
     set {_h} to helmet of victim
     if chance of 1/3:
