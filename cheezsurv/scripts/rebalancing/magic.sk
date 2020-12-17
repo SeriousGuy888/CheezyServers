@@ -149,7 +149,7 @@ function capMana(p: player):
 function getSpellbookDamageMultiplier() :: number:
   return 1.25
 function applyDamageMultiplier(p: player, dmg: number) :: number:
-  set {_mult} to (getMana({_p}) / getMaxMana({_p}) / 2)
+  set {_mult} to (getMana({_p}) / getMaxMana({_p}) / 1.5) + 0.5
   if hasSpellbook({_p}):
     set {_mult} to {_mult} * getSpellbookDamageMultiplier()
   return {_dmg} * {_mult}
