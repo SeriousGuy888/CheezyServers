@@ -57,7 +57,7 @@ function selectSpell(p: player, s: string):
       send "§a%{magic.spell_costs::%{_s}%}% §2XP levels spent to unlock the spell §a%{_s}%§2." to {_p}
       make {_p} execute command "/spellmenu"
     else:
-      send "§c%{magic.spell_costs.%{_s}%}% §4XP levels are required to unlock this spell!" to {_p}
+      send "§c%{magic.spell_costs::%{_s}%}% §4XP levels are required to unlock this spell!" to {_p}
     stop
 
   set {_spell_before_swap} to metadata "sel_magic_spell" of {_p}
@@ -221,7 +221,7 @@ function castSpell(p: player, s: string):
     send action bar "§cYou are already casting a spell!" to {_p}
     stop
 
-  set {_mana_req} to applyManaCostMultiplier({_p}, {magic.spell_costs.%{_s}%})
+  set {_mana_req} to applyManaCostMultiplier({_p}, {magic.spell_costs::%{_s}%})
   if getMana({_p}) < {_mana_req}:
     notEnoughMana({_p}, {_mana_req})
     stop
