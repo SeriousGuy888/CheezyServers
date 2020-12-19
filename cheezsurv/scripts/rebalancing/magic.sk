@@ -390,6 +390,7 @@ on shoot:
   set metadata "spell_projectile" of projectile to {_spell}
   set metadata "spell_projectile_spawn_loc" of projectile to location of shooter
   subtract 1 from saturation of shooter
+  delete metadata "using_magic_spell" of shooter
   
   set {_beam_length} to 20
   set {_particle_count} to 15
