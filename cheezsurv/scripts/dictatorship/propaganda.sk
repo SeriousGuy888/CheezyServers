@@ -16,6 +16,7 @@ on script load:
   add """Civilian genocide. That's all I need."" -Lucas 2020" to {propaganda::*}
   add """Yes, theft, my favourite activity."" -Lucas 2020" to {propaganda::*}
   add """Okay someone send me hentai."" -Lucas 2020" to {propaganda::*}
+  add """I like to support murderers."" -Liam 2020" to {propaganda::*}
   add "The actionlogger is logging your actions." to {propaganda::*}
   add """I think communism was good"" -Liam 2020" to {propaganda::*}
   add """Genocide's a smart idea."" -Jasper 2020" to {propaganda::*}
