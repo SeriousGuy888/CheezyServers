@@ -446,7 +446,7 @@ on damage:
   set {_add_xp} to 1
 
   if {_spell} is "disarm":
-    chance of applyDamageMultiplier(attacker, 1/3)
+    chance of applyDamageMultiplier(attacker, 2/3)
     drop victim's tool
     set victim's tool to air
     set metadata "magically_disarmed" of victim to attacker
