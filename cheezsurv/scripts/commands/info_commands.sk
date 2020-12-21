@@ -1,3 +1,28 @@
+on skript start:
+  delete {tps_graph::*}
+
+function getTpsGraph() :: string:
+  set {_labels} to ""
+  set {_data} to ""
+  loop {tps_graph::*}:
+    set {_l} to "%unix date of (loop-index parsed as number) formatted as ""HH:mm""% UTC"
+    replace all " " in {_l} with "%%20"
+    # replace all ":" in {_l} with "%%20"
+    set {_d} to loop-value
+    replace all " " in {_d} with "%%20"
+
+    set {_labels} to "%{_labels}%'%{_l}%',"
+    set {_data} to "%{_data}%%{_d}%,"
+  set {_labels} to first (length of {_labels} - 1) characters of {_labels}
+  set {_data} to first (length of {_data} - 1) characters of {_data}
+
+  set {_link} to "https://quickchart.io/chart?bkg=white&f=svg&c={type:'line',data:{labels:[%{_labels}%],datasets:[{label:'TPS',data:[%{_data}%]}]}}"
+  replace all "§" in {_link} with "&"
+  return {_link}
+
+every minute:
+  set {tps_graph::%unix timestamp of now%} to tps from last minute
+
 command /tps:
   trigger:
     set {_tps} to tps from last minute

@@ -264,7 +264,7 @@ discord command tps:
   prefixes: {@prefixes}
   trigger:
     set {_tps} to tps from last minute
-    reply with "**Server TPS:** %{_tps}%"
+    reply with "**Server TPS:** %{_tps}%%nl%%getTpsGraph()%"
 
 discord command ping [<player>]:
   prefixes: {@prefixes}
