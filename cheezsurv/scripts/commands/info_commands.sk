@@ -20,8 +20,8 @@ function getTpsGraph() :: string:
   replace all "§" in {_link} with "&"
   return {_link}
 
-every minute:
-  set {tps_graph::%unix timestamp of now%} to tps from last minute
+every 5 minutes:
+  set {tps_graph::%unix timestamp of now%} to tps from last 5 minutes
 
 command /tps:
   trigger:
