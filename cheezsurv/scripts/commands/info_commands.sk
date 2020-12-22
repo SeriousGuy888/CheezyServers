@@ -5,23 +5,15 @@ function getTpsGraph() :: string:
   set {_labels} to ""
   set {_data} to ""
 
-  set {_len} to (size of {tps_graph::*})
-  set {_max_entries} to 50
+  set {_len} to size of {tps_graph::*}
+  set {_max_entries} to 64
+  set {_offset} to {_len} - {_max_entries}
 
-  set {_interval} to {_max_entries} / {_len}
-  set {_offset} to mod({_len}, {_interval})
-  set {_since_interval} to 0
-
-  # return "%{_len}% %{_max_entries}% %{_offset}% %{_interval}% %{_since_interval}%"
   loop {tps_graph::*}:
     if {_offset} > 0:
       subtract 1 from {_offset}
-      stop
-    if {_since_interval} < {_interval}:
-      add 1 to {_since_interval}
-      stop
-    set {_since_interval} to 0
-
+      continue
+      
     set {_l} to "%unix date of (loop-index parsed as number) formatted as ""HH:mm""% UTC"
     replace all " " in {_l} with "%%20"
     set {_d} to loop-value
@@ -33,9 +25,9 @@ function getTpsGraph() :: string:
   set {_labels} to first (length of {_labels} - 1) characters of {_labels}
   set {_data} to first (length of {_data} - 1) characters of {_data}
 
-  set {_link} to "https://quickchart.io/chart?bkg=white&f=webp&c={type:'line',data:{labels:[%{_labels}%],datasets:[{label:'TPS',data:[%{_data}%]}]}}"
+  set {_link} to "https://quickchart.io/chart?bkg=white&f=webp&c={type:'line',data:{labels:[%{_labels}%],datasets:[{label:'Last+%{_max_entries}%+TPS+Entries',data:[%{_data}%]}]}}"
   replace all "§" in {_link} with "&"
-  # return {_link}
+  return {_link}
 
 every 5 minutes:
   set {tps_graph::%unix timestamp of now%} to tps from last 5 minutes
