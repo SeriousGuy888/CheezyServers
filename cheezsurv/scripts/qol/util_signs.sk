@@ -12,9 +12,9 @@ on sign change:
   set line 4 to "§7[SRMB: -1]"
 
 on right click on sign:
-  player's gamemode is not spectator
+  # player's gamemode is not spectator
   player's tool is air 
-  
+
   line 1 is "§1[Score]"
 
   set {_num} to uncoloured line 2 parsed as number
