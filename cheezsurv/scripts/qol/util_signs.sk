@@ -1,0 +1,29 @@
+on sign change:
+  line 1 is "[Score]"
+
+  set {_num} to uncoloured line 2 parsed as number
+  if {_num} is not set:
+    set {_num} to 0
+
+  set line 1 to "§1[Score]"
+  set line 2 to "§3§l%{_num}%"
+  
+  set line 3 to "§7[RMB: +1]"
+  set line 4 to "§7[SRMB: -1]"
+
+on right click on sign:
+  player's gamemode is not spectator
+  player's tool is air 
+  
+  line 1 is "§1[Score]"
+
+  set {_num} to uncoloured line 2 parsed as number
+  if {_num} is not set:
+    set {_num} to 0
+  
+  if player is sneaking:
+    add -1 to {_num}
+  else:
+    add 1 to {_num}
+  
+  set line 2 to "§3§l%{_num}%"
