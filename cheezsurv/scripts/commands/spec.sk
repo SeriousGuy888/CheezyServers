@@ -1,12 +1,33 @@
+on skript start:
+  set {spec.disabled} to true if {spec.disabled} is not set
+
 on join:
   if {%player%.spec.enabled} is not set:
     set {%player%.spec.enabled} to true
+
+command /togglespec <text>:
+  aliases: /togglesp
+  trigger:
+    if executor is not op:
+      send "§cInsufficient permissions!"
+      stop
+    set {spec.disabled} to false if {spec.disabled} is not set
+    if {spec.disabled} is false:
+      set {spec.disabled} to true
+      broadcast "§3The §b/spec §3command has been disabled by §b%executor% §3due to reason §b%arg-1%§3."
+    else if {spec.disabled} is true:
+      set {spec.disabled} to false
+      broadcast "§3The §b/spec §3command has been reenabled by §b%executor% §3due to reason §b%arg-1%§3."
+
 
 command /spec:
   executable by: players
   aliases: /sp
   trigger:
     if player's gamemode is survival:
+      if {spec.disabled} is true:
+        send "§c/spec is currently disabled. Ask an admin if this is a mistake."
+        stop
       set {%player%.spec.loc} to player's location
       set player's gamemode to spectator
       send action bar "Activated Spectator Mode" to player
