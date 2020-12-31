@@ -7,10 +7,14 @@ options:
 command /vanish [<player>]:
   aliases: /v
   trigger:
-    if player is not op:
-      send "§cInsufficient permission!"
-      stop
+    if executor is a player:
+      if player is not op:
+        send "§cInsufficient permission!"
+        stop
     if arg-1 is not set:
+      if executor is not a player:
+        send "Specify player."
+        stop
       set {vanished.%player%} to false if {vanished.%player%} is not set
       if {vanished.%player%} is false:
         hide the player from all players
