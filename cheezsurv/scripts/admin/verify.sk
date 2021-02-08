@@ -5,22 +5,34 @@ command /verify <OfflinePlayer>:
   permission: cheez.verify
   permission message: §cInsufficient permissions!
   trigger:
-    if player is op:
-      make console execute command "/pex user %arg-1% group set Citizen"
-      broadcast "§2%arg-1% §2has just been verified!"
-      send ":ballot_box_with_check: %arg-1% is now verified." to channel with id "{@discordChannelId}" with "Cheezy"
-      send "§6You are now verified!" to arg-1
+    set {_allowed} to false
+    if executor is op:
+      set {_allowed} to true
+    if executor is console:
+      set {_allowed} to true
+    if {_allowed} = false:
+      stop
+    make console execute command "/pex user %arg-1% group set Citizen"
+    broadcast "§2%arg-1% §2has just been verified!"
+    send ":ballot_box_with_check: %arg-1% is now verified." to channel with id "{@discordChannelId}" with "Cheezy"
+    send "§6You are now verified!" to arg-1
 
 command /unverify <OfflinePlayer>:
   permission: cheez.verify
   permission message: §cInsufficient permissions!
   trigger:
-    if player is op:
-      make executor execute command "/deop %arg-1%"
-      make console execute command "/pex user %arg-1% group set default"
-      broadcast "§c%arg-1% §ahas just been unverified!"
-      send ":regional_indicator_x: %arg-1% is no longer verified." to channel with id "{@discordChannelId}" with "Cheezy"
-      send "§4You are no longer verified." to arg-1
+    set {_allowed} to false
+    if executor is op:
+      set {_allowed} to true
+    if executor is console:
+      set {_allowed} to true
+    if {_allowed} = false:
+      stop
+    make executor execute command "/deop %arg-1%"
+    make console execute command "/pex user %arg-1% group set default"
+    broadcast "§c%arg-1% §chas just been unverified!"
+    send ":regional_indicator_x: %arg-1% is no longer verified." to channel with id "{@discordChannelId}" with "Cheezy"
+    send "§4You are no longer verified." to arg-1
 
 on damage:
   attacker is set
