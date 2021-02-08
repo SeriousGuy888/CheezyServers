@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Too Much Coal"
+      "text": "Mining"
     },
     "description": {
-      "text": "Have a stack or more of coal in your inventory."
+      "text": "Obtain a wooden pickaxe."
     },
     "icon": {
-      "item": "minecraft:coal"
+      "item": "minecraft:wooden_pickaxe"
     },
     "frame": "task",
     "show_toast": true,
@@ -15,23 +15,19 @@
     "hidden": false
   },
   "criteria": {
-    "coal": {
+    "e": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:coal",
-            "count": {
-              "min": 64,
-              "max": 32767
-            }
+            "item": "minecraft:wooden_pickaxe"
           }
         ]
       }
     }
   },
   "rewards": {
-      "experience": 20
+    "experience": 50
   },
-  "parent": "cheezsurv:obtain_coal"
+  "parent": "cheezsurv:root"
 }

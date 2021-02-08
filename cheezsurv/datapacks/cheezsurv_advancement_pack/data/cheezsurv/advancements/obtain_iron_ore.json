@@ -29,5 +29,5 @@
   "rewards": {
     "experience": 250
   },
-  "parent": "cheezsurv:root"
+  "parent": "cheezsurv:obtain_coal"
 }
