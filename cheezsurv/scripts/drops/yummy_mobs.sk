@@ -6,7 +6,7 @@ options:
 
 on death of wolf:
   set {_drop_amount} to random number between 1 and 3
-  drop {_drop_amount} of steak named {@dog} with lore "§7§oDog flavoured!" and "§7§oExtremely nutricious." at victim
+  drop {_drop_amount} of steak named {@dog} with lore "§7§oDog Flavoured!" and "§7§oExtremely nutricious." at victim
 
 on death of bat:
   set {_drop_amount} to random number between 0 and 1
