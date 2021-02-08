@@ -1,7 +1,6 @@
 options:
   idLength: 10
   idAssignmentInterval: 5 seconds
-  legacyCodeUpdateInterval: 30 seconds
   namePrefix: Villager ##
   idPrefix: vil5-
   idVersion: 5
@@ -10,34 +9,13 @@ options:
   lastNames: ("Trumpet", "Snowman", "Toothbrush", "Smith", "Duck", "Ass", "Bass", "Bypass", "Class", "Crass", "Grass", "Mass", "Pass", "Gas", "Jackass", "Nervegas", "Trespass", "Pompeii", "Trump", "Biden", "Sandals", "Blunt", "Elchapo", "Pie", "Garfield", "Inbred", "Hrrm", "Hrrrm", "Hurm", "Hurrm", "Herrm", "Hurrrm", "Hrm", "Hrrrmson", "Claus", "Candycane", "Golem", "Stolen", "Goldfish", "Ingot", "Baron", "Christ", "Yeti", "Rubik", "Cube", "Death", "Nuke", "Sheppard", "Liam", "Bee", "Ironforests", "Jasper", "Bovine", "Thorium", "Plutonium", "Uranium", "Hexagon", "Matteoville", "Dragonson", "Bluntson", "Puzic", "Aardvark", "Weeeeed", "Druggledealerson", "Caterpillar", "Jasperlandtwo", "Holden", "Tobytopia", "Youtubson")
   firstNames: ("Aary", "Barry", "Berry", "Birch", "Blackberry", "Blackcherry", "Blueberry", "Cary", "Carry", "Cranberry", "Dairy", "Earring", "Fairy", "Ferry", "Gary", "Gerry", "Glary", "Hairy", "Harry", "Jerry", "Karen", "Kerosene", "Larry", "Mary", "Merry", "Parry", "Quarry", "Raspberry", "Scary", "Sherry", "Sorry", "Terry", "Very", "Wary", "Yeti", "Blunt", "Fynchy", "Cocaniny", "Weedy", "Druggie", "Goldie", "Googly", "Jackson", "Holdy", "Toby", "Laim", "Chris", "Glory", "Hurrrm", "Smith", "Lazy")
 
-function generateVillagerId(l: number) :: text:
-  set {_c::*} to "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "a", "b", "c", "d", "e", and "f"
-  set {_r} to ""
-  loop {_l} times:
-    set {_r} to "%{_r}%%random element of {_c::*}%"
-  return {_r}
-
 function nameVillager(e: entity, first: string, last: string):
   set name of {_e} to "%{_first}% %{_last}%"
-
-on script load:
-  set {_old_id_formats::*} to "villager_", "2-v-", "3-villager-", and "vil-v4-"
 
 every {@idAssignmentInterval}:
   loop all entities:
     loop-entity is villager
-    if {villagerid::%loop-entity's uuid%} is not set:
-      set {_id} to "{@idPrefix}%generateVillagerId({@idLength})%"
-
-      if {villagerids::*} contains {_id}: # dont allow the same id to be used twice.
-        send "[WARN] Villager with UUID %loop-entity's uuid% could not be given an entity ID this cycle as the generated ID, %{_id}%, is already taken. Will attempt to assign an ID next cycle." to console
-        stop # if an id is already used, generate a new one in the next cycle
-      
-      set {villagerid::%loop-entity's uuid%} to {_id}
-      add {_id} to {villagerids::*}
-      {@idAssignedParticleEffect}
     
-
     set {_assign_new_name} to false
     if loop-entity's name is not set:
       set {_assign_new_name} to true
@@ -50,17 +28,8 @@ every {@idAssignmentInterval}:
       set {_l} to random element out of {@lastNames}
       set {_f} to random element out of {@firstNames}
       set name of loop-entity to "%{_f}% %{_l}%"
+      {@idAssignedParticleEffect}
 
-every {@legacyCodeUpdateInterval}:
-  loop all entities:
-    loop-entity is villager
-    if {villagerid::%loop-entity%} is set:
-      loop {_old_id_formats::*}:
-        if {villagerid::%loop-entity%} starts with {_old_id_formats::%loop-index%}: # convert all old id formats to the newest format
-          remove {villagerid::%loop-entity's uuid%} from {villagerids::*}
-          set {villagerid::%loop-entity's uuid%} to "{@idPrefix}%generateVillagerId({@idLength})%"
-          add {villagerid::%loop-entity's uuid%} to {villagerids::*}
-          {@idAssignedParticleEffect}
 
 command /villagerid:
   aliases: /villid, /vid
@@ -70,7 +39,7 @@ command /villagerid:
       stop
     set {_villagerId} to {villagerid::%targeted entity's uuid%} otherwise "[unassigned]"
     set {_villagerName} to display name of targeted entity otherwise "§2this villager"
-    send "%nl%§2The entity ID number of §a%{_villagerName}% §2is%nl%§a%{_villagerId}%%nl%%nl%§2The current ID number iteration is §av{@idVersion}§2. Do not record this villager's ID unless it is prefixed with §a{@idPrefix}§2. If it is not prefixed properly, please wait up to {@legacyCodeUpdateInterval} for it to be automatically converted to the current ID iteration.%nl%"
+    send "%nl%§2The UUID of §a%{_villagerName}% §2is%nl%§a%targeted entity's uuid%%nl%%nl%§2."
 
 on breed:
   event-entity is villager
