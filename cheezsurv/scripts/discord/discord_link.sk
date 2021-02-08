@@ -1,6 +1,6 @@
 options:
-  prefixes: "s3!", "%mention tag of event-bot% "
-  codePrefix: "surv3-"
+  prefixes: "s4!", "%mention tag of event-bot% "
+  codePrefix: "surv4-"
   codeLength: 6
 
 on skript unload:
