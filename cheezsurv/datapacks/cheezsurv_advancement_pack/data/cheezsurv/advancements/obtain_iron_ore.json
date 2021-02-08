@@ -1,13 +1,13 @@
 {
   "display": {
     "title": {
-      "text": "Light Blue Umbrella"
+      "text": "Iron Age"
     },
     "description": {
-      "text": "Obtain a diamond pickaxe."
+      "text": "Obtain iron ore."
     },
     "icon": {
-      "item": "minecraft:diamond_pickaxe"
+      "item": "minecraft:iron_ore"
     },
     "frame": "goal",
     "show_toast": true,
@@ -15,19 +15,19 @@
     "hidden": false
   },
   "criteria": {
-    "diamondPick": {
+    "e": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:diamond_pickaxe"
+            "item": "minecraft:iron_ore"
           }
         ]
       }
     }
   },
   "rewards": {
-    "experience": 100
+    "experience": 250
   },
-  "parent": "cheezsurv:obtain_iron_ore"
+  "parent": "cheezsurv:root"
 }

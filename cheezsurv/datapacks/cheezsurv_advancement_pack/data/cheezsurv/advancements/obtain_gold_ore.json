@@ -1,33 +1,33 @@
 {
   "display": {
     "title": {
-      "text": "Light Blue Umbrella"
+      "text": "Golden Age? Wait..."
     },
     "description": {
-      "text": "Obtain a diamond pickaxe."
+      "text": "Obtain gold ore."
     },
     "icon": {
-      "item": "minecraft:diamond_pickaxe"
+      "item": "minecraft:gold_ore"
     },
-    "frame": "goal",
+    "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
   "criteria": {
-    "diamondPick": {
+    "e": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:diamond_pickaxe"
+            "item": "minecraft:gold_ore"
           }
         ]
       }
     }
   },
   "rewards": {
-    "experience": 100
+    "experience": 50
   },
   "parent": "cheezsurv:obtain_iron_ore"
 }
