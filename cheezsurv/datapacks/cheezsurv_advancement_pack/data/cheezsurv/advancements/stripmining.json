@@ -7,7 +7,7 @@
       "text": "Go stripmining between Y levels 0 and 12 in the overworld."
     },
     "icon": {
-      "item": "minecraft:diamond"
+      "item": "minecraft:diamond_ore"
     },
     "frame": "task",
     "show_toast": true,
@@ -31,5 +31,5 @@
   "rewards": {
       "experience": 15
   },
-  "parent": "cheezsurv:obtain_diamond_pick"
+  "parent": "cheezsurv:obtain_iron_ore"
 }
