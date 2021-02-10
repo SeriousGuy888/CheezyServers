@@ -29,5 +29,5 @@
   "rewards": {
     "experience": 50
   },
-  "parent": "cheezsurv:root"
+  "parent": "cheezsurv:place_crafting_table"
 }
