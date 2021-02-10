@@ -1,0 +1,45 @@
+options:
+  soldierRange: 30
+  soldierAttackRange: 3
+
+on damage:
+  victim has scoreboard tag "soldier"
+  distance between victim and attacker < {@soldierAttackRange}
+  make victim damage attacker by 1
+
+command /soldierspawn:
+  trigger:
+    player is op
+    spawn nitwit
+    set {_e} to last spawned entity
+
+    add "no_villager_death_message" to scoreboard tags of {_e}
+    add "soldier" to scoreboard tags of {_e}
+    add "OWNER: %player%" to scoreboard tags of {_e}
+
+    make console execute command "/data merge entity %uuid of {_e}% {Attributes:[{Name:generic.follow_range,Base:{@soldierRange}}]}"
+
+command /soldiermarch:
+  trigger:
+    player is op
+    set {_t} to player's target block
+    loop all villagers in radius {@soldierRange} around {_t}:
+      set {_e} to loop-entity
+      {_e} has scoreboard tag "soldier"
+      {_e} has scoreboard tag "OWNER: %player%"
+
+      make {_e} pathfind to {_t} at speed 1.2
+
+command /soldierattack:
+  trigger:
+    player is op
+    loop all villagers in radius {@soldierRange} around player:
+      set {_e} to loop-entity
+      {_e} has scoreboard tag "soldier"
+      {_e} has scoreboard tag "OWNER: %player%"
+
+      loop all entities in radius {@soldierAttackRange} around {_e}:
+        set {_v} to loop-entity-2
+        {_v} is not player
+        {_v} does not have scoreboard tag "OWNER: %player%"
+        make {_e} damage {_v} by 1
