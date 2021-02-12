@@ -23,13 +23,13 @@ on script load:
   add "The actionlogger is logging your actions." to {propaganda::*}
   add """I think communism was good"" -Liam 2020" to {propaganda::*}
   add """Genocide's a smart idea."" -Jasper 2020" to {propaganda::*}
+  add """I am a pig kink."" -Jakob 2021" to {propaganda::*}
   add """Allah the Pinata"" -Hoang 2020" to {propaganda::*}
   add """I am very high."" -Lucas 2020" to {propaganda::*}
   add "Ever tried to shear a bee?" to {propaganda::*}
   add "You shouldn't dupe items." to {propaganda::*}
   add "Ignorance is strength." to {propaganda::*}
   add "Scaaaaaaaaaaaam" to {propaganda::*}
-  add "CheezSurv 3.0" to {propaganda::*}
   add "Love is fake." to {propaganda::*}
   add "Hail Santa." to {propaganda::*}
 
