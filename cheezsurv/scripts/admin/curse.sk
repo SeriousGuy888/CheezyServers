@@ -1,0 +1,48 @@
+command /curse <offlineplayer>:
+  trigger:
+    player is op
+    if {cursed::*} contains arg-1:
+      remove arg-1 from {cursed::*}
+      send "Uncursed %arg-1%"
+    else:
+      add arg-1 to {cursed::*}
+      send "Cursed %arg-1%"
+
+on damage:
+  if victim is player:
+    {cursed::*} contains victim
+    set damage to damage * 1.8
+  if attacker is player:
+    {cursed::*} contains attacker
+    set damage to damage * 0.8
+
+# on enchant prepare:
+#   {cursed::*} contains player
+#   if itemtype is sword:
+#     add unbreaking 1 to {_offers::*}
+#     add unbreaking 2 to {_offers::*}
+#     add bane of arthropods 2 to {_offers::*}
+#   if itemtype is pickaxe:
+#     add unbreaking 1 to {_offers::*}
+#     add unbreaking 2 to {_offers::*}
+#     add efficiency 3 to {_offers::*}
+#   if itemtype is axe:
+#     add unbreaking 1 to {_offers::*}
+#     add unbreaking 2 to {_offers::*}
+#     add efficiency 3 to {_offers::*}
+#   if itemtype is shovel:
+#     add unbreaking 1 to {_offers::*}
+#     add unbreaking 2 to {_offers::*}
+#     add efficiency 3 to {_offers::*}
+#   if itemtype is book:
+#     add unbreaking 1 to {_offers::*}
+#     add unbreaking 2 to {_offers::*}
+#     add knockback 2 to {_offers::*}
+  
+
+#   if enchant offer 1 is set:
+#     set enchant offer 1 to {_offers::1}
+#   if enchant offer 2 is set:
+#     set enchant offer 2 to {_offers::2}
+#   if enchant offer 3 is set:
+#     set enchant offer 3 to {_offers::3}
