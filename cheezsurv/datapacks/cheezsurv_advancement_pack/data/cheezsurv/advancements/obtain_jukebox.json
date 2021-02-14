@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "An Excellent Use of a Diamond"
+    },
+    "description": {
+      "text": "Obtain a jukebox."
+    },
+    "icon": {
+      "item": "minecraft:jukebox"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:jukebox"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 20
+  },
+  "parent": "cheezsurv:place_crafting_table"
+}
