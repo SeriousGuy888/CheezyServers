@@ -28,6 +28,9 @@ command /spec:
       if {spec.disabled} is true:
         send "§c/spec is currently disabled. Ask an admin if this is a mistake."
         stop
+      if player is not flying:
+        if block below player is air:
+          stop
       set {%player%.spec.loc} to player's location
       set player's gamemode to spectator
       send action bar "Activated Spectator Mode" to player
@@ -36,7 +39,6 @@ command /spec:
         set player's gamemode to survival
         teleport player to {%player%.spec.loc}
         delete {%player%.spec.loc}
-        subtract 3 from y of player's velocity
         send action bar "Deativated Spectator Mode" to player
       else if {%player%.spec.loc} is not set:
         send "§cYou are not in /spec spectator mode."
