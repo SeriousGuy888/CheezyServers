@@ -11,7 +11,10 @@ command /curse <offlineplayer>:
 on damage:
   if victim is player:
     {cursed::*} contains victim
-    set damage to damage * 1.8
+    if damage cause is fall:
+      set damage to damage * 1.3
+    else:
+      set damage to damage * 1.8
   if attacker is player:
     {cursed::*} contains attacker
     set damage to damage * 0.8
