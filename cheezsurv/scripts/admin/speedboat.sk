@@ -1,0 +1,4 @@
+command /speedboat <number=5> <player=%player%>:
+  trigger:
+    player is op
+    push vehicle of arg-2 forward with force arg-1
