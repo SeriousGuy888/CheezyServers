@@ -1,6 +1,6 @@
 options:
   prefix: §f#§e[Propaganda] §f
-  interval: 1 minute
+  interval: 30 seconds
 
 on script load:
   delete {propaganda::*}
@@ -15,11 +15,11 @@ on script load:
   add """Uaguaghaaaauaaughhghwaaeoeueeuang'aang"" -Liam and Hoang 2020" to {propaganda::*}
   add """Love is in the air with all these cows fricking."" -Liam 2021" to {propaganda::*}
   add """Okay have sex in front of me. Incest is great."" -Lucas 2020" to {propaganda::*}
+  add """You can never have too many hentai."" -Liam and Jasper 2021" to {propaganda::*}
   add """I just wanna duck this cow. Why is it so hard?"" -Asa 2021" to {propaganda::*}
   add """One of the zombies turned into a zombie."" -Hoang 2020" to {propaganda::*}
   add """Nothing makes me more horny than food!"" -Jasper 2021" to {propaganda::*}
   add """Civilian genocide. That's all I need."" -Lucas 2020" to {propaganda::*}
-  add """You can never have too many hentai."" -Jasper 2021" to {propaganda::*}
   add """Yes, theft, my favourite activity."" -Lucas 2020" to {propaganda::*}
   add """Can you please don't not do that?"" -Jasper 2020" to {propaganda::*}
   add """I'm gonna kill you little kids!"" -Toby 2021" to {propaganda::*}
@@ -28,17 +28,19 @@ on script load:
   add """Okay someone send me hentai."" -Lucas 2020" to {propaganda::*}
   add """I like to support murderers."" -Liam 2020" to {propaganda::*}
   add """I §lwill §rpunch a child."" -Jasper 2021" to {propaganda::*}
-  add "The actionlogger is logging your actions." to {propaganda::*}
   add """I think communism was good"" -Liam 2020" to {propaganda::*}
   add """Genocide's a smart idea."" -Jasper 2020" to {propaganda::*}
   add """I'm making them horny."" -Toby 2021" to {propaganda::*}
+  add """Hentai is a necessity."" -Asa 2021" to {propaganda::*}
   add """I am a pig kink."" -Jakob 2021" to {propaganda::*}
   add """Allah the Pinata"" -Hoang 2020" to {propaganda::*}
   add """I am very high."" -Lucas 2020" to {propaganda::*}
+  add "It is illegal to break the law." to {propaganda::*}
   add "Ever tried to shear a bee?" to {propaganda::*}
-  add "You shouldn't dupe items." to {propaganda::*}
   add "Ignorance is strength." to {propaganda::*}
-  add "Scaaaaaaaaaaaam" to {propaganda::*}
+  add "Je suis une chenille." to {propaganda::*}
+  add "Do all the drugglez." to {propaganda::*}
+  add "Don't do X-Ray." to {propaganda::*}
   add "Love is fake." to {propaganda::*}
   add "Hail Santa." to {propaganda::*}
 
