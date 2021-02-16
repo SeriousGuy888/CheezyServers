@@ -6,7 +6,7 @@ on script load:
   delete {propaganda::*}
 
 
-  add """I guess in 2018 people just really liked too fuck their cats."" -Jasper 2020" to {propaganda::*}
+  add """I guess in 2018 people just really liked to fuck their cats."" -Jasper 2020" to {propaganda::*}
   add """I constantly go to nightclubs. There's nothing I like more."" -Jasper 2020" to {propaganda::*}
   add """Thank you for being test subjects in this civilian genocide."" -Lucas 2020" to {propaganda::*}
   add """Lemme bring you out of sight to harass you real quick."" -Lucas 2020" to {propaganda::*}
@@ -19,9 +19,11 @@ on script load:
   add """One of the zombies turned into a zombie."" -Hoang 2020" to {propaganda::*}
   add """Nothing makes me more horny than food!"" -Jasper 2021" to {propaganda::*}
   add """Civilian genocide. That's all I need."" -Lucas 2020" to {propaganda::*}
+  add """You can never have too many hentai."" -Jasper 2021" to {propaganda::*}
   add """Yes, theft, my favourite activity."" -Lucas 2020" to {propaganda::*}
   add """Can you please don't not do that?"" -Jasper 2020" to {propaganda::*}
   add """I'm gonna kill you little kids!"" -Toby 2021" to {propaganda::*}
+  add """Hey, are you a black Canadian?"" -Toby 2021" to {propaganda::*}
   add """My pp was cut off my Hypixel"" -Jasper 2021" to {propaganda::*}
   add """Okay someone send me hentai."" -Lucas 2020" to {propaganda::*}
   add """I like to support murderers."" -Liam 2020" to {propaganda::*}
