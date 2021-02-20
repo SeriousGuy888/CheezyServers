@@ -129,7 +129,7 @@ on right click:
     apply haste 3 to player for {@cocaineDuration} seconds
 
     set metadata "druggifying" of player to "cocaine"
-    subtract 8 from player's health
+    subtract 2 from player's health
 
     set {drugs.max_health::%player%} to 8
     add {@cocaineDuration} to {drugs.max_health::%player%.timer}
