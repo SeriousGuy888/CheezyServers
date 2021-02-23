@@ -12,10 +12,6 @@ on right click on stair:
       make player ride {_s}
       set metadata "sitting" of player to location of clicked block
       set metadata "chair" of {_s} to true
- 
-on left click:
-  metadata "chair" of clicked entity is true
-  cancel event
 
 on break:
   loop all players:
@@ -26,6 +22,10 @@ on dismount:
   metadata "sitting" of player is set
   kill player's vehicle
   delete metadata "sitting" of player
+
+on vehicle damage:
+  metadata "sitting" of event-entity is set
+  cancel event
 
 on quit:
   metadata "sitting" of player is set
