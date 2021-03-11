@@ -1,0 +1,23 @@
+options:
+  dist: 10
+
+command /restrainingorder <offlineplayer> <offlineplayer>:
+  trigger:
+    player is op
+    if {restraining_order.%arg-2%::*} does not contain arg-1:
+      add arg-1 to {restraining_order.%arg-2%::*}
+      send "added restraining order to restrain %arg-2% from %arg-1%"
+    else:
+      remove arg-1 from {restraining_order.%arg-2%::*}
+      send "b"
+
+every 1 second:
+  loop all players:
+    loop all players in radius {@dist} around loop-player: 
+      if {restraining_order.%loop-player-1%::*} contains loop-player-2:
+        gamemode of loop-player-1 is survival or adventure
+        gamemode of loop-player-2 is survival or adventure
+
+        push loop-player-1 (direction from loop-player-2 to loop-player-1) at force 0.75
+        send "§4You are violating a restraining order! You are not allowed within {@dist} meters of §c%loop-player-2%§4!" to loop-player-1
+        send "§2Pushed §a%loop-player-1% §2away from you due to a restraining order." to loop-player-2
