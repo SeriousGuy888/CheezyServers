@@ -1,0 +1,37 @@
+every 2 seconds:
+  loop all players:
+    loop-player's gamemode is survival or adventure
+    set {_danger} to false
+
+    if loop-player's inventory contains mycelium:
+      set {_danger} to true
+    loop blocks in radius 2 around loop-player:
+      loop-block is mycelium
+      set {_danger} to true
+
+    set {_hazmat} to false
+    if loop-player's helmet's name contains "hazmat":
+      loop-player's helmet is leather helmet
+      loop-player's helmet is enchanted with protection
+      set {_hazmat} to true
+    if loop-player's chestplate's name contains "hazmat":
+      loop-player's chestplate is leather chestplate
+      loop-player's chestplate is enchanted with protection
+      set {_hazmat} to true
+    if loop-player's leggings' name contains "hazmat":
+      loop-player's leggings is leather leggings
+      loop-player's leggings is enchanted with protection
+      set {_hazmat} to true
+    if loop-player's boots' name contains "hazmat":
+      loop-player's boots is leather boots
+      loop-player's boots is enchanted with protection
+      set {_hazmat} to true
+
+    if {_danger} is true:
+      if {_hazmat} is true:
+        send action bar "§dYou were shielded from the radioactivity of mycelium." to loop-player
+      else:
+        send action bar "§d⚠ Mycelium is very radioactive. Hazmat armour is recommended." to loop-player
+        apply ambient slowness to loop-player for 3 seconds
+        if chance of 20%:
+          apply ambient nausea to loop-player for 7 seconds
