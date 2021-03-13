@@ -35,3 +35,14 @@ every 2 seconds:
         apply ambient slowness to loop-player for 3 seconds
         if chance of 20%:
           apply ambient nausea to loop-player for 7 seconds
+
+
+every 5 seconds:
+  loop all villagers:
+    loop blocks in radius 2 around loop-entity:
+      loop-block is mycelium
+      set {_danger} to true
+
+    if {_danger} is true:
+      apply ambient slowness to loop-entity for 3 seconds
+      apply ambient wither to loop-entity for 8 seconds
