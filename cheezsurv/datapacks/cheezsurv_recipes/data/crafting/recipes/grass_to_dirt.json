@@ -1,0 +1,9 @@
+{
+  "type": "smelting",
+  "ingredient": {
+    "item": "minecraft:grass_block"
+  },
+  "result": "minecraft:dirt",
+  "experience": 1.0,
+  "cookingtime": 50
+}
