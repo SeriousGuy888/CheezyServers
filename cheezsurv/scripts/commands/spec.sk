@@ -29,6 +29,7 @@ command /spec:
         send "§c/spec is currently disabled. Ask an admin if this is a mistake."
         stop
       if player is not flying:
+        block at player is air
         block below player is air
         block below (block below player) is air
         stop
