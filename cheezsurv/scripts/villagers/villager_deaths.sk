@@ -16,27 +16,30 @@ on death of villager:
 
   if victim is leashed:
     if attacker is set:
-      set {villager_death_messages.current} to "%{_villager_name}% was executed by hanging by %{_attacker_name}%"
+      set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% was executed by hanging by %{_attacker_name}%"
     else:
-      set {villager_death_messages.current} to "%{_villager_name}% was executed by hanging"
+      set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% was executed by hanging"
   else:
-    set {_murder_variations::*} to ("murdered", "murderized", "assassinated", "slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", "killed to death", "put down", "euthanized", "butchered", "destroyed", "dismembered", "quartered", "purged", "massacred", "executed", and "deleted")
-    set {_died_variations::*} to ("died", "passed away", "was removed from existence", "was unborn", "contracted dying syndrome")
+    set {_murder_variations::*} to ("murdered", "murderized", "assassinated", "slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", "killed to death", "put down", "euthanized", "butchered", "destroyed", "purged", "massacred", "executed", "deleted", "forced to deathe")
+    set {_died_variations::*} to ("deathed", "passed away", "was removed from existence", "contracted death syndrome")
 
     if attacker is set:
-      set {villager_death_messages.current} to "%{_villager_name}% was %random element out of {_murder_variations::*}% by %{_attacker_name}%"
+      set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% was %random element out of {_murder_variations::*}% by %{_attacker_name}%"
     else:
-      set {villager_death_messages.current} to "%{_villager_name}% %random element out of {_died_variations::*}% from %damage cause%"
+      set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% %random element out of {_died_variations::*}% from %damage cause%"
   
   set {_nloc::*} to nearestLocation(location of victim) split at "|"
-  set {villager_death_messages.current} to "%{villager_death_messages.current}% §7§o[%round({_nloc::2} parsed as number)%§7§om from %{_nloc::1} in uppercase%]"
+  set {villager_death_messages::%uuid of victim%} to "%{villager_death_messages::%uuid of victim%}% §7§o[%round({_nloc::2} parsed as number)%§7§om from %{_nloc::1} in uppercase%]"
 
 
-  send ":skull: **%uncoloured {villager_death_messages.current}% at %floor(x-coordinate of victim)% %floor(y-coordinate of victim)% %floor(z-coordinate of victim)% in %world of victim%**" to channel with id "{@discordChannelId}" with "Cheezy"
+  send ":skull: **%uncoloured {villager_death_messages::%uuid of victim%}% at %floor(x-coordinate of victim)% %floor(y-coordinate of victim)% %floor(z-coordinate of victim)% in %world of victim%**" to channel with id "{@discordChannelId}" with "Cheezy"
   loop all players:
     set {villager_death_messages.subscribed.%loop-player%} to true if {villager_death_messages.subscribed.%loop-player%} is not set
     {villager_death_messages.subscribed.%loop-player%} is true
-    send "%{villager_death_messages.current}%" to loop-player
+    send "%{villager_death_messages::%uuid of victim%}%" to loop-player
+  
+  delete {villager_death_messages::%uuid of victim%}
+
   
 command /villagerdeathmessages:
   aliases: /villdeathmsgs, /vdm
