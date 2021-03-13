@@ -39,6 +39,7 @@ every 2 seconds:
 
 every 5 seconds:
   loop all villagers:
+    set {_danger} to false
     loop blocks in radius 2 around loop-entity:
       loop-block is mycelium
       set {_danger} to true
