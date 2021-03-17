@@ -122,7 +122,8 @@ command /givemoolah <OfflinePlayer> <Number>:
     add arg-2 to {bank.balance::%arg-1%}
     send "Gave %arg-2%c to %arg-1%"
 
-command /pay [<player>] [<number>]:
+
+command /pay [<offlineplayer>] [<number>]:
   executable by: players
   trigger:
     if arg-2 is not set:
@@ -140,9 +141,38 @@ command /pay [<player>] [<number>]:
     
     remove arg-2 from {bank.balance::%player%}
     add arg-2 to {bank.balance::%arg-1%}
-    send "§2Paid §a%arg-2%§2 coins to §a%arg-1%§2."
-    send "§2Received §a%arg-2%§2 coins from §a%player%§2." to arg-1
-    logEconomyAction("`%player%` paid `%arg-2%` coins to `%arg-1%` via /pay")
+
+    if arg-1 is online:
+      send "§2Paid §a%arg-2%§2 coins to §a%arg-1%§2."
+      send "§2Received §a%arg-2%§2 coins from §a%player%§2." to arg-1
+      logEconomyAction("`%player%` paid `%arg-2%` coins to `%arg-1%` via /pay")
+    else:
+      send "§2Paid §a%arg-2%§2 coins to §a%arg-1%§2.%nl%§2You are able to cencel this payment until this player next comes online with §a/outgoingpayments§2."
+      add arg-2 to {economy.outgoing_payments::%player%::%arg-1%}
+      add player to {economy.incoming_payments::%arg-1%::*}
+      logEconomyAction("`%player%` paid `%arg-2%` coins to offline player `%arg-1%` via /pay")
+
+command /outgoingpayments <offlineplayer=%player%>:
+  executable by: players
+  trigger:
+
+    open chest with 6 rows named "Outgoing Payments" to player
+    wait 1 tick
+    loop 54 times: # I can't be bothered to paginate this skript is just so discughskjting
+      format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
+
+    set {_inc} to 0
+    loop {economy.outgoing_payments::%player%::*}:
+      set {_item} to skull of (loop-index parsed as offline player)
+      format slot {_inc} of player with {_item} with lore "§6Payment: §e%loop-value%§ec" to run [remove loop-value from {bank.balance::%(loop-index parsed as offline player)%}]->[add loop-value to {bank.balance::%player%}]->[logEconomyAction("`%player%` cancelled their payment of `%loop-value%` coins to `%(loop-index parsed as offline player)%`")]->[send "§2Your payment of §a%loop-value%§ac §2to §a%(loop-index parsed as offline player)% §2was successfully cancelled!"]->[delete {economy.outgoing_payments::%player%::%loop-index%}]->[remove player from {economy.incoming_payments::%loop-index%::*}]->[make player execute command "/outgoingpayments %loop-index parsed as offline player%"]
+      add 1 to {_inc}
+
+on join:
+  loop {economy.incoming_payments::%player%::*}:
+    send "§6You were paid §e%{economy.outgoing_payments::%loop-value%::%player%}%§ec §6by §e%loop-value% §6while you were offline."
+    delete {economy.outgoing_payments::%loop-value%::%player%}
+    remove loop-value from {economy.incoming_payments::%player%::*}
+
 
 command /withdraw [<text>]:
   executable by: players
