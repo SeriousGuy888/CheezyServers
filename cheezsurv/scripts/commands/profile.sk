@@ -2,8 +2,9 @@ on right click on player:
   set {_clicker} to event-player
   set {_clickee} to event-entity
 
-  tool of {_clicker} is air
-  {_clicker} is not sneaking
+  if player's gamemode is not spectator:
+    tool of {_clicker} is air
+    {_clicker} is not sneaking
 
   open chest with 1 row named "%{_clickee}%'s Profile" to {_clicker}
   wait 1 tick
