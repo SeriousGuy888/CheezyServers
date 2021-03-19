@@ -43,6 +43,7 @@ on script load:
   add """Allah the Pinata"" -Hoang 2020" to {propaganda::*}
   add """I am very high."" -Lucas 2020" to {propaganda::*}
   add "It is illegal to break the law." to {propaganda::*}
+  add "Je suis une vache explosive." to {propaganda::*}
   add "Ever tried to shear a bee?" to {propaganda::*}
   add "Ignorance is strength." to {propaganda::*}
   add "Je suis une chenille." to {propaganda::*}
