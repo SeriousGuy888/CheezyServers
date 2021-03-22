@@ -176,9 +176,28 @@ on join:
 
 command /withdraw [<text>]:
   executable by: players
-  aliases: /with
+  aliases: /with, /wd
   trigger:
-    send "§bThe /withdraw command has been split into the /coin and /banknote commands."
+    open chest with 3 rows named "§8Withdraw Moolah §7[Bal: %{bank.balance::%player%}%§7c]" to player
+    wait 1 tick
+    loop 27 times:
+      format slot (loop-number - 1) of player with light gray stained glass pane named " " to be unstealable
+    
+    # look what i have to do because skript's loops randomly break stuff here
+    format slot 0 of player with giveBanknote(0.01, 1) to run [make player execute command "/banknote 0.01"]->[make player execute command "/with"]
+    format slot 1 of player with giveBanknote(0.05, 1) to run [make player execute command "/banknote 0.05"]->[make player execute command "/with"]
+    format slot 2 of player with giveBanknote(0.1, 1) to run [make player execute command "/banknote 0.1"]->[make player execute command "/with"]
+    format slot 3 of player with giveBanknote(0.25, 1) to run [make player execute command "/banknote 0.25"]->[make player execute command "/with"]
+    format slot 4 of player with giveBanknote(5, 1) to run [make player execute command "/banknote 5"]->[make player execute command "/with"]
+    format slot 5 of player with giveBanknote(10, 1) to run [make player execute command "/banknote 10"]->[make player execute command "/with"]
+    format slot 6 of player with giveBanknote(20, 1) to run [make player execute command "/banknote 20"]->[make player execute command "/with"]
+    format slot 7 of player with giveBanknote(50, 1) to run [make player execute command "/banknote 50"]->[make player execute command "/with"]
+    format slot 8 of player with giveBanknote(100, 1) to run [make player execute command "/banknote 100"]->[make player execute command "/with"]
+
+    format slot 22 of player with giveCoin(1) to run [make player execute command "/coin 1"]->[make player execute command "/with"]
+    
+    
+
 
 command /coin <integer>:
   executable by: players
