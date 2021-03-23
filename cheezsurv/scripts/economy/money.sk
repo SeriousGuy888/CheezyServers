@@ -152,7 +152,7 @@ command /pay [<offlineplayer>] [<number>]:
       add player to {economy.incoming_payments::%arg-1%::*}
       logEconomyAction("`%player%` paid `%arg-2%` coins to offline player `%arg-1%` via /pay")
 
-command /outgoingpayments <offlineplayer=%player%>:
+command /outgoingpayments:
   executable by: players
   trigger:
 
