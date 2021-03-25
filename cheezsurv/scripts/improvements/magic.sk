@@ -245,6 +245,8 @@ function castSpell(p: player, s: string):
 
 function fireSpell(p: player):
   set {_s} to metadata "casting_spell" of {_p}
+  delete metadata "casting_spell" of {_p}
+
   loop {@spellFireDelay} times:
     show 5 end rod at {_p}
     send action bar "§5Casting spell §d%{_s}% §5in §d%({@spellFireDelay} - loop-number) / 10% §5seconds..." to {_p}
@@ -257,8 +259,7 @@ function fireSpell(p: player):
     send action bar "§5Casted spell §d%{_s}%§5." to {_p}
   else:
     send action bar "§5You need to hold your magic stick to cast spells!" to {_p}
-
-  delete metadata "casting_spell" of {_p}
+    
   delete metadata "using_magic_spell" of {_p}
 
 
@@ -385,12 +386,14 @@ on left click:
 
 on shoot:
   shooter is player
+  projectile is snowball
   metadata "using_magic_spell" of shooter is set
   set {_spell} to metadata "using_magic_spell" of shooter
+  delete metadata "using_magic_spell" of shooter
+  
   set metadata "spell_projectile" of projectile to {_spell}
   set metadata "spell_projectile_spawn_loc" of projectile to location of shooter
   subtract 1 from saturation of shooter
-  delete metadata "using_magic_spell" of shooter
   
   set {_beam_length} to 20
   set {_particle_count} to 15
