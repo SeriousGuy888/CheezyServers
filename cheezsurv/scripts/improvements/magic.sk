@@ -486,7 +486,7 @@ on damage:
     victim is not armor stand
     ignite victim for 20 seconds
   if {_spell} is "combust":
-    set {_force} to applyDefenceMultiplier(victim, 2)
+    set {_force} to applyDefenceMultiplier(victim, 1.5)
     create safe explosion of force {_force} at victim
   if {_spell} is "kill_dog":
     victim is wolf
