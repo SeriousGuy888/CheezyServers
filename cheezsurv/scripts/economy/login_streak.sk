@@ -7,15 +7,15 @@ options:
 on join:
   if {login_streak::%player%.epoch_day_num} is not set:
     set {login_streak::%player%.epoch_day_num} to (unix timestamp of 1 day ago / 86400)
-  if difference between (unix timestamp of now / 86400) and {login_streak::%player%.epoch_day_num} >= 1:
+  if (unix timestamp of now / 86400) - {login_streak::%player%.epoch_day_num} >= 1:
     make player execute command "/claimdailyreward"
 
 command /claimdailyreward:
   trigger:
     if {login_streak::%player%.epoch_day_num} is not set:
       set {login_streak::%player%.epoch_day_num} to (unix timestamp of 1 day ago / 86400)
-    if difference between (unix timestamp of now / 86400) and {login_streak::%player%.epoch_day_num} >= 1:
-      if difference between (unix timestamp of now / 86400) and {login_streak::%player%.epoch_day_num} >= 2:
+    if (unix timestamp of now / 86400) - {login_streak::%player%.epoch_day_num} >= 1:
+      if (unix timestamp of now / 86400) - {login_streak::%player%.epoch_day_num} >= 2:
         if {login_streak::%player%.streak} > 1:
           send "§6You lost your §e%{login_streak::%player%.streak}% §6day login streak!"
         set {login_streak::%player%.streak} to 0
