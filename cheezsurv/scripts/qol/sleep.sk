@@ -1,9 +1,36 @@
 options:
   discordChannelId: %{config.discord_chat}%
 
+function skipNight(w: world):
+  loop 32 times:
+    if time in {_w} > 5am:
+      if time in {_w} < 6:30am:
+        set weather in {_w} to sun
+        send ":sunny: *The night has been skipped.*" to channel with id "{@discordChannelId}" with "Cheezy"
+        broadcast "§bThe night has been skipped."
+        stop loop
+    if {sleep.skipping::*} is not set:
+      stop loop
+    add 500 ticks to time in {_w}
+    wait 5 ticks
+
+  delete {sleep.skipping::*}
+
+command /nonightskip:
+  trigger:
+    size of {sleep.skipping::*} > 0
+    loop {sleep.skipping::*}:
+      damage loop-value by 0.001
+    send ":eye: *%player% has woken all sleeping players.*" to channel with id "{@discordChannelId}" with "Cheezy"
+    broadcast "§b%player% §bhas kicked sleeping players out of bed."
+    delete {sleep.skipping::*}
+
 on bed enter:
-  broadcast "§b%player% is now sleeping!"
-  send ":bed: **%player% is now sleeping!**" to channel with id "{@discordChannelId}" with "Cheezy"
-  wait 2 seconds
-  set time in player's world to 6am
-  set weather in player's world to sun
+  add player to {sleep.skipping::*}
+
+  send ":bed: *%player% is sleeping to skip the night.*" to channel with id "{@discordChannelId}" with "Cheezy"
+  send formatted "§b%player% is sleeping to skip the night. §c<cmd:/nonightskip>[Wake]" to all players
+  skipNight(player's world)
+
+on bed leave:
+  remove player from {sleep.skipping::*}
