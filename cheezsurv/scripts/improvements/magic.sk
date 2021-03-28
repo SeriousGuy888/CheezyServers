@@ -252,6 +252,8 @@ function fireSpell(p: player):
     send action bar "§5Casting spell §d%{_s}% §5in §d%({@spellFireDelay} - loop-number) / 10% §5seconds..." to {_p}
     wait 0.1 seconds
 
+  if gamemode of {_p} is spectator:
+    stop
   if holdingWand({_p}):
     if shieldSpellRemaining({_p}) is set:
       delete metadata "magic_shield" of {_p}
