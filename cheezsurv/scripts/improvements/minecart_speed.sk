@@ -1,0 +1,4 @@
+every 1 seconds:
+  loop all players:
+    loop-player's vehicle is regular minecart
+    set max minecart speed of loop-player's vehicle to 0.5
