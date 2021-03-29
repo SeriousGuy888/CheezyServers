@@ -18,6 +18,7 @@ function skipNight(w: world):
 
 command /nonightskip:
   trigger:
+    player is not "lukanator2"
     size of {sleep.skipping::*} > 0
     loop {sleep.skipping::*}:
       damage loop-value by 0.001
