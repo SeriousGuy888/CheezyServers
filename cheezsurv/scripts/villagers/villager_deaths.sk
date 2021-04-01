@@ -16,7 +16,7 @@ on death of villager:
 
   if victim is leashed:
     if attacker is set:
-      set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% was executed by hanging by %{_attacker_name}%"
+      set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% was hanged by %{_attacker_name}%"
     else:
       set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% was executed by hanging"
   else:
