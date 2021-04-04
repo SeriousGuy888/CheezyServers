@@ -5,6 +5,8 @@ on right click on player:
   set {_clicker} to event-player
   set {_clickee} to event-entity
 
+  {_clickee} is online
+
   make {_clicker} execute command "/profile %{_clickee}%"
 
 command /toggleprofile:
