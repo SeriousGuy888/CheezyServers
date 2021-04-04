@@ -37,6 +37,7 @@ command /unverify <OfflinePlayer>:
 on damage:
   attacker is set
   attacker is player
+  attacker is online
   attacker does not have permission "verified"
   cancel event
   send "§cYou are not verified!" to attacker
