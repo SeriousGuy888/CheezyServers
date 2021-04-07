@@ -2,11 +2,14 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:white_banner"
+      "tag": "minecraft:banners"
+    },
+    {
+      "item": "minecraft:white_dye"
     }
   ],
   "result": {
-    "item": "minecraft:white_banner",
+    "tag": "minecraft:white_banner",
     "count": 1
   }
 }
