@@ -1,0 +1,27 @@
+command /makeit <offlineplayer>:
+  trigger:
+    player is op
+    set {tag_game.it} to arg-1
+    send "%arg-1% is now it!"
+
+command /whoisit:
+  trigger:
+    send "%{tag_game.it}% is currently IT!"
+
+on join:
+  if {tag_game.it} is player:
+    send "You are currently IT! Tag someone to make them it!"
+  else:
+    make player execute command "/whoisit"
+
+on damage:
+  attacker is player
+  victim is player
+  {tag_game.it} is attacker
+  set {tag_game.it} to victim
+  loop all players:
+    if loop-player is victim:
+      send "Tag from %attacker%! You're it!" to loop-player
+    else:
+      send "§7%attacker% §7tagged §7%victim%§7! This player is now IT!" to loop-player
+  make console execute command "/sendtodiscordchat :point_up_2: **%attacker% tagged %victim%. This player is now IT!**"
