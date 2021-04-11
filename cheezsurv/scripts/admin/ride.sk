@@ -1,0 +1,4 @@
+command /ride <player> <player>:
+  trigger:
+    player is op
+    make arg-1 ride arg-2
