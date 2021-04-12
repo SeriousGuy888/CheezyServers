@@ -19,6 +19,8 @@ on damage:
   attacker is player
   victim is player
 
+  attacker is not victim
+
   add 1 to {stats.%attacker%.tagged}
   add 1 to {stats.%victim%.tagged_by}
 
