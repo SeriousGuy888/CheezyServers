@@ -18,6 +18,10 @@ on damage:
   damage cause is not thorns
   attacker is player
   victim is player
+
+  add 1 to {stats.%attacker%.tagged}
+  add 1 to {stats.%victim%.tagged_by}
+
   {tag_game.it} is attacker
   set {tag_game.it} to victim
   loop all players:

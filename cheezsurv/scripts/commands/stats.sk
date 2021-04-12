@@ -33,6 +33,9 @@ command /stats <OfflinePlayer=%player%>:
     send "§4Murders: §c%{stats.%arg-1%.murders}%"
     send "§4K/D: §c%{_kd}%%nl%"
 
+    send "§3Other Humans Tagged: §b%{stats.%arg-1%.tagged}%"
+    send "§3Times Tagged by Other Humans: §b%{stats.%arg-1%.tagged_by}%%nl%"
+
     set {_m_lvl} to floor({magic.xp::%arg-1%.level})
     set {_m_pts} to floor({magic.xp::%arg-1%.points})
     set {_m_to_next_lvl} to floor(getMagicXpToLevelUp({_m_lvl}))
