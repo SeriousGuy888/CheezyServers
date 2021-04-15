@@ -63,7 +63,6 @@ on death of player:
 
   attacker is set
   attacker is player
-  victim is online
   set {stats.%attacker%.murders} to 0 if {stats.%attacker%.murders} is not set
   add 1 to {stats.%attacker%.murders}
 
