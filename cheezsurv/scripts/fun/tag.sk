@@ -1,3 +1,6 @@
+options:
+  tagBackCooldown: 3 seconds
+
 command /makeit <offlineplayer>:
   trigger:
     player is op
@@ -21,8 +24,19 @@ on damage:
 
   attacker is not victim
 
+
+  if victim is {tag_game.last_tag.tagger}:
+    set {_cooldown} to difference between now and {tag_game.last_tag.time}
+    if {_cooldown} < {@tagBackCooldown}:
+      send "Tagback Cooldown: %{_cooldown}%" to (attacker and victim)
+      stop
+
+
   add 1 to {stats.%attacker%.tagged}
   add 1 to {stats.%victim%.tagged_by}
+
+  set {tag_game.last_tag.time} to now
+  set {tag_game.last_tag.tagger} to attacker
 
   {tag_game.it} is attacker
   set {tag_game.it} to victim
