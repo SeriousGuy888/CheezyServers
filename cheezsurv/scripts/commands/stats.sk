@@ -52,10 +52,6 @@ command /setstats <OfflinePlayer> <text> <number>:
     set {stats.%arg-1%.%arg-2%} to arg-3
     send "Set stat %arg-2% of %arg-1% to %arg-3%."
     send "§7§o[%executor%§7§o: Set stat %arg-2%§7§o of %arg-1%§7§o to %arg-3%§7§o.]" to console if executor is not console
-    loop all players:
-      loop-player is op
-      loop-player is not executor 
-      send "§7§o[%executor%§7§o: Set stat %arg-2%§7§o of %arg-1%§7§o to %arg-3%§7§o.]" to loop-player
 
 on death of player:
   set {stats.%victim%.deaths} to 0 if {stats.%victim%.deaths} is not set
