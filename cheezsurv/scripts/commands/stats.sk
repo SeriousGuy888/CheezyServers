@@ -61,9 +61,8 @@ on death of player:
   set {stats.%victim%.deaths} to 0 if {stats.%victim%.deaths} is not set
   add 1 to {stats.%victim%.deaths}
 
-  attacker is set
   attacker is player
-  set {stats.%attacker%.murders} to 0 if {stats.%attacker%.murders} is not set
+  # set {stats.%attacker%.murders} to 0 if {stats.%attacker%.murders} is not set
   add 1 to {stats.%attacker%.murders}
 
 on join:
