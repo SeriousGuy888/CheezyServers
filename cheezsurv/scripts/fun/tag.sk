@@ -32,13 +32,14 @@ on damage:
       stop
 
 
+  {tag_game.it} is attacker
+
   add 1 to {stats.%attacker%.tagged}
   add 1 to {stats.%victim%.tagged_by}
 
   set {tag_game.last_tag.time} to now
   set {tag_game.last_tag.tagger} to attacker
 
-  {tag_game.it} is attacker
   set {tag_game.it} to victim
   loop all players:
     if loop-player is victim:
