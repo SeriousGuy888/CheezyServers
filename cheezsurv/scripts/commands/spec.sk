@@ -72,6 +72,12 @@ command /create:
     make player execute command "/spec creative"
 
 
+on world change:
+  player's world is "creative"
+  set player's gamemode to creative
+  enable flight for player
+
+
 command /dimension [<text>]:
   executable by: players
   aliases: /dim
