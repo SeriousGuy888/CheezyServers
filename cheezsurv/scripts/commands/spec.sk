@@ -44,6 +44,7 @@ command /spec [<text>]:
         set player's gamemode to creative
         send action bar "Going to the creative world!" to player
         make console execute command "/mvtp %player% creative"
+        enable flight for player
       else:
         set {%player%.spec.mode} to 0
         set player's gamemode to spectator
@@ -57,9 +58,10 @@ command /spec [<text>]:
         send action bar "Deativated Spectator Mode" to player
       else if {%player%.spec.mode} = 1: # creative
         send action bar "Going back to survival!" to player
-
+      
       set player's gamemode to survival
       teleport player to {%player%.spec.loc}
+      disable flight for player
       delete {%player%.spec.loc}
       delete {%player%.spec.mode}
 
@@ -68,6 +70,7 @@ command /create:
   aliases: /cr
   trigger:
     make player execute command "/spec creative"
+
 
 command /dimension [<text>]:
   executable by: players
