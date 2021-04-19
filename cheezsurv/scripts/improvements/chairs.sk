@@ -12,6 +12,7 @@ on right click on stair:
       make player ride {_s}
       set metadata "sitting" of player to location of clicked block
       set metadata "chair" of {_s} to true
+      send "Sat down on ""chair"" - You can use /chair to toggle this"
 
 on break:
   loop all players:
@@ -41,7 +42,7 @@ command /chair:
     set {chairs.%player%} to true if {chairs.%player%} is not set
     if {chairs.%player%} is true:
       set {chairs.%player%} to false
-      send "§dToggled chairs §coff§d."
+      send "Toggled chairs off."
     else if {chairs.%player%} is false:
       set {chairs.%player%} to true
-      send "§dToggled chairs §aon§d."
+      send "Toggled chairs on."
