@@ -24,6 +24,10 @@ command /spec [<text>]:
   executable by: players
   aliases: /sp
   trigger:
+    if player's gamemode is survival:
+      delete {%player%.spec.loc}
+      delete {%player%.spec.mode}
+
     if {%player%.spec.mode} is not set: # survival
       if {spec.disabled} is true:
         send "§c/spec is currently disabled. Ask an admin if this is a mistake."
