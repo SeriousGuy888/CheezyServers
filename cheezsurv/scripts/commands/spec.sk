@@ -94,6 +94,8 @@ command /dimension [<text>]:
       teleport player to spawn point of "world_nether" if arg-1 is "n"
       teleport player to spawn point of "world_the_end" if arg-1 is "e"
       send action bar "Teleporting..." to player
+      wait 1 second
+      set gamemode of player to spectator
     else:
       send "/dim <o|n|e>%nl%/dim e §7to go to the end"
 
