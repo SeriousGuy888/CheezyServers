@@ -12,7 +12,12 @@ command /verify <OfflinePlayer>:
       set {_allowed} to true
     if {_allowed} = false:
       stop
-    make console execute command "/pex user %arg-1% group set Citizen"
+
+    if arg-1 has permission "verified":
+      send "§cThis human is already verified!"
+      stop
+
+    make console execute command "/lp user %arg-1% parent set citizen"
     broadcast "§2%arg-1% §2has just been verified!"
     send ":ballot_box_with_check: %arg-1% is now verified." to channel with id "{@discordChannelId}" with "Cheezy"
     send "§6You are now verified!" to arg-1
@@ -28,8 +33,13 @@ command /unverify <OfflinePlayer>:
       set {_allowed} to true
     if {_allowed} = false:
       stop
+
+    if arg-1 does not have permission "verified":
+      send "§cThis human is already unverified!"
+      stop
+
     make executor execute command "/deop %arg-1%"
-    make console execute command "/pex user %arg-1% group set default"
+    make console execute command "/lp user %arg-1% parent set default"
     broadcast "§c%arg-1% §chas just been unverified!"
     send ":regional_indicator_x: %arg-1% is no longer verified." to channel with id "{@discordChannelId}" with "Cheezy"
     send "§4You are no longer verified." to arg-1
