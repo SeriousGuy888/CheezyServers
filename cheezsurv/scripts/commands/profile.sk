@@ -20,7 +20,7 @@ command /toggleprofile:
       set {profile_click::%player%} to true
       send "Enabled. Right clicking on players now opens profiles."
 
-command /profile <player=%player%>:
+command /profile <offlineplayer=%player%>:
   executable by: players
   trigger:
     if player's gamemode is not spectator:
@@ -40,7 +40,10 @@ command /profile <player=%player%>:
     set {_d_discrim} to "##%discriminator of user with id {_d_id}%"
     format slot 3 of player with blue wool named "§3Linked Discord Account" with lore "§b%{_d_username}%§b%{_d_discrim}%", "§b§o(ID: %{_d_id}%§b)", "", and "§b§o/link" to be unstealable
     
-    format slot 4 of player with golden helmet named "§5Rank (User Group)" with lore "§d%group of arg-1%", "", "§7§oAdmin - Server Administrator", "§7§oCitizen - Approved Member", "§7§oDefault - Unverified Member" to be unstealable
+    if arg-1 is online:
+      format slot 4 of player with golden helmet named "§5Rank (User Group)" with lore "§d%group of arg-1%", "", "§7§oAdmin - Server Administrator", "§7§oCitizen - Approved Member", "§7§oDefault - Unverified Member" to be unstealable
+    else:
+      format slot 4 of player with golden helmet named "§5Rank (User Group)" with lore "§dThis player is not online!" to be unstealable
 
     format slot 5 of player with sunflower named "§6Balance" with lore "§e%{bank.balance::%arg-1%}%§ec" to close then run [make event-player execute command "/bal %arg-1%"]
 
