@@ -35,7 +35,10 @@ on death of villager:
   
   delete {villager_death_messages::%uuid of victim%}
 
-  
+on spawn of villager:
+  world of event-entity is "creative"
+  add "no_villager_death_message" to scoreboard tags of event-entity
+
 command /villagerdeathmessages:
   aliases: /villdeathmsgs, /vdm
   trigger:
