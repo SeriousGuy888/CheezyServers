@@ -1,11 +1,6 @@
 options:
   discordChannelId: %{config.discord_chat}%
 
-on script load:
-  loop {recently_attacked::*}:
-    delete {recently_attacked.%{recently_attacked::%loop-index%}%}
-    remove {recently_attacked::%loop-index%} from {recently_attacked::*}
-
 on death of villager:
   if victim has scoreboard tag "no_villager_death_message":
     stop
