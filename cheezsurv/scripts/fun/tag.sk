@@ -28,7 +28,7 @@ on damage:
   if victim is {tag_game.last_tag.tagger}:
     set {_cooldown} to difference between now and {tag_game.last_tag.time}
     if {_cooldown} < {@tagBackCooldown}:
-      send "Tagback Cooldown: %{_cooldown}%" to (attacker and victim)
+      send "Tagback Cooldown: %{_cooldown}% / {@tagBackCooldown}" to (attacker and victim)
       stop
 
 
