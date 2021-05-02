@@ -1,0 +1,3 @@
+on death of drowned:
+  chance of 1/200
+  drop wet sponge at location of victim
