@@ -1,0 +1,26 @@
+command /mute <offlineplayer>:
+  trigger:
+    if executor is op:
+      set {_a} to true
+    if executor is console:
+      set {_a} to true
+
+    if {_a} is true:
+      if {muted::%arg-1%} is true:
+        set {muted::%arg-1%} to false
+        broadcast "%arg-1%'s tounge was reinstated by the CheezSurv Sekretpoleess."
+      else:
+        set {muted::%arg-1%} to true
+        broadcast "%arg-1%'s tounge was confiscated by the CheezSurv Sekretpoleess."
+
+function muteCheck(p: player) :: boolean:
+  if {muted::%{_p}%} is true:
+    send "Unfortunately, your tounge is currently in the possession of the Sekretpoleess. Please ask them to reinstate your tounge to speak." to {_p}
+    return true
+  return false
+
+on chat:
+  cancel event if muteCheck(player) is true
+  
+on command "/me":
+  cancel event if muteCheck(player) is true
