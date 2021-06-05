@@ -129,6 +129,7 @@ command /spectp <player>:
       stop
     teleport player to arg-1
     send action bar "Teleporting to %arg-1%..." to player
+    set gamemode of player to spectator
 
 on join:
   {%player%.spec.loc} is set
