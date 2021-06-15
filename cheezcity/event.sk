@@ -91,54 +91,38 @@ command /createliveevent [<Text>] [<Number>]:
             remove 1 from {event.livein}
             wait 1 second
 
+
+function stopEvent(p: player):
+  send "§aStopping event..." to {_p}
+  delete {event.livein}
+  set {event.on} to false
+  wait 35 ticks
+  broadcast "§3The event §b%{event.name}%§3, hosted by §b%{event.host}%§3 has been shut down by §b%{_p}%§3.%nl%§b/event rate§3 to rate the event!"
+  loop all players:
+    set {event.rated.%loop-player%} to false
+  set {event.recentlyended} to true
+  delete {event.ratings::*}
+  wait 30 seconds
+  set {event.recentlyended} to false
+  set {_rating} to 0
+  loop {event.ratings::*}:
+    add {event.ratings::%loop-index%} to {_rating}
+  set {_rating} to {_rating} / size of {event.ratings::*}
+  broadcast "§3Event rating session ended.%nl%§3The event was rated an average of §b%{_rating}%/10§3 based on §b%{event.ratings::*}%§3 votes."
+
+
 command /stopevent:
   permission: cheez.event.stop
   permission message: §cYou require the permission node cheez.event.stop to use this command!
   trigger:
-    if {event.on} is not set:
-      set {event.on} to false
+    set {event.on} to false if {event.on} is not set
+      
     if {event.livein} is not set:
-      message "§cThere is currently no ongoing event!"
-    else if {event.livein} is set:
-      message "§aStopping event..."
-      delete {event.livein}
-      set {event.on} to false
-      wait 35 ticks
-      message "§aSuccess!"
-      broadcast "§3The event §b%{event.name}%§3 has been shut down by §b%player%§3.%nl%§b/event rate§3 to rate the event!"
-      loop all players:
-        set {event.rated.%loop-player%} to false
-      set {event.recentlyended} to true
-      delete {event.ratings::*}
-      wait 30 seconds
-      set {event.recentlyended} to false
-      set {_rating} to 0
-      loop {event.ratings::*}:
-        add {event.ratings::%loop-index%} to {_rating}
-      set {_rating} to {_rating} / size of {event.ratings::*}
-      broadcast "§3Event rating session ended.%nl%§3The event was rated §b%{_rating}%/10§3 based on %{event.ratings::*}% votes."
-    if {event.on} is not set:
-      set {event.on} to false
-    if {event.on} is false:
-      message "§cThere is currently no ongoing event!"
-    else if {event.on} is true:
-      message "§aStopping event..."
-      delete {event.livein}
-      set {event.on} to false
-      wait 35 ticks
-      message "§aSuccess!"
-      broadcast "§3The event §b%{event.name}%§3 has been shut down by §b%player%§3.%nl%§b/event rate§3 to rate the event!"
-      loop all players:
-        set {event.rated.%loop-player%} to false
-      set {event.recentlyended} to true
-      delete {event.ratings::*}
-      wait 30 seconds
-      set {event.recentlyended} to false
-      set {_rating} to 0
-      loop {event.ratings::*}:
-        add {event.ratings::%loop-index%} to {_rating}
-      set {_rating} to {_rating} / size of {event.ratings::*}
-      broadcast "§3Event rating session ended.%nl%§3The event was rated §b%{_rating}%/10§3 based on %{event.ratings::*}% votes."
+      if {event.on} is false:
+        send "§cThere is currently no ongoing event!"
+        stop
+      
+    stopEvent(player)
 
 command /event <text="info"> [<integer>]:
   executable by: players
