@@ -26,11 +26,8 @@ command /createevent [<Text>]:
             set {event.on} to true
             set {event.recentlyended} to false
             set {event.name} to arg-1
-            set {event.world} to player's world
             set {event.host} to player
-            set {event.x} to player's x-coordinate
-            set {event.y} to player's y-coordinate
-            set {event.z} to player's z-coordinate
+            set {event.location} to player's location
             #message "%nl%§e§lDebug: §eEventOn: %{event.on}%%nl%§eEventName: %{event.name}%%nl%§eEventWorld: %{event.world}%%nl%§eEventHost: %{event.host}%%nl%§eEventCoords: %{event.x}%,%{event.y}%,%{event.z}%%nl%"
             broadcast "§3An event named §b%{event.name}%§3 has been started by §b%player%§3!%nl%§3Use the command §b/event join§3 to join this event!"
 
@@ -60,11 +57,8 @@ command /createliveevent [<Text>] [<Number>]:
             if arg-2 is set:
               set {event.recentlyended} to false
               set {event.name} to arg-1
-              set {event.world} to player's world
               set {event.host} to player
-              set {event.x} to player's x-coordinate
-              set {event.y} to player's y-coordinate
-              set {event.z} to player's z-coordinate
+              set {event.location} to player's location
               set {event.livein} to arg-2 * 60
               #message "%nl%§e§lDebug: §eEventOn: %{event.on}%%nl%§eEventName: %{event.name}%%nl%§eEventWorld: %{event.world}%%nl%§eEventHost: %{event.host}%%nl%§eEventCoords: %{event.x}%,%{event.y}%,%{event.z}%%nl%§eEventLiveIn: %{event.livein}%%nl%"
               broadcast "§3An event named §b%{event.name}%§3 has been scheduled to start in §b%arg-2%§3 minutes by §b%player%§3!"
@@ -126,7 +120,7 @@ command /stopevent:
       loop {event.ratings::*}:
         add {event.ratings::%loop-index%} to {_rating}
       set {_rating} to {_rating} / size of {event.ratings::*}
-      broadcast "§3Event rating session ended.%nl%§3The event was rated §b%{_rating}%/10§3."
+      broadcast "§3Event rating session ended.%nl%§3The event was rated §b%{_rating}%/10§3 based on %{event.ratings::*}% votes."
     if {event.on} is not set:
       set {event.on} to false
     if {event.on} is false:
@@ -148,58 +142,47 @@ command /stopevent:
       loop {event.ratings::*}:
         add {event.ratings::%loop-index%} to {_rating}
       set {_rating} to {_rating} / size of {event.ratings::*}
-      broadcast "§3Event rating session ended.%nl%§3The event was rated §b%{_rating}%/10§3."
+      broadcast "§3Event rating session ended.%nl%§3The event was rated §b%{_rating}%/10§3 based on %{event.ratings::*}% votes."
 
-command /event <Text="info"> [<Number>]:
+command /event <text="info"> [<integer>]:
+  executable by: players
   trigger:
-    if executor is console:
-      message "The console cannot execute this command!"
-    if executor is player:
-      if arg-1 is "info":
-        message "%nl%§9§lEVENT INFO"
-        if {event.on} is not set:
-          set {event.on} to false
-        if {event.on} is false:
-          message "§bThere is currently not any ongoing event.%nl%"
-        if {event.on} is true:
-          message "§3Event Name: §b%{event.name}%%nl%§3Event Host: §b%{event.host}%%nl%§2Use §a/event join§2 to join this event!%nl%"
-      if arg-1 is "join":
-        message "§aJoining event..."
-        wait 5 ticks
-        if {event.on} is false:
-          message "§c§lERROR §c| There is no ongoing event."
-        if {event.world} is not set:
-          message "§c§lERROR §c| Varibable EventWorld is not set. Contact an admin."
-        if {event.x} is not set:
-          message "§c§lERROR §c| Varibable EventX is not set. Contact an admin."
-        if {event.y} is not set:
-          message "§c§lERROR §c| Varibable EventY is not set. Contact an admin."
-        if {event.z} is not set:
-          message "§c§lERROR §c| Varibable EventZ is not set. Contact an admin."
-        {event.world} is set
-        {event.x} is set
-        {event.y} is set
-        {event.z} is set
-        {event.on} is true
-        # make console execute command "/mv tp %player% e:%{event.world}%:%{event.x}%,%{event.y}%,%{event.z}%"
-        teleport player to location({event.x}, {event.y}, {event.z}, {event.world})
-        message "§aSuccess!"
-      if arg-1 is "rate":
-        if {event.recentlyended} is false:
-          message "§c§lERROR §c| No recently ended event to rate."
-        if {event.recentlyended} is true:
-          if arg-2 is not set:
-            message "§c/event rate <1 - 10>"
-          if arg-2 is set:
-            if {event.rated.%player%} is true:
-              message "§cYou already rated!"
-            else if {event.rated.%player%} is false:
-              if arg-2 is less than 1:
-                message "§cRating must be between 1 and 10."
-              if arg-2 is more than 10:
-                message "§cRating must be between 1 and 10."
-              arg-2 is more than 0
-              arg-2 is less than 11
-              add arg-2 to {event.ratings::*}
-              set {event.rated.%player%} to true
-              message "§aSubmitted your rating!"
+    if arg-1 is "info":
+      set {event.on} to false if {event.on} is not set
+
+      send "%nl%§9§lEVENT INFO"
+      if {event.on} is false:
+        send "§bThere is currently not any ongoing event.%nl%"
+      if {event.on} is true:
+        send "§3Event Name: §b%{event.name}%%nl%§3Event Host: §b%{event.host}%%nl%§2Use §a/event join§2 to join this event!%nl%"
+    if arg-1 is "join":
+      send "§aJoining event..."
+      wait 5 ticks
+      if {event.on} is false:
+        send "§c§lERROR §c| There is no ongoing event."
+        stop
+      if {event.location} is not set:
+        send "§c§lERROR §c| The event does not have a location. Contact an admin."
+        stop
+      teleport player to {event.location}
+      send "§aSuccess!"
+    if arg-1 is "rate":
+      if {event.recentlyended} is false:
+        send "§c§lERROR §c| No recently ended event to rate."
+        stop
+
+      if arg-2 is not set:
+        send "§c/event rate <1 - 10>"
+      if arg-2 is set:
+        if {event.rated.%player%} is true:
+          send "§cYou already rated!"
+        else if {event.rated.%player%} is false:
+          if arg-2 is less than 1:
+            send "§cRating must be between 1 and 10."
+            stop
+          if arg-2 is more than 10:
+            send "§cRating must be between 1 and 10."
+            stop
+          add arg-2 to {event.ratings::*}
+          set {event.rated.%player%} to true
+          send "§aSubmitted your rating!"
