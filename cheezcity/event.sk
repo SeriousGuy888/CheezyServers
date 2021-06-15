@@ -108,7 +108,7 @@ function stopEvent(p: player):
   loop {event.ratings::*}:
     add {event.ratings::%loop-index%} to {_rating}
   set {_rating} to {_rating} / size of {event.ratings::*}
-  broadcast "§3Event rating session ended.%nl%§3The event was rated an average of §b%{_rating}%/10§3 based on §b%{event.ratings::*}%§3 votes."
+  broadcast "§3Event rating session ended.%nl%§3The event was rated an average of §b%{_rating}%/10§3 based on §b%size of {event.ratings::*}%§3 votes."
 
 
 command /stopevent:
