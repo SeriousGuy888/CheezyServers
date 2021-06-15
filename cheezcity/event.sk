@@ -9,25 +9,25 @@ command /createevent [<Text>]:
   trigger:
     if arg-1 is not set:
       message "§3§lCorrect Usage: §b/createevent <Event Name>"
-    if arg-1 is set:
-      if {event.on} is not set:
-        set {event.on} to false
-      if {event.on} is true:
-        message "§c§lERROR §c| There is currently an ongoing event."
-      if {event.livein} is set:
-        message "§c§lERROR §c| There is currently a scheduled event."
-      if {event.on} is false:
-        {event.livein} is not set
-        if length of arg-1 is more than 24:
-          message "§c§lERROR §c| The name of events are limited to 24 characters!"
-        else if length of arg-1 is less than or equal to 24:
-          set {event.on} to true
-          set {event.recentlyended} to false
-          set {event.name} to arg-1
-          set {event.host} to player
-          set {event.location} to player's location
-          #message "%nl%§e§lDebug: §eEventOn: %{event.on}%%nl%§eEventName: %{event.name}%%nl%§eEventWorld: %{event.world}%%nl%§eEventHost: %{event.host}%%nl%§eEventCoords: %{event.x}%,%{event.y}%,%{event.z}%%nl%"
-          broadcast "§3An event named §b%{event.name}%§3 has been started by §b%player%§3!%nl%§3Use the command §b/event join§3 to join this event!"
+      stop
+    set {event.on} to false if {event.on} is not set
+
+    if {event.on} is true:
+      message "§c§lERROR §c| There is currently an ongoing event."
+    if {event.livein} is set:
+      message "§c§lERROR §c| There is currently a scheduled event."
+    if {event.on} is false:
+      {event.livein} is not set
+      if length of arg-1 is more than 24:
+        message "§c§lERROR §c| The name of events are limited to 24 characters!"
+      else if length of arg-1 is less than or equal to 24:
+        set {event.on} to true
+        set {event.recentlyended} to false
+        set {event.name} to arg-1
+        set {event.host} to player
+        set {event.location} to player's location
+        #message "%nl%§e§lDebug: §eEventOn: %{event.on}%%nl%§eEventName: %{event.name}%%nl%§eEventWorld: %{event.world}%%nl%§eEventHost: %{event.host}%%nl%§eEventCoords: %{event.x}%,%{event.y}%,%{event.z}%%nl%"
+        broadcast "§3An event named §b%{event.name}%§3 has been started by §b%player%§3!%nl%§3Use the command §b/event join§3 to join this event!"
 
 command /createliveevent [<Text>] [<Number>]:
   permission: cheez.event.create.live
@@ -36,60 +36,60 @@ command /createliveevent [<Text>] [<Number>]:
   trigger:
     if arg-1 is not set:
       message "§3§lCorrect Usage: §b/createliveevent <Event Name> <Time Until Starting (Minutes)>"
-    if arg-1 is set:
-      if {event.on} is not set:
-        set {event.on} to false
-      if {event.on} is true:
-        message "§c§lERROR §c| There is currently an ongoing event."
-      if {event.livein} is set:
-        message "§c§lERROR §c| There is currently a scheduled event."
-      if {event.on} is false:
-        {event.livein} is not set
-        if length of arg-1 is more than 24:
-          message "§c§lERROR §c| The name of events are limited to 24 characters!"
-        else if length of arg-1 is less than or equal to 24:
-          if arg-2 is not set:
-            message "§3§lCorrect Usage: §b/createliveevent %arg-1% <Time Until Starting (Minutes)>"
-          if arg-2 is set:
-            set {event.recentlyended} to false
-            set {event.name} to arg-1
-            set {event.host} to player
-            set {event.location} to player's location
-            set {event.livein} to arg-2 * 60
-            #message "%nl%§e§lDebug: §eEventOn: %{event.on}%%nl%§eEventName: %{event.name}%%nl%§eEventWorld: %{event.world}%%nl%§eEventHost: %{event.host}%%nl%§eEventCoords: %{event.x}%,%{event.y}%,%{event.z}%%nl%§eEventLiveIn: %{event.livein}%%nl%"
-            broadcast "§3An event named §b%{event.name}%§3 has been scheduled to start in §b%arg-2%§3 minutes by §b%player%§3!"
-            loop {event.livein} times:
-              if {event.livein} is 600:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b10§3 Minutes!"
-              if {event.livein} is 300:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b5§3 Minutes!"
-              if {event.livein} is 180:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b3§3 Minutes!"
-              if {event.livein} is 120:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b2§3 Minutes!"
-              if {event.livein} is 60:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b1§3 Minute!"
-              if {event.livein} is 30:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b30§3 Seconds!"
-              if {event.livein} is 20:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b20§3 Seconds!"
-              if {event.livein} is 10:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b10§3 Seconds!"
-              if {event.livein} is 5:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b5§3 Seconds!"
-              if {event.livein} is 4:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b4§3 Seconds!"
-              if {event.livein} is 3:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b3§3 Seconds!"
-              if {event.livein} is 2:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b2§3 Seconds!"
-              if {event.livein} is 1:
-                broadcast "§3Event §b%{event.name}%§3 starts in §b1§3 Second!"
-                wait 1 second
-                set {event.on} to true
-                broadcast "§3Event §b%{event.name}%§3 is live! (/event join)"
-              remove 1 from {event.livein}
+      stop
+    if {event.on} is not set:
+      set {event.on} to false
+    if {event.on} is true:
+      message "§c§lERROR §c| There is currently an ongoing event."
+    if {event.livein} is set:
+      message "§c§lERROR §c| There is currently a scheduled event."
+    if {event.on} is false:
+      {event.livein} is not set
+      if length of arg-1 is more than 24:
+        message "§c§lERROR §c| The name of events are limited to 24 characters!"
+      else if length of arg-1 is less than or equal to 24:
+        if arg-2 is not set:
+          message "§3§lCorrect Usage: §b/createliveevent %arg-1% <Time Until Starting (Minutes)>"
+        if arg-2 is set:
+          set {event.recentlyended} to false
+          set {event.name} to arg-1
+          set {event.host} to player
+          set {event.location} to player's location
+          set {event.livein} to arg-2 * 60
+          #message "%nl%§e§lDebug: §eEventOn: %{event.on}%%nl%§eEventName: %{event.name}%%nl%§eEventWorld: %{event.world}%%nl%§eEventHost: %{event.host}%%nl%§eEventCoords: %{event.x}%,%{event.y}%,%{event.z}%%nl%§eEventLiveIn: %{event.livein}%%nl%"
+          broadcast "§3An event named §b%{event.name}%§3 has been scheduled to start in §b%arg-2%§3 minutes by §b%player%§3!"
+          loop {event.livein} times:
+            if {event.livein} is 600:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b10§3 Minutes!"
+            if {event.livein} is 300:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b5§3 Minutes!"
+            if {event.livein} is 180:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b3§3 Minutes!"
+            if {event.livein} is 120:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b2§3 Minutes!"
+            if {event.livein} is 60:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b1§3 Minute!"
+            if {event.livein} is 30:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b30§3 Seconds!"
+            if {event.livein} is 20:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b20§3 Seconds!"
+            if {event.livein} is 10:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b10§3 Seconds!"
+            if {event.livein} is 5:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b5§3 Seconds!"
+            if {event.livein} is 4:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b4§3 Seconds!"
+            if {event.livein} is 3:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b3§3 Seconds!"
+            if {event.livein} is 2:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b2§3 Seconds!"
+            if {event.livein} is 1:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b1§3 Second!"
               wait 1 second
+              set {event.on} to true
+              broadcast "§3Event §b%{event.name}%§3 is live! (/event join)"
+            remove 1 from {event.livein}
+            wait 1 second
 
 command /stopevent:
   permission: cheez.event.stop
