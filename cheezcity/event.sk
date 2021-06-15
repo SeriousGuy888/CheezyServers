@@ -59,32 +59,9 @@ command /createliveevent [<Text>] [<Number>]:
           #message "%nl%§e§lDebug: §eEventOn: %{event.on}%%nl%§eEventName: %{event.name}%%nl%§eEventWorld: %{event.world}%%nl%§eEventHost: %{event.host}%%nl%§eEventCoords: %{event.x}%,%{event.y}%,%{event.z}%%nl%§eEventLiveIn: %{event.livein}%%nl%"
           broadcast "§3An event named §b%{event.name}%§3 has been scheduled to start in §b%arg-2%§3 minutes by §b%player%§3!"
           loop {event.livein} times:
-            if {event.livein} is 600:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b10§3 Minutes!"
-            if {event.livein} is 300:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b5§3 Minutes!"
-            if {event.livein} is 180:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b3§3 Minutes!"
-            if {event.livein} is 120:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b2§3 Minutes!"
-            if {event.livein} is 60:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b1§3 Minute!"
-            if {event.livein} is 30:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b30§3 Seconds!"
-            if {event.livein} is 20:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b20§3 Seconds!"
-            if {event.livein} is 10:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b10§3 Seconds!"
-            if {event.livein} is 5:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b5§3 Seconds!"
-            if {event.livein} is 4:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b4§3 Seconds!"
-            if {event.livein} is 3:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b3§3 Seconds!"
-            if {event.livein} is 2:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b2§3 Seconds!"
+            if (600, 300, 180, 120, 60, 30, 20, 10, 5, 4, 3, 2, 1) contains {event.livein}:
+              broadcast "§3Event §b%{event.name}%§3 starts in §b%{event.livein}%§3 seconds!"
             if {event.livein} is 1:
-              broadcast "§3Event §b%{event.name}%§3 starts in §b1§3 Second!"
               wait 1 second
               set {event.on} to true
               broadcast "§3Event §b%{event.name}%§3 is live! (/event join)"
