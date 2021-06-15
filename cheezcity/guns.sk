@@ -1,0 +1,82 @@
+options:
+  unloaded: §bUnloaded
+  pistolammo: snowball named "§cPistol Ammo"
+  pistolname: "§cPistol §7(L Reload | R Shoot)"
+
+command /guns:
+  permission: cheez.guns
+  permission message: §cYou require the permission node cheez.guns to use this command!
+  trigger:
+    if executor is console:
+      message "The console cannot execute this command."
+    if executor is player:
+      open chest inventory with 2 rows named "Guns" to player
+      wait 2 ticks
+      loop integers between 0 and 17:
+        format slot loop-number of player with light gray stained glass pane named " " to be unstealable
+      format slot 0 of player with iron hoe named {@pistolname} with lore "{@unloaded}" to run [give 1 of iron hoe named {@pistolname} with lore "{@unloaded}" to player]->[play sound "block.note_block.pling" with volume 0.5 to player]
+      format slot 9 of player with {@pistolammo} to run [give 16 of {@pistolammo} to player]->[play sound "block.note_block.pling" with volume 0.5 to player]
+
+on damage:
+  victim is player
+  projectile is snowball or egg
+  if scoreboard tags of projectile contains "guns_pistol_bullet":
+    make attacker damage victim by 1
+    stop
+  make attacker damage victim by 0.00001
+  add 0.00001 to victim's health
+
+# Pistol | BEGIN
+
+on left click with iron hoe:
+  name of player's held item is {@pistolname}
+  cancel event
+  if the 1st line of the lore of the player's tool is "{@unloaded}":
+    if player does not have 1 {@pistolammo}:
+      send action bar "§4You do not have ammo!" to player
+    if player has 1 {@pistolammo}:
+      set {_ammo} to 0
+      loop 16 times:
+        player has 1 {@pistolammo}
+        play sound "block.note_block.snare" with volume 1 to player
+        add 1 to {_ammo}
+        remove 1 {@pistolammo} from player
+        send action bar "§2Reloading | %{_ammo}%" to player
+        set the 1st line of the lore of the player's tool to "%{_ammo}%"
+        wait 0.35 seconds
+
+
+  else:
+    send action bar "§4Your weapon is still loaded!" to player
+
+on right click with iron hoe:
+  name of player's held item is {@pistolname}
+  cancel event
+  if the 1st line of the lore of the player's tool is "{@unloaded}":
+    send action bar "§4Your gun is not loaded!" to player
+  if the 1st line of the lore of the player's tool is not "{@unloaded}":
+    shoot an snowball from the player at speed 4
+    set {_pistol_bullet} to last shot snowball
+    add "guns_pistol_bullet" to scoreboard tags of {_pistol_bullet}
+
+    set {_ammoleft} to the 1st line of the lore of the player's tool parsed as integer
+    remove 1 from {_ammoleft}
+    if {_ammoleft} is more than 0:
+      send action bar "§2Firing | %{_ammoleft}%" to player
+      set the 1st line of the lore of the player's tool to "%{_ammoleft}%"
+    if {_ammoleft} is less than or equal to 0:
+      send action bar "§2Firing | %{_ammoleft}%" to player
+      set the 1st line of the lore of the player's tool to "{@unloaded}"
+    # add "{pickup:0b,life:1000,damage:3d,Color:16746496,Potion:""minecraft:slowness""}" to the nbt of {_pistol_bullet}
+    add 2 to {%player%.suspicion}
+    chance of 25%:
+      add 1 to the data value of the tool
+      if data value of player's tool is more than 250:
+        remove 1 of player's held item from player's inventory
+        play sound "entity.item.break" at player
+
+on right click with snowball:
+  name of player's held item is "§rPistol Ammo"
+  cancel event
+
+# Pistol | END
