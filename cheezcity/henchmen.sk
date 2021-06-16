@@ -1,0 +1,13 @@
+every 5 ticks:
+  loop all players:
+    loop {henchmen.active::%loop-player%::*}:
+      make loop-value-2 pathfind to loop-player with speed 1
+
+command /henchmen:
+  executable by: players
+  aliases: /henchman
+  trigger:
+    player is op
+    spawn husk at player
+    set name of last spawned husk to "%player%'s Henchman"
+    add last spawned husk to {henchmen.active::%player%::*}
