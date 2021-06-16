@@ -2,6 +2,7 @@ options:
 #=Prefix==============================================
   Prefix: &6[*] # Plugin Prefix
   Forecast: §6[Forecast]
+  worldAffected: "CheezCityWorld"
 #=====================================================
 
 command /weather [<Text="help">] [<Text>] [<Number>]:
@@ -14,10 +15,6 @@ command /weather [<Text="help">] [<Text>] [<Number>]:
       message "§e/weather set - Set the weather"
     if arg-1 is "set":
       if arg-2 is set:
-        if arg-2 is "sun":
-          broadcast "{@Prefix} {@Forecast} §eSunny weather today! ☺"
-          wait 10 seconds
-          set weather in player's world to sunny
         if arg-2 is "clear":
           broadcast "{@Prefix} {@Forecast} §eSunny weather today! ☺"
           wait 10 seconds
@@ -26,27 +23,15 @@ command /weather [<Text="help">] [<Text>] [<Number>]:
           broadcast "{@Prefix} {@Forecast} §3Rain expected today. ☹"
           wait 10 seconds
           set weather in player's world to rainy
-        if arg-2 is "downfall":
-          broadcast "{@Prefix} {@Forecast} §3Rain expected today. ☹"
-          wait 10 seconds
-          set weather in player's world to rainy
-        if arg-2 is "storm":
-          broadcast "{@Prefix} {@Forecast} §b§lSevere Thunderstorm Warning§b - Stay inside if possible."
-          wait 10 seconds
-          set weather in player's world to thundering
         if arg-2 is "thunder":
-          broadcast "{@Prefix} {@Forecast} §b§lSevere Thunderstorm Warning§b - Stay inside if possible."
-          wait 10 seconds
-          set weather in player's world to thundering
-        if arg-2 is "thunderstorm":
           broadcast "{@Prefix} {@Forecast} §b§lSevere Thunderstorm Warning§b - Stay inside if possible."
           wait 10 seconds
           set weather in player's world to thundering
       else:
         message "{@Prefix} §cPlease specify what kind of weather!"
-        message "%nl%§3Valid Options:%nl%§bSUN / CLEAR%nl%§bRAIN / DOWNFALL%nl%§bSTORM / THUNDER / THUNDERSTORM"
+        message "%nl%§3Valid Options:%nl%§bCLEAR%nl%§bRAIN%nl%§bTHUNDER"
 
-every minecraft day in "world":
+every minecraft day in {@worldAffected}:
   set {_new} to "sunny"
   chance of 33%:
     set {_new} to "rain"
@@ -55,18 +40,18 @@ every minecraft day in "world":
   if {_new} is "sunny":
     broadcast "{@Prefix} {@Forecast} §eSunny weather today! ☺"
     wait 10 seconds
-    set weather in "world" to sunny
+    set weather in {@worldAffected} to sunny
   if {_new} is "rain":
     broadcast "{@Prefix} {@Forecast} §3Rain expected today. ☹"
     wait 10 seconds
-    set weather in "world" to rainy
+    set weather in {@worldAffected} to rainy
   if {_new} is "storm":
     broadcast "{@Prefix} {@Forecast} §b§lSevere Thunderstorm Warning§b - Stay inside if possible."
     wait 10 seconds
-    set weather in "world" to thundering
+    set weather in {@worldAffected} to thundering
 
-every minute in "world":
-  if weather in "world" is thundering:
+every minute in {@worldAffected}:
+  if weather in {@worldAffected} is thundering:
     loop all players:
       add loop-player to {_players::*}
       set {_size} to size of {_players::*}
