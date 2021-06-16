@@ -18,7 +18,6 @@ command /guns:
       format slot 9 of player with {@pistolammo} to run [give 16 of {@pistolammo} to player]->[play sound "block.note_block.pling" with volume 0.5 to player]
 
 on damage:
-  victim is player
   projectile is snowball or egg
   if scoreboard tags of projectile contains "guns_pistol_bullet":
     make attacker damage victim by 1
