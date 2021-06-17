@@ -63,9 +63,13 @@ on damage:
     if {pvp::%attacker%.chargeup} >= 100:
       set damage to damage * {@specialAttackMultiplier}
       send action bar "§aUsed {@specialAttackMultiplier}x damage multiplier!" to attacker
+      subtract 50 from {pvp::%attacker%.chargeup}
+      play sound "entity.player.attack.strong" at victim
       if victim is a player:
         send action bar "§cOpponent used {@specialAttackMultiplier}x damage multiplier!" to victim
-      subtract 50 from {pvp::%attacker%.chargeup}
+        loop 3 times:
+          play sound "block.note_block.snare" to victim
+          wait 1 tick
   if victim is player:
     attacker is set
     set {pvp::%victim%.combat} to {@now}
@@ -77,6 +81,9 @@ on right click:
   set metadata "pvp_charging" of player to {@now}
   send action bar "§aCharging..." to player
   push player forwards with force 1.5
+  loop 4 times:
+    play sound "entity.generic.small_fall" at player
+    wait 3 tick
 every 4 ticks:
   loop all players:
     set {_charge_timestamp} to metadata "pvp_charging" of loop-player
