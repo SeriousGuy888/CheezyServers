@@ -6,12 +6,14 @@ options:
 every 10 ticks:
   loop all players:
     # send "looping %loop-player%" to "Cheez2" parsed as player
+
     set {_last_combat} to difference between {pvp::%loop-player%.combat} and {@now}
     set {_combat_log} to {@combatTimer} - {_last_combat}
     set {_combat} to true
     if {_last_combat} > {@combatTimer}:
       set {_combat} to false
-      remove loop-player from bossbar {pvp::%loop-player%.bossbar}
+      remove loop-player from bossbar {pvp::%loop-player%.bossbar} if {pvp::%loop-player%.bossbar} is set
+      delete {pvp::%loop-player%.bossbar}
 
     if {_combat} is true:
       if loop-player's target is set:
@@ -27,21 +29,22 @@ every 10 ticks:
         if {pvp::%loop-player%.chargeup} < 0:
           set {pvp::%loop-player%.chargeup} to 0
 
-
+    if {pvp::%loop-player%.bossbar} is set:
+      remove loop-player from bossbar {pvp::%loop-player%.bossbar}
+      delete {pvp::%loop-player%.bossbar}
     set {pvp::%loop-player%.bossbar} to a new bossbar
+
     set colour of bossbar {pvp::%loop-player%.bossbar} to yellow
     if {_chargeup} is true:
       set title of bossbar {pvp::%loop-player%.bossbar} to "§eAttack Chargeup"
       set {_progress} to {pvp::%loop-player%.chargeup} / 100
     else:
-      set title of bossbar {pvp::%loop-player%.bossbar} to "§eCombat Log (%{_combat_log}% seconds)"
-      set {_progress} to {_combat_log} / {@combatTimer}
+      set title of bossbar {pvp::%loop-player%.bossbar} to "§eCombat Log (%round({_combat_log})% seconds)"
+      set {_progress} to round({_combat_log}) / {@combatTimer}
 
 
     set progress of bossbar {pvp::%loop-player%.bossbar} to {_progress}
     if {_combat} is true:
-      if {_combat_log} <= 0:
-        {pvp::%loop-player%.chargeup} <= 0
       add loop-player to bossbar {pvp::%loop-player%.bossbar}
 
 on damage:
