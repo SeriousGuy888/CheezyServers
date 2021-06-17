@@ -1,6 +1,7 @@
 options:
-  attackChargeUpSpeed: 15
+  attackChargeUpSpeed: 20
   combatTimer: 10
+  specialAttackMultiplier: 1.5
   now: unix timestamp of now
 
 every 10 ticks:
@@ -25,7 +26,7 @@ every 10 ticks:
             set {pvp::%loop-player%.chargeup} to 100
       else:
         set {_chargeup} to false
-        subtract {@attackChargeUpSpeed} from {pvp::%loop-player%.chargeup}
+        subtract {@attackChargeUpSpeed} / 2 from {pvp::%loop-player%.chargeup}
         if {pvp::%loop-player%.chargeup} < 0:
           set {pvp::%loop-player%.chargeup} to 0
 
@@ -36,10 +37,18 @@ every 10 ticks:
 
     set colour of bossbar {pvp::%loop-player%.bossbar} to yellow
     if {_chargeup} is true:
-      set title of bossbar {pvp::%loop-player%.bossbar} to "§eAttack Chargeup"
+      if {pvp::%loop-player%.chargeup} >= 100:
+        set colour of bossbar {pvp::%loop-player%.bossbar} to green
+        set {_bossbar_title} to "§2[LMB] §a⚔ {@specialAttackMultiplier}x DMG"
+        if loop-player's tool is sword:
+          set {_bossbar_title} to "%{_bossbar_title}% §7| §2[RMB] §a» Charge"
+        set title of bossbar {pvp::%loop-player%.bossbar} to {_bossbar_title}
+      else:
+        set title of bossbar {pvp::%loop-player%.bossbar} to "§eAttack Chargeup"
       set {_progress} to {pvp::%loop-player%.chargeup} / 100
     else:
-      set title of bossbar {pvp::%loop-player%.bossbar} to "§eCombat Log (%round({_combat_log})% seconds)"
+      set colour of bossbar {pvp::%loop-player%.bossbar} to blue
+      set title of bossbar {pvp::%loop-player%.bossbar} to "§bCombat Log (%round({_combat_log})% seconds)"
       set {_progress} to round({_combat_log}) / {@combatTimer}
 
 
@@ -50,8 +59,39 @@ every 10 ticks:
 on damage:
   if attacker is player:
     set {pvp::%attacker%.combat} to {@now}
+
+    if {pvp::%attacker%.chargeup} >= 100:
+      set damage to damage * {@specialAttackMultiplier}
+      send action bar "§aUsed {@specialAttackMultiplier}x damage multiplier!" to attacker
+      if victim is a player:
+        send action bar "§cOpponent used {@specialAttackMultiplier}x damage multiplier!" to victim
+      subtract 50 from {pvp::%attacker%.chargeup}
   if victim is player:
+    attacker is set
     set {pvp::%victim%.combat} to {@now}
+
+on right click:
+  player's tool is sword
+  {pvp::%player%.chargeup} >= 100
+  subtract 100 from {pvp::%player%.chargeup}
+  set metadata "pvp_charging" of player to {@now}
+  send action bar "§aCharging..." to player
+  push player forwards with force 1.5
+every 4 ticks:
+  loop all players:
+    set {_charge_timestamp} to metadata "pvp_charging" of loop-player
+    {_charge_timestamp} is set
+    if difference between {_charge_timestamp} and {@now} >= 2:
+      delete metadata "pvp_charging" of loop-player
+      continue
+    if x of loop-player's velocity is 0:
+      y of loop-player's velocity is 0
+      delete metadata "pvp_charging" of loop-player
+      continue
+    loop all entities in radius 2 around loop-player:
+      loop-entity-2 is not loop-player
+      make loop-player damage loop-entity-2 by 1
+
 
 on quit:
   delete {pvp::%player%.bossbar}
