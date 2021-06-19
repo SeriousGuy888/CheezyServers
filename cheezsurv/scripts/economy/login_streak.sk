@@ -29,7 +29,7 @@ command /claimdailyreward:
       set {login_streak::%player%.epoch_day_num} to floor(unix timestamp of now / 86400)
 
       logEconomyAction("`%player%` received `%{_reward}%` coins for their `%{login_streak::%player%.streak}%` day login streak. (Days since epoch: `%{login_streak::%player%.epoch_day_num}%`)")
-      send "§6You have received §e%{_reward}% §ecoins §6for your §e%{login_streak::%player%.streak}% §6day login streak."
+      send "§6You have received §e%{_reward}% §esunfles §6for your §e%{login_streak::%player%.streak}% §6day login streak."
     else:
       set {_next_reward} to unix date of (floor(unix timestamp of 1 day after now / 86400) * 86400)
       set {_time_until_reward} to (difference between now and {_next_reward})
