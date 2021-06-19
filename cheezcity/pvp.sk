@@ -1,10 +1,11 @@
 options:
-  attackChargeUpSpeed: 20
+  attackChargeUpSpeed: 12
+  attackChargeUpMax: 120 # it is filled at 100 but can go up to this number for a short grace period
   combatTimer: 10
   specialAttackMultiplier: 1.5
   now: unix timestamp of now
 
-every 10 ticks:
+every 4 ticks:
   loop all players:
     # send "looping %loop-player%" to "Cheez2" parsed as player
 
@@ -21,9 +22,9 @@ every 10 ticks:
         set {_chargeup} to true
         set {_dist} to distance between loop-player and loop-player's target
         if {_dist} < 6:
-          add {@attackChargeUpSpeed} to {pvp::%loop-player%.chargeup}
-          if {pvp::%loop-player%.chargeup} > 100:
-            set {pvp::%loop-player%.chargeup} to 100
+          add {@attackChargeUpSpeed} / 2 to {pvp::%loop-player%.chargeup}
+          if {pvp::%loop-player%.chargeup} > {@attackChargeUpMax}:
+            set {pvp::%loop-player%.chargeup} to {@attackChargeUpMax}
       else:
         set {_chargeup} to false
         subtract {@attackChargeUpSpeed} / 2 from {pvp::%loop-player%.chargeup}
@@ -44,8 +45,8 @@ every 10 ticks:
           set {_bossbar_title} to "%{_bossbar_title}% §7| §2[RMB] §a» Charge"
         set title of bossbar {pvp::%loop-player%.bossbar} to {_bossbar_title}
       else:
-        set title of bossbar {pvp::%loop-player%.bossbar} to "§eAttack Chargeup"
-      set {_progress} to {pvp::%loop-player%.chargeup} / 100
+        set title of bossbar {pvp::%loop-player%.bossbar} to "§eAttack and Combo Chargeup"
+      set {_progress} to min({pvp::%loop-player%.chargeup}, 100) / 100
     else:
       set colour of bossbar {pvp::%loop-player%.bossbar} to blue
       set title of bossbar {pvp::%loop-player%.bossbar} to "§bCombat Log (%round({_combat_log})% seconds)"
@@ -58,12 +59,17 @@ every 10 ticks:
 
 on damage:
   if attacker is player:
+    if difference between {pvp::%attacker%.combat} and {@now} < 1: # if last attack was less than one second ago, a combo
+      add {@attackChargeUpSpeed} * 2 to {pvp::%attacker%.chargeup}
+      play sound "block.glass.hit" to attacker
+      send action bar "§aCombo! (+%{@attackChargeUpSpeed} * 2%%% Attack Chargeup)" to attacker
+
     set {pvp::%attacker%.combat} to {@now}
 
     if {pvp::%attacker%.chargeup} >= 100:
       set damage to damage * {@specialAttackMultiplier}
       send action bar "§aUsed {@specialAttackMultiplier}x damage multiplier!" to attacker
-      subtract 50 from {pvp::%attacker%.chargeup}
+      subtract {@attackChargeUpMax} / 2 from {pvp::%attacker%.chargeup}
       play sound "entity.player.attack.strong" at victim
       if victim is a player:
         send action bar "§cOpponent used {@specialAttackMultiplier}x damage multiplier!" to victim
@@ -77,7 +83,7 @@ on damage:
 on right click:
   player's tool is sword
   {pvp::%player%.chargeup} >= 100
-  subtract 100 from {pvp::%player%.chargeup}
+  subtract {@attackChargeUpMax} from {pvp::%player%.chargeup}
   set metadata "pvp_charging" of player to {@now}
   send action bar "§aCharging..." to player
   push player forwards with force 1.5
