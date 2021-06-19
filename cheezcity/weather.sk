@@ -52,9 +52,9 @@ every minecraft day in {@worldAffected}:
 
 every minute in {@worldAffected}:
   if weather in {@worldAffected} is thundering:
-    loop all players:
+    loop all players in world {@worldAffected}:
       add loop-player to {_players::*}
-      set {_size} to size of {_players::*}
-      set {_x} to a random integer between 1 and {_size}
-      strike lightning effect at {_players::%{_x}%}
-      remove 1.5 from {_players::%{_x}%}'s health
+      set {_player} to random element out of {_players::*}
+      if skylight level at {_player} is 15:
+        strike lightning effect at {_player}
+        remove 1.5 from {_players::%{_x}%}'s health
