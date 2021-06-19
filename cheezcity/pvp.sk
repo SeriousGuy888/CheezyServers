@@ -46,14 +46,14 @@ every 4 ticks:
         set title of bossbar {pvp::%loop-player%.bossbar} to {_bossbar_title}
       else:
         set title of bossbar {pvp::%loop-player%.bossbar} to "§eAttack and Combo Chargeup"
-      set {_progress} to min({pvp::%loop-player%.chargeup}, 100) / 100
+      set {_progress} to {pvp::%loop-player%.chargeup} / 100
     else:
       set colour of bossbar {pvp::%loop-player%.bossbar} to blue
       set title of bossbar {pvp::%loop-player%.bossbar} to "§bCombat Log (%round({_combat_log})% seconds)"
       set {_progress} to round({_combat_log}) / {@combatTimer}
 
 
-    set progress of bossbar {pvp::%loop-player%.bossbar} to {_progress}
+    set progress of bossbar {pvp::%loop-player%.bossbar} to min(max({_progress}, 0), 100)
     if {_combat} is true:
       add loop-player to bossbar {pvp::%loop-player%.bossbar}
 
