@@ -5,7 +5,7 @@ options:
   specialAttackMultiplier: 1.5
   now: unix timestamp of now
 
-every 4 ticks:
+every 5 ticks:
   loop all players:
     # send "looping %loop-player%" to "Cheez2" parsed as player
 
@@ -53,7 +53,7 @@ every 4 ticks:
       set {_progress} to round({_combat_log}) / {@combatTimer}
 
 
-    set progress of bossbar {pvp::%loop-player%.bossbar} to min(max({_progress}, 0), 100)
+    set progress of bossbar {pvp::%loop-player%.bossbar} to min(max({_progress}, 0), 1)
     if {_combat} is true:
       add loop-player to bossbar {pvp::%loop-player%.bossbar}
 
