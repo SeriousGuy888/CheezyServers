@@ -5,10 +5,13 @@ options:
   specialAttackMultiplier: 1.5
   now: unix timestamp of now
 
+on skript start:
+  add item frame to {pvp.exempted_entities::*} # i hate skript so much
+  add item to {pvp.exempted_entities::*}
+  add armor stand to {pvp.exempted_entities::*}
+
 every 5 ticks:
   loop all players:
-    # send "looping %loop-player%" to "Cheez2" parsed as player
-
     set {_last_combat} to difference between {pvp::%loop-player%.combat} and {@now}
     set {_combat_log} to {@combatTimer} - {_last_combat}
     set {_combat} to true
@@ -19,6 +22,8 @@ every 5 ticks:
 
     if {_combat} is true:
       if loop-player's target is set:
+        {pvp.exempted_entities::*} does not contain loop-player's target
+
         set {_chargeup} to true
         set {_dist} to distance between loop-player and loop-player's target
         if {_dist} < 6:
@@ -59,6 +64,7 @@ every 5 ticks:
 
 on damage:
   if attacker is player:
+    {pvp.exempted_entities::*} does not contain victim
     if difference between {pvp::%attacker%.combat} and {@now} < 1: # if last attack was less than one second ago, a combo
       add {@attackChargeUpSpeed} * 2 to {pvp::%attacker%.chargeup}
       play sound "block.glass.hit" to attacker
