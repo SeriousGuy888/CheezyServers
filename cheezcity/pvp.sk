@@ -115,6 +115,7 @@ every 4 ticks:
 on quit:
   delete {pvp::%player%.bossbar}
 
+  {pvp::%player%.combat} is set
   set {_last_combat} to difference between {pvp::%player%.combat} and {@now}
   set {_combat_log} to {@combatTimer} - {_last_combat}
   set {_combat} to true
