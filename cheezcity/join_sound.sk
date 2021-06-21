@@ -1,0 +1,16 @@
+options:
+  sound: "block.note_block.pling"
+  volume: 0.4
+  delay: 5 ticks
+
+on join:
+  play sound {@sound} at volume {@volume} at pitch 1 to all players
+  wait {@delay}
+  play sound {@sound} at volume {@volume} at pitch 1.2 to all players
+
+on quit:
+  play sound {@sound} at volume {@volume} at pitch 1.6 to all players
+  wait {@delay}
+  play sound {@sound} at volume {@volume} at pitch 1.4 to all players
+  wait {@delay}
+  play sound {@sound} at volume {@volume} at pitch 1.2 to all players
