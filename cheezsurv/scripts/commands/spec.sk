@@ -43,7 +43,7 @@ command /spec [<text>]:
         set {%player%.spec.mode} to 1
         set player's gamemode to creative
         send action bar "Going to the creative world!" to player
-        make console execute command "/mvtp %player% creative"
+        teleport player to spawn of world "creative"
         enable flight for player
       else:
         set {%player%.spec.mode} to 0
