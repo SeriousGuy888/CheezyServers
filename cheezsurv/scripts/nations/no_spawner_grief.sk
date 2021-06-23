@@ -1,0 +1,9 @@
+on break of mob spawner:
+  player's gamemode is survival or adventure
+  cancel event
+  send "No spawner griefing. You meanie."
+
+on explode:
+  loop exploded blocks:
+    loop-block is mob spawner
+    cancel event
