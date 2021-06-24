@@ -1,0 +1,9 @@
+on portal create:
+  event-world is not "world_nether"
+  cancel event
+
+on right click on end portal frame:
+  player's tool is ender eye
+  player's gamemode is survival or adventure
+  send "no going to the moon"
+  cancel event
