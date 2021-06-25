@@ -1,5 +1,5 @@
 function autosmeltDrops(loc: location, broken_block: item, drop_item: item):
-  loop dropped items in radius 0.5 of {_loc}:
+  loop dropped items in radius 0.75 of {_loc}:
     item of loop-value is not {_broken_block} # waiting for skript 1.17
     delete loop-value
     set {_amt} to random number between 1 and 3
