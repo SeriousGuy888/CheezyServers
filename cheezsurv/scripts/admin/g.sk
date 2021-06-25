@@ -1,0 +1,11 @@
+command /g <number> <player=%player%>:
+  trigger:
+    if player is not op:
+      send "you kannot utilise cis kommand you dukking dukk"
+      stop
+    set {_gm} to arg-1
+    set {_p} to arg-2
+    set {_p}'s gamemode to survival if {_gm} is 0
+    set {_p}'s gamemode to creative if {_gm} is 1
+    set {_p}'s gamemode to adventure if {_gm} is 2
+    set {_p}'s gamemode to spectator if {_gm} is 3
