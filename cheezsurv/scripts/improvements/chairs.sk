@@ -25,7 +25,7 @@ on dismount:
   delete metadata "sitting" of player
 
 on vehicle damage:
-  metadata "sitting" of event-entity is set
+  metadata "chair" of event-entity is set
   cancel event
 
 on quit:
