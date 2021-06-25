@@ -15,8 +15,8 @@ on death of villager:
     else:
       set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% was executed by hanging"
   else:
-    set {_murder_variations::*} to ("murdered", "murderized", "assassinated", "slaughtered", "nuked", "killified", "terminated", "deprecated", "annihilated", "killed to death", "put down", "euthanized", "butchered", "destroyed", "purged", "massacred", "executed", "deleted", "forced to deathe")
-    set {_died_variations::*} to ("deathed", "passed away", "was removed from existence", "contracted death syndrome")
+    set {_murder_variations::*} to ("murdered", "jakobised", "assassinated", "slaughtered", "nuked", "deaced", "terminated", "deprecated", "annihilated", "killed to death", "put down", "euthanised", "butchered", "destroyed", "purged", "massacred", "executed", "deleted")
+    set {_died_variations::*} to ("deaced", "passed away", "was removed from existence", "contracted death syndrome")
 
     if attacker is set:
       set {villager_death_messages::%uuid of victim%} to "%{_villager_name}% was %random element out of {_murder_variations::*}% by %{_attacker_name}%"
