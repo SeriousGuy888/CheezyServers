@@ -1,0 +1,19 @@
+on skript start:
+  set {nations.grace} to true if {nations.grace} is not set
+
+command /togglegrace:
+  trigger:
+    player is op
+    if {nations.grace} is false:
+      set {nations.grace} to true
+      broadcast "grace period now active so no murder pls"
+    else if {nations.grace} is true:
+      set {nations.grace} to false
+      broadcast "grace period now inactive so murder pls"
+
+on damage:
+  attacker is player
+  victim is player
+  {nations.grace} is true
+  cancel event
+  send "grace period" to attacker
