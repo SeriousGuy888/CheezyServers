@@ -36,11 +36,11 @@ command /stats <OfflinePlayer=%player%>:
     send "§3Other Humans Tagged: §b%{stats.%arg-1%.tagged}%"
     send "§3Times Tagged by Other Humans: §b%{stats.%arg-1%.tagged_by}%%nl%"
 
-    set {_m_lvl} to floor({magic.xp::%arg-1%.level})
-    set {_m_pts} to floor({magic.xp::%arg-1%.points})
-    set {_m_to_next_lvl} to floor(getMagicXpToLevelUp({_m_lvl}))
-    send "§5Magic Level: §d%{_m_lvl}%"
-    send "§5Magic XP: §d%{_m_pts}%§d/%{_m_to_next_lvl}%%nl%"
+    # set {_m_lvl} to floor({magic.xp::%arg-1%.level})
+    # set {_m_pts} to floor({magic.xp::%arg-1%.points})
+    # set {_m_to_next_lvl} to floor(getMagicXpToLevelUp({_m_lvl}))
+    # send "§5Magic Level: §d%{_m_lvl}%"
+    # send "§5Magic XP: §d%{_m_pts}%§d/%{_m_to_next_lvl}%%nl%"
 
     send "§2Playtime: §a%timeToText({playtime.%arg-1%})%§7<tooltip:*Only recalculates every time the player leaves; *While the default Minecraft playtime statistic exists, we do not use it as it requires the player to be online to access.>*<reset>"
     send "§2Login Streak: §a%{login_streak::%arg-1%.streak}%"
