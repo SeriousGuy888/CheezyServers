@@ -5,17 +5,25 @@ command /makeit <offlineplayer>:
   trigger:
     player is op
     set {tag_game.it} to arg-1
-    send "%arg-1% is now it!"
+    send "%arg-1% is now It!"
 
 command /whoisit:
   trigger:
-    send "%{tag_game.it}% is currently IT!"
+    send "%{tag_game.it}% is currently It!"
 
 on join:
   if {tag_game.it} is player:
-    send "You are currently IT! Tag someone to make them it!"
+    send "You are currently It! Tag someone to make them It!"
   else:
     make player execute command "/whoisit"
+
+every 10 minutes:
+  {tag_game.it} is not online
+  set {_candidates::*} to all players where [{afk.%input%} is not true]
+
+  size of {_candidates::*} > 0
+  set {tag_game.it} to random element out of {_candidates::*}
+  broadcast "%{tag_game.it}% was randomly chosen to be It as the previous It is not online."
 
 on damage:
   damage cause is not thorns
@@ -43,7 +51,7 @@ on damage:
   set {tag_game.it} to victim
   loop all players:
     if loop-player is victim:
-      send "Tag from %attacker%! You're it!" to loop-player
+      send "Tag from %attacker%! You're It!" to loop-player
     else:
       send "%attacker% tagged %victim%!" to loop-player
   make console execute command "/sendtodiscordchat :point_up_2: **%attacker% tagged %victim%.**"
