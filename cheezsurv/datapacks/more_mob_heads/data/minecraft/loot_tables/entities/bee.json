@@ -18,6 +18,11 @@
           "conditions": [
             {
               "condition": "killed_by_player"
+            },
+            {
+              "condition": "random_chance_with_looting",
+              "chance": 0.2,
+              "looting_multiplier": 0.02
             }
           ],
           "children": [
@@ -34,7 +39,7 @@
                 {
                   "condition": "entity_properties",
                   "predicate": {
-                    "nbt": "{Anger:0,HasNectar:0b}"
+                    "nbt": "{AngerTime:0,HasNectar:0b}"
                   },
                   "entity": "this"
                 }
@@ -53,7 +58,7 @@
                 {
                   "condition": "entity_properties",
                   "predicate": {
-                    "nbt": "{Anger:0,HasNectar:1b}"
+                    "nbt": "{AngerTime:0,HasNectar:1b}"
                   },
                   "entity": "this"
                 }
