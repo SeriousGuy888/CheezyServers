@@ -17,13 +17,12 @@ on join:
   else:
     make player execute command "/whoisit"
 
-# every 10 minutes:
-#   {tag_game.it} parsed as offlineplayer is not online
-#   set {_candidates::*} to all players where [{afk.%input%} is not true]
-
-#   size of {_candidates::*} > 0
-#   set {tag_game.it} to random element out of {_candidates::*}
-#   broadcast "%{tag_game.it}% was randomly chosen to be It as the previous It is not online."
+every 5 minutes:
+  ("%uuid of {tag_game.it}%" parsed as offlineplayer) is not online
+  set {_candidates::*} to all players where [{afk.%input%} is not true]
+  size of {_candidates::*} > 0
+  set {tag_game.it} to random element out of {_candidates::*}
+  broadcast "%{tag_game.it}% was randomly chosen to be It as the previous It is not online."
 
 on damage:
   damage cause is not thorns
