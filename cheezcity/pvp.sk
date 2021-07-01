@@ -64,7 +64,9 @@ every 5 ticks:
 
 on damage:
   if attacker is player:
-    {pvp.exempted_entities::*} does not contain victim
+    victim is player
+    # {pvp.exempted_entities::*} does not contain victim
+
     if difference between {pvp::%attacker%.combat} and {@now} < 1: # if last attack was less than one second ago, a combo
       add {@attackChargeUpSpeed} * 2 to {pvp::%attacker%.chargeup}
       play sound "block.glass.hit" to attacker
@@ -83,7 +85,8 @@ on damage:
           play sound "block.note_block.snare" to victim
           wait 1 tick
   if victim is player:
-    attacker is set
+    attacker is player
+    # attacker is set
     set {pvp::%victim%.combat} to {@now}
 
 on right click:
