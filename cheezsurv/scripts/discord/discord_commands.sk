@@ -1,5 +1,5 @@
 options:
-  prefixes: "sn!", "%mention tag of event-bot% "
+  prefixes: "s5!", "%mention tag of event-bot% "
   linkDefaultedMsg: "`Defaulted to looking up your player data as you have your Discord ID linked.`%nl%"
   specifyPlayer: "Please specify a player name. If you wish for the command to default to your info, link your Discord ID with `/link` in game."
   playerNotFound: "No player found by that name. Try fixing your spelling."

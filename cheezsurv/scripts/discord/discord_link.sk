@@ -1,5 +1,5 @@
 options:
-  prefixes: "sn!", "%mention tag of event-bot% "
+  prefixes: "s5!", "%mention tag of event-bot% "
   codePrefix: "survn-"
   codeLength: 6
 
