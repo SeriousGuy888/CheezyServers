@@ -1,10 +1,10 @@
 on break:
     player's gamemode is survival or adventure
     player's tool is enchanted with silk touch
-    if event-block is grass path:
-        cancel event
-        set event-block to air
-        drop grass path at location of event-block
+    # if event-block is dirt path:
+    #     cancel event
+    #     set event-block to air
+    #     drop dirt path at location of event-block
     if event-block is farmland:
         cancel event
         set event-block to air
