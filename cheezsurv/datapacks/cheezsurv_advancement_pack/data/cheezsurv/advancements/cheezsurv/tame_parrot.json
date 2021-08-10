@@ -1,0 +1,30 @@
+{
+  "display": {
+    "title": {
+      "text": "Parrots Love Chocolate!"
+    },
+    "description": {
+      "text": "Tame a parrot. You should feed it a chocolate chip cookie."
+    },
+    "icon": {
+      "item": "minecraft:cookie"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "tame_animalwolf": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:parrot"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 15
+  },
+  "parent": "cheezsurv:cheezsurv/exploration"
+}

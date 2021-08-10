@@ -1,0 +1,38 @@
+{
+  "display": {
+      "title": {
+          "text": "One Hit Dog Death"
+      },
+      "description": {
+          "text": "Deal 20 HP or 10 hearts or more of damage at once to a dog."
+      },
+      "icon": {
+          "item": "minecraft:diamond_sword",
+          "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:32767s}]}"
+      },
+      "frame": "goal",
+      "show_toast": true,
+      "announce_to_chat": true,
+      "hidden": false
+  },
+  "criteria": {
+    "killify": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+          "entity": {
+              "type": "minecraft:wolf"
+          },
+          "damage": {
+              "taken": {
+                  "min": 20,
+                  "max": 10000
+              }
+          }
+      }
+  }
+  },
+  "rewards": {
+      "experience": 10
+  },
+  "parent": "cheezsurv:cruelty/two_hit_dog_death"
+}

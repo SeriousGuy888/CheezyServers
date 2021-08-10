@@ -1,0 +1,27 @@
+{
+  "display": {
+    "title": {
+      "text": "1.16: The Nether Update"
+    },
+    "description": {
+      "text": "New stuff to do in the pits of hell!"
+    },
+    "icon": {
+      "item": "minecraft:netherrack",
+      "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:32767s}]}"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "asdf": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "dimension": "the_nether"
+      }
+    }
+  },
+  "parent": "cheezsurv:cheezsurv/swimming_in_lava"
+}

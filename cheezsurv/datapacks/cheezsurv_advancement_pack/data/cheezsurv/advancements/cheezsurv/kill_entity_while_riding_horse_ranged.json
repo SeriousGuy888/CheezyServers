@@ -1,0 +1,43 @@
+{
+  "display": {
+    "title": {
+      "text": "Mounted Archer"
+    },
+    "description": {
+      "text": "Kill any entity with a ranged attack from at least 25 blocks away while riding a horse."
+    },
+    "icon": {
+      "item": "minecraft:bow",
+      "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:32767s}]}"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hoooooooooorse": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "distance": {
+            "absolute": {
+              "min": 25
+            }
+          }
+        },
+        "killing_blow": {
+          "is_projectile": true,
+          "source_entity": {
+            "type": "minecraft:player",
+            "nbt": "{RootVehicle:{Entity:{id:\"minecraft:horse\"}}}"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "cheezsurv:cheezsurv/kill_entity_while_riding_horse"
+}

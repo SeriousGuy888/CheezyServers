@@ -1,0 +1,26 @@
+{
+  "display": {
+    "title": {
+      "text": "CheezSurv",
+      "color": "gold"
+    },
+    "description": {
+      "text": "Main tree of the CheezSurv Advancement Pack!",
+      "color": "yellow"
+    },
+    "icon": {
+      "item": "minecraft:sponge",
+      "nbt": "{Enchantments:[{}]}"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/block/yellow_terracotta.png"
+  },
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

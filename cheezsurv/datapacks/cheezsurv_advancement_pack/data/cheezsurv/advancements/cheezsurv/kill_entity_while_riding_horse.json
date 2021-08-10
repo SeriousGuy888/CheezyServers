@@ -1,0 +1,40 @@
+{
+  "display": {
+    "title": {
+      "text": "Lethal Jousting"
+    },
+    "description": {
+      "text": "Kill any entity with a melee attack while riding a horse."
+    },
+    "icon": {
+      "item": "minecraft:arrow",
+      "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:32767s}]}"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hoooooooooorse": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "killing_blow": {
+          "is_explosion": false,
+          "is_fire": false,
+          "is_magic": false,
+          "is_projectile": false,
+          "is_lightning": false,
+          "source_entity": {
+            "type": "minecraft:player",
+            "nbt": "{RootVehicle:{Entity:{id:\"minecraft:horse\"}}}"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 15
+  },
+  "parent": "cheezsurv:cheezsurv/murder"
+}

@@ -1,0 +1,34 @@
+{
+  "display": {
+    "title": {
+      "text": "This is a Strange Bottle"
+    },
+    "description": {
+      "text": "Brew a lingering potion."
+    },
+    "icon": {
+      "item": "minecraft:lingering_potion",
+      "nbt": "{Potion:\"minecraft:harming\"}"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "a": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:lingering_potion"]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+      "experience": 75
+  },
+  "parent": "cheezsurv:cheezsurv/brew_weakness_potion"
+}

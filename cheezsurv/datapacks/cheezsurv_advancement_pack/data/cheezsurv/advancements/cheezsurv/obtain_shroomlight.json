@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Glowing Mushrooms?"
+    },
+    "description": {
+      "text": "Obtain a shroomlight."
+    },
+    "icon": {
+      "item": "minecraft:shroomlight"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "asdsg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:shroomlight"]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 10
+  },
+  "parent": "cheezsurv:cheezsurv/obtain_fungus"
+}

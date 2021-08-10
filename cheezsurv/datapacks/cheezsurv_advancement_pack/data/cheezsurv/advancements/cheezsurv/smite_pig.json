@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Powered Pig"
+    },
+    "description": {
+      "text": "Use a trident and channel lightning onto a pig."
+    },
+    "icon": {
+      "item": "minecraft:cooked_porkchop"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "aa": {
+      "trigger": "minecraft:channeled_lightning",
+      "conditions": {
+        "victims": [
+          {
+            "type": "minecraft:pig"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "parent": "cheezsurv:cheezsurv/trident_kill"
+}

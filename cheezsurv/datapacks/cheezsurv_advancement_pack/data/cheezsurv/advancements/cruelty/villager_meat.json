@@ -1,0 +1,23 @@
+{
+    "display": {
+        "title": {
+            "text": "Villager Meat"
+        },
+        "description": {
+            "text": "It's technically not cannibalism!"
+        },
+        "icon": {
+            "item": "emerald"
+        },
+        "show_toast": false,
+        "announce_to_chat": false,
+        "hidden": false
+    },
+    "criteria": {
+        "tick": {
+            "trigger": "minecraft:tick"
+        }
+    },
+    "rewards": {},
+    "parent": "cheezsurv:cruelty/root"
+}

@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Mining"
+    },
+    "description": {
+      "text": "Obtain a wooden pickaxe."
+    },
+    "icon": {
+      "item": "minecraft:wooden_pickaxe"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:wooden_pickaxe"]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "cheezsurv:cheezsurv/place_crafting_table"
+}

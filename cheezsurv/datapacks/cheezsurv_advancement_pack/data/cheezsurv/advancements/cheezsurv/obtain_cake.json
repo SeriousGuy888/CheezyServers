@@ -1,0 +1,36 @@
+{
+  "display": {
+    "title": {
+      "text": "The Lie"
+    },
+    "description": {
+      "text": "Obtain cake."
+    },
+    "icon": {
+      "item": "minecraft:cake"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "q": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:cake"],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 25
+  },
+  "parent": "cheezsurv:cheezsurv/place_crafting_table"
+}

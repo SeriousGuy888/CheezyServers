@@ -1,0 +1,31 @@
+{
+  "display": {
+    "title": {
+      "text": "Tastes Pretty Weird"
+    },
+    "description": {
+      "text": "Consume a bowl of suspicious stew. (Maybe you'll even poison yourself :D)"
+    },
+    "icon": {
+      "item": "minecraft:suspicious_stew"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "eat": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "minecraft:suspicious_stew"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 25
+  },
+  "parent": "cheezsurv:cheezsurv/enter_shipwreck"
+}

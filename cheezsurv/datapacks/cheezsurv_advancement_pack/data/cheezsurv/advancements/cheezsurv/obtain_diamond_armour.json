@@ -1,0 +1,42 @@
+{
+  "display": {
+    "title": {
+      "text": "I now super shiny"
+    },
+    "description": {
+      "text": "Get a full set of diamond armour pieces in your inventory."
+    },
+    "icon": {
+      "item": "minecraft:diamond_chestplate"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "aa": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:diamond_helmet"]
+          },
+          {
+            "items": ["minecraft:diamond_chestplate"]
+          },
+          {
+            "items": ["minecraft:diamond_leggings"]
+          },
+          {
+            "items": ["minecraft:diamond_boots"]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "parent": "cheezsurv:cheezsurv/obtain_diamond_pick"
+}

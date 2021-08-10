@@ -1,0 +1,40 @@
+{
+  "display": {
+    "title": {
+      "text": "Sniper"
+    },
+    "description": {
+      "text": "Shoot a player from more than fifty blocks away."
+    },
+    "icon": {
+      "item": "minecraft:bow",
+      "nbt": "{Enchantments:[{id:\"minecraft:sharpness\",lvl:32767s}]}"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shootDog": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:player",
+          "distance": {
+            "absolute": {
+              "min": 50
+            }
+          }
+        },
+        "killing_blow": {
+          "is_projectile": true
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "cheezsurv:cheezsurv/murder"
+}

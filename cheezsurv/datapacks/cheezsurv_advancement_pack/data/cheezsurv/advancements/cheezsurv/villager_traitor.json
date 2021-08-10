@@ -1,0 +1,28 @@
+{
+    "display": {
+        "title": {
+            "text": "Villager Traitor"
+        },
+        "description": {
+            "text": "Be murdered by a zombie villager."
+        },
+        "icon": {
+            "item": "minecraft:rotten_flesh"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "dead": {
+            "trigger": "minecraft:entity_killed_player",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:zombie_villager"
+                }
+            }
+        }
+    },
+    "parent": "cheezsurv:cheezsurv/sell_to_villager"
+}

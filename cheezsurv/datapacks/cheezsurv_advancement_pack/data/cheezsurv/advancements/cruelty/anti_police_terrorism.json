@@ -1,0 +1,31 @@
+{
+    "display": {
+        "title": {
+            "text": "Anti-Police Terrorism"
+        },
+        "description": {
+            "text": "Get revenge on the iron golems and kill one of them."
+        },
+        "icon": {
+            "item": "minecraft:poppy"
+        },
+        "frame": "goal",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "murder": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:iron_golem"
+                }
+            }
+        }
+    },
+    "rewards": {
+        "experience": 500
+    },
+    "parent": "cheezsurv:cruelty/enemy_of_the_people"
+}

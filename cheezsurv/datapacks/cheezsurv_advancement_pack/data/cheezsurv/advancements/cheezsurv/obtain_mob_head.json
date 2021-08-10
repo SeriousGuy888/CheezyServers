@@ -1,0 +1,60 @@
+{
+  "display": {
+    "title": {
+      "text": "Trophy Hunter"
+    },
+    "description": {
+      "text": "Create a charged creeper using Channelling on a trident to obtain either a zombie, creeper, or skeleton head."
+    },
+    "icon": {
+      "item": "minecraft:zombie_head"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "creeper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:creeper_head"]
+          }
+        ]
+      }
+    },
+    "zombie": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:zombie_head"]
+          }
+        ]
+      }
+    },
+    "skeleton": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:skeleton_skull"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "creeper",
+      "zombie",
+      "skeleton"
+    ]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "parent": "cheezsurv:cheezsurv/charge_creeper"
+}

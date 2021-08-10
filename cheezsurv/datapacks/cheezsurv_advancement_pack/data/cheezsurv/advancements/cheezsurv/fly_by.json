@@ -1,0 +1,35 @@
+{
+  "display": {
+    "title": {
+      "text": "Fly-By"
+    },
+    "description": {
+      "text": "Shoot and kill something while flying with an elytra."
+    },
+    "icon": {
+      "item": "minecraft:elytra"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "plaaaaaaaaane": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "killing_blow": {
+          "is_projectile": true,
+          "source_entity": {
+            "type": "minecraft:player",
+            "nbt": "{FallFlying:1b}"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "parent": "cheezsurv:cheezsurv/anti_aircraft"
+}

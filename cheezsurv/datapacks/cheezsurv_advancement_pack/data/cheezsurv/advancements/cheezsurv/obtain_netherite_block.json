@@ -1,0 +1,36 @@
+{
+  "display": {
+    "title": {
+      "text": "A Very Expensive Gray Cube"
+    },
+    "description": {
+      "text": "Craft a Netherite Block"
+    },
+    "icon": {
+      "item": "minecraft:netherite_block"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "adfdsg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:netherite_block"],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 750
+  },
+  "parent": "cheezsurv:cheezsurv/obtain_netherite_ingot"
+}

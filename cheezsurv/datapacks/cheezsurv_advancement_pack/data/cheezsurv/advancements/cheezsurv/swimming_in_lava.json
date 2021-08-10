@@ -1,0 +1,29 @@
+{
+  "display": {
+    "title": {
+      "text": "Cheez Swimming"
+    },
+    "description": {
+      "text": "Go for a swim in some molten cheez. (Ideally with fire resistance)"
+    },
+    "icon": {
+      "item": "minecraft:lava_bucket"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "swim": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:lava"
+      }
+    }
+  },
+  "rewards": {
+    "experience": 25
+  },
+  "parent": "cheezsurv:cheezsurv/exploration"
+}

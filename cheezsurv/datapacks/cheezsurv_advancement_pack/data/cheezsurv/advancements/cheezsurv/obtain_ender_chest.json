@@ -1,0 +1,36 @@
+{
+  "display": {
+    "title": {
+      "text": "Item Teleporter"
+    },
+    "description": {
+      "text": "Obtain an ender chest."
+    },
+    "icon": {
+      "item": "minecraft:ender_chest"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "e": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:ender_chest"],
+            "count": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "parent": "cheezsurv:cheezsurv/obtain_ender_pearl"
+}

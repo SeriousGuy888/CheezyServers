@@ -1,0 +1,29 @@
+{
+  "display": {
+    "title": {
+      "text": "The Biome Everyone Nukes"
+    },
+    "description": {
+      "text": "Locate and enter a Mesa (well actually they're called badlands now.)"
+    },
+    "icon": {
+      "item": "minecraft:orange_terracotta"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "main": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "biome": "minecraft:badlands"
+      }
+    }
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "parent": "cheezsurv:cheezsurv/enter_mushroom_fields"
+}

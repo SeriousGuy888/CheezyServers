@@ -1,0 +1,40 @@
+{
+    "display": {
+        "title": {
+            "text": "Dog Murdering Machine"
+        },
+        "description": {
+            "text": "Murder a dog from more than 100 blocks away."
+        },
+        "icon": {
+            "item": "minecraft:dispenser"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "shootDog": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:wolf",
+                    "distance": {
+                        "absolute": {
+                            "min": 100,
+                            "max": 1000
+                        }
+                    }
+                },
+                "killing_blow": {
+                    "is_projectile": true
+                }
+            }
+        }
+    },
+    "rewards": {
+        "experience": 200
+    },
+    "parent": "cheezsurv:cruelty/dog_murder_mastery"
+}

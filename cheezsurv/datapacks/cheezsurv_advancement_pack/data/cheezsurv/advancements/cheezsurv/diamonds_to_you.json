@@ -1,0 +1,51 @@
+{
+  "display": {
+    "title": {
+      "text": "Diamonds to You!"
+    },
+    "description": {
+      "text": "This is a recreation of one of the original achievements. Now it's a CheezSurv advancement. Throw a diamond to a player or zombie."
+    },
+    "icon": {
+      "item": "minecraft:diamond"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "zombie": {
+      "trigger": "minecraft:thrown_item_picked_up_by_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:zombie"
+        },
+        "item": {
+          "item": "minecraft:diamond"
+        }
+      }
+    },
+    "player": {
+      "trigger": "minecraft:thrown_item_picked_up_by_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:player"
+        },
+        "item": {
+          "item": "minecraft:diamond"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "zombie",
+      "player"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  },
+  "parent": "cheezsurv:cheezsurv/stripmining"
+}

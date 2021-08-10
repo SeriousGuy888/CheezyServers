@@ -1,0 +1,49 @@
+{
+  "display": {
+    "title": {
+      "text": "Nihilism Blocks?"
+    },
+    "description": {
+      "text": "Obtain either warped or crimson nylium."
+    },
+    "icon": {
+      "item": "minecraft:warped_nylium"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "crimson": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:crimson_nylium"]
+          }
+        ]
+      }
+    },
+    "warped": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:warped_nylium"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "crimson",
+      "warped"
+    ]
+  ],
+  "rewards": {
+    "experience": 5
+  },
+  "parent": "cheezsurv:cheezsurv/nether_update"
+}

@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Electrocution"
+    },
+    "description": {
+      "text": "Strike a player with a trident, channelling lightning onto them."
+    },
+    "icon": {
+      "item": "minecraft:player_head"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "aa": {
+      "trigger": "minecraft:channeled_lightning",
+      "conditions": {
+        "victims": [
+          {
+            "type": "minecraft:player"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "parent": "cheezsurv:cheezsurv/smite_pig"
+}

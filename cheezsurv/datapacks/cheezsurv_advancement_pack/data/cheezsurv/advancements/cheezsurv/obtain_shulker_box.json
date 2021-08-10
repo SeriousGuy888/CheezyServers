@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "I made the corpse into a box."
+    },
+    "description": {
+      "text": "Craft a shulker box."
+    },
+    "icon": {
+      "item": "minecraft:shulker_box"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "q": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:shulker_box"]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "parent": "cheezsurv:cheezsurv/obtain_shulker_shell"
+}

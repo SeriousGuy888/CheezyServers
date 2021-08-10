@@ -1,0 +1,32 @@
+{
+    "display": {
+        "title": {
+            "text": "Manual Iron Farming"
+        },
+        "description": {
+            "text": "Kill an iron golem that is naturally spawned (i.e. Not spawned by a player using iron blocks)."
+        },
+        "icon": {
+            "item": "minecraft:iron_ingot"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "murder": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "minecraft:iron_golem",
+                    "nbt": "{PlayerCreated:0b}"
+                }
+            }
+        }
+    },
+    "rewards": {
+        "experience": 500
+    },
+    "parent": "cheezsurv:cruelty/anti_police_terrorism"
+}

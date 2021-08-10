@@ -1,0 +1,29 @@
+{
+  "display": {
+    "title": {
+      "text": "Crafting"
+    },
+    "description": {
+      "text": "Place down a crafting table."
+    },
+    "icon": {
+      "item": "minecraft:crafting_table"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "wealth": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "minecraft:crafting_table"
+    }
+  }
+  },
+  "rewards": {
+    "experience": 5
+  },
+  "parent": "cheezsurv:cheezsurv/root"
+}
