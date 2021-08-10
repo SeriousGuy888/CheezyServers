@@ -1,17 +1,8 @@
 {
   "display": {
-    "title": [
-      {
-        "text": "It"
-      },
-      {
-        "text": " is ",
-        "italic": true
-      },
-      {
-        "text": "a Pitchfork"
-      }
-    ],
+    "title": {
+      "text": "Qet Kutlerised"
+    },
     "description": {
       "text": "Kill something using a trident"
     },
