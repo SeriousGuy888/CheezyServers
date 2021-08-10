@@ -20,10 +20,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:enchanted_golden_apple",
+            "items": ["minecraft:enchanted_golden_apple"],
             "count": {
-              "min": 1,
-              "max": 32767
+              "min": 1
             }
           }
         ]

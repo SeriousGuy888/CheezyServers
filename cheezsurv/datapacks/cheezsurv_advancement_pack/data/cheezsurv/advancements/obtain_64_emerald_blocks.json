@@ -21,10 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:emerald_block",
+            "item": ["minecraft:emerald_block"],
             "count": {
-              "min": 64,
-              "max": 32767
+              "min": 64
             }
           }
         ]

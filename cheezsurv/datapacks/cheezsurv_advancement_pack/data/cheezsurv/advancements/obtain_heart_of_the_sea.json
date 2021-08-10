@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:heart_of_the_sea"
+            "items": ["minecraft:heart_of_the_sea"]
           }
         ]
       }

@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:tipped_arrow"
+            "items": ["minecraft:tipped_arrow"]
           }
         ]
       }

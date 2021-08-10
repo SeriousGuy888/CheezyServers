@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:iron_ore"
+            "items": ["minecraft:iron_ore"]
           }
         ]
       }

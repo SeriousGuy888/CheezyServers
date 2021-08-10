@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:cake",
+            "items": ["minecraft:cake"],
             "count": {
               "min": 1
             }

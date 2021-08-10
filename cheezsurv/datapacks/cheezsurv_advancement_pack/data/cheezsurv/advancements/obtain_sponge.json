@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:sponge"
+            "items": ["minecraft:sponge"]
           }
         ]
       }
@@ -30,7 +30,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:wet_sponge"
+            "items": ["minecraft:wet_sponge"]
           }
         ]
       }

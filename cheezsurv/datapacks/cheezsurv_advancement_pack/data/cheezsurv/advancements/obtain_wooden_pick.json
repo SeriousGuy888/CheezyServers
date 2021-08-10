@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:wooden_pickaxe"
+            "items": ["minecraft:wooden_pickaxe"]
           }
         ]
       }

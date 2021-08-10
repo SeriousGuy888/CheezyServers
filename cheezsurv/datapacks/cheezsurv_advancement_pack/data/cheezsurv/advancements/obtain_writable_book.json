@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:writable_book"
+            "items": ["minecraft:writable_book"]
           }
         ]
       }

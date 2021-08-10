@@ -21,11 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:piglin_banner_pattern",
-            "count": {
-              "min": 1,
-              "max": 32767
-            }
+            "items": ["minecraft:piglin_banner_pattern"]
           }
         ]
       }

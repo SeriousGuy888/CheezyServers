@@ -20,19 +20,19 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:netherite_pickaxe"
+            "items": ["minecraft:netherite_pickaxe"]
           },
           {
-            "item": "minecraft:netherite_sword"
+            "items": ["minecraft:netherite_sword"]
           },
           {
-            "item": "minecraft:netherite_axe"
+            "items": ["minecraft:netherite_axe"]
           },
           {
-            "item": "minecraft:netherite_shovel"
+            "items": ["minecraft:netherite_shovel"]
           },
           {
-            "item": "minecraft:netherite_hoe"
+            "items": ["minecraft:netherite_hoe"]
           }
         ]
       }

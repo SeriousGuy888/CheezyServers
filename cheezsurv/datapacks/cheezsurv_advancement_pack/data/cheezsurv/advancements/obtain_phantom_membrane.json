@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:phantom_membrane",
+            "items": ["minecraft:phantom_membrane"],
             "count": {
               "min": 1
             }

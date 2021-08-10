@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:ender_chest",
+            "items": ["minecraft:ender_chest"],
             "count": {
               "min": 1
             }

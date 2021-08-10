@@ -20,16 +20,16 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:diamond_helmet"
+            "items": ["minecraft:diamond_helmet"]
           },
           {
-            "item": "minecraft:diamond_chestplate"
+            "items": ["minecraft:diamond_chestplate"]
           },
           {
-            "item": "minecraft:diamond_leggings"
+            "items": ["minecraft:diamond_leggings"]
           },
           {
-            "item": "minecraft:diamond_boots"
+            "items": ["minecraft:diamond_boots"]
           }
         ]
       }
