@@ -4,12 +4,13 @@
       "text": "CheezSurv Advancement Pack"
     },
     "description": {
-      "text": "It's pretty fun.",
-      "obfuscated": true
+      "text": "fery goodful"
     },
     "icon": {
-      "item": "minecraft:enchanted_golden_apple"
+      "item": "minecraft:sponge",
+      "nbt": "{Enchantments:[{}]}"
     },
+    "frame": "task",
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false,
@@ -19,6 +20,5 @@
     "tick": {
       "trigger": "minecraft:tick"
     }
-  },
-  "rewards": {}
+  }
 }
