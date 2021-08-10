@@ -22,7 +22,7 @@
           "type": "minecraft:zombie"
         },
         "item": {
-          "item": "minecraft:diamond"
+          "items": ["minecraft:diamond"]
         }
       }
     },
@@ -33,7 +33,7 @@
           "type": "minecraft:player"
         },
         "item": {
-          "item": "minecraft:diamond"
+          "items": ["minecraft:diamond"]
         }
       }
     }
