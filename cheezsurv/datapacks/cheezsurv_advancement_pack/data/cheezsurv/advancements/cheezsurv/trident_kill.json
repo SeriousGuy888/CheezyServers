@@ -23,7 +23,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:trident"
+                "items": ["minecraft:trident"]
               }
             }
           }
