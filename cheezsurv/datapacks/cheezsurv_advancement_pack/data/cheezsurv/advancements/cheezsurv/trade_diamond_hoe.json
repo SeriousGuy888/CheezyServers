@@ -19,7 +19,7 @@
       "trigger": "minecraft:villager_trade",
       "conditions": {
         "item": {
-          "item": "minecraft:diamond_hoe"
+          "items": ["minecraft:diamond_hoe"]
         }
       }
     }

@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:gold_ore"]
+            "items": ["minecraft:raw_gold"]
           }
         ]
       }

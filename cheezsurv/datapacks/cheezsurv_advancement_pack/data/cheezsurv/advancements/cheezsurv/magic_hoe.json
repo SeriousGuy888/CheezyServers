@@ -20,7 +20,7 @@
       "trigger": "minecraft:enchanted_item",
       "conditions": {
         "item": {
-          "item": "minecraft:diamond_hoe"
+          "items": ["minecraft:diamond_hoe"]
         }
       }
     }
