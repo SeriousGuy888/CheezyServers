@@ -26,7 +26,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:netherite_pickaxe"
+                "items": ["minecraft:netherite_pickaxe"]
               }
             }
           }
@@ -44,7 +44,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:netherite_sword"
+                "items": ["minecraft:netherite_sword"]
               }
             }
           }
@@ -62,7 +62,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:netherite_shovel"
+                "items": ["minecraft:netherite_shovel"]
               }
             }
           }
@@ -80,7 +80,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:netherite_axe"
+                "items": ["minecraft:netherite_axe"]
               }
             }
           }
@@ -98,7 +98,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:netherite_hoe"
+                "items": ["minecraft:netherite_hoe"]
               }
             }
           }
@@ -116,7 +116,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:netherite_scrap"
+                "items": ["minecraft:netherite_scrap"]
               }
             }
           }
@@ -134,7 +134,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:netherite_ingot"
+                "items": ["minecraft:netherite_ingot"]
               }
             }
           }
@@ -152,7 +152,7 @@
             "type": "minecraft:player",
             "equipment": {
               "mainhand": {
-                "item": "minecraft:netherite_block"
+                "items": ["minecraft:netherite_block"]
               }
             }
           }
