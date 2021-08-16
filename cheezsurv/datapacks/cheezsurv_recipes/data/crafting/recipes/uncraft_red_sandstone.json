@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:white_wool"
+      "item": "minecraft:red_sandstone"
     }
   ],
   "result": {
-    "item": "minecraft:string",
+    "item": "minecraft:red_sand",
     "count": 4
   }
 }
