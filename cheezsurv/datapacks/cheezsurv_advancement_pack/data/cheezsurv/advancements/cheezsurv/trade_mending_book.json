@@ -20,7 +20,7 @@
       "trigger": "minecraft:villager_trade",
       "conditions": {
         "item": {
-          "item": "minecraft:enchanted_book",
+          "items": ["minecraft:enchanted_book"],
           "nbt": "{StoredEnchantments:[{id:\"minecraft:mending\",lvl:1s}]}",
           "count": {
             "min": 1,

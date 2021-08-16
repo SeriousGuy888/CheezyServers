@@ -4,10 +4,10 @@
       "text": "Iron Age"
     },
     "description": {
-      "text": "Obtain iron ore."
+      "text": "Obtain raw iron."
     },
     "icon": {
-      "item": "minecraft:iron_ore"
+      "item": "minecraft:raw_iron"
     },
     "frame": "goal",
     "show_toast": true,

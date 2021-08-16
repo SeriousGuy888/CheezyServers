@@ -4,10 +4,10 @@
       "text": "Golden Age"
     },
     "description": {
-      "text": "Obtain gold ore."
+      "text": "Obtain raw gold."
     },
     "icon": {
-      "item": "minecraft:gold_ore"
+      "item": "minecraft:raw_gold"
     },
     "frame": "task",
     "show_toast": true,
