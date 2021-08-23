@@ -7,7 +7,7 @@
       "text": "View a villager through a spyglass."
     },
     "icon": {
-      "item": "minecraft:spyglass"
+      "item": "minecraft:emerald"
     },
     "frame": "task",
     "show_toast": true,
@@ -40,5 +40,5 @@
   "rewards": {
     "experience": 15
   },
-  "parent": "cheezsurv:cruelty/villager_meat"
+  "parent": "cheezsurv:cheezsurv/spyglass_player"
 }

@@ -1,0 +1,179 @@
+{
+  "display": {
+    "title": {
+      "text": "What Big Noses You All Have"
+    },
+    "description": {
+      "text": "View through a spyglass all of the members of the villager/illager big-nose family.\n-----\nNamely, a villager, wandering trader, evoker, pillager, vindicator, evoker, and witch."
+    },
+    "icon": {
+      "item": "minecraft:emerald_block"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "villager": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "minecraft:villager"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": ["minecraft:spyglass"]
+        }
+      }
+    },
+    "wandering_trader": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "minecraft:wandering_trader"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": ["minecraft:spyglass"]
+        }
+      }
+    },
+    "evoker": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "minecraft:evoker"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": ["minecraft:spyglass"]
+        }
+      }
+    },
+    "pillager": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "minecraft:pillager"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": ["minecraft:spyglass"]
+        }
+      }
+    },
+    "vindicator": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "minecraft:vindicator"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": ["minecraft:spyglass"]
+        }
+      }
+    },
+    "ravager": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "minecraft:ravager"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": ["minecraft:spyglass"]
+        }
+      }
+    },
+    "witch": {
+      "trigger": "minecraft:using_item",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "player": {
+                "looking_at": {
+                  "type": "minecraft:witch"
+                }
+              }
+            },
+            "entity": "this"
+          }
+        ],
+        "item": {
+          "items": ["minecraft:spyglass"]
+        }
+      }
+    }
+  },
+  "requirements": [
+    ["villager"],
+    ["wandering_trader"],
+    ["evoker"],
+    ["pillager"],
+    ["vindicator"],
+    ["ravager"],
+    ["witch"]
+  ],
+  "rewards": {
+    "experience": 300
+  },
+  "parent": "cheezsurv:cheezsurv/spyglass_villager"
+}
