@@ -20,8 +20,13 @@
         "entity": {
           "type": "minecraft:villager"
         },
-        "source_entity": {
-          "type": "minecraft:egg"
+        "damage": {
+          "type": {
+            "is_projectile": true,
+            "direct_entity": {
+              "type": "minecraft:egg"
+            }
+          }
         }
       }
     }
