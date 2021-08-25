@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Villager Bullying"
+    },
+    "description": {
+      "text": "Bully a villager by throwing an egg at it."
+    },
+    "icon": {
+      "item": "minecraft:egg"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "tame_animalwolf": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:villager"
+        },
+        "source_entity": {
+          "type": "minecraft:egg"
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 15
+  },
+  "parent": "cheezsurv:cruelty/villager_meat"
+}
