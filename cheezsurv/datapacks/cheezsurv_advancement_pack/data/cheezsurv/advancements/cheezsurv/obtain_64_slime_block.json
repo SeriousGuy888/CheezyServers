@@ -1,0 +1,36 @@
+{
+  "display": {
+    "title": {
+      "text": "Icky"
+    },
+    "description": {
+      "text": "Obtain a stack of slime blocks."
+    },
+    "icon": {
+      "item": "minecraft:slime_block"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "coal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:slime_block"],
+            "count": {
+              "min": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "parent": "cheezsurv:cheezsurv/obtain_redstone"
+}

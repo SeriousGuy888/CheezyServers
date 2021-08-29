@@ -1,0 +1,36 @@
+{
+  "display": {
+    "title": {
+      "text": "Sticky"
+    },
+    "description": {
+      "text": "Obtain a stack of honey blocks."
+    },
+    "icon": {
+      "item": "minecraft:honey_block"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "coal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:honey_block"],
+            "count": {
+              "min": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "parent": "cheezsurv:cheezsurv/obtain_64_slime_block"
+}
