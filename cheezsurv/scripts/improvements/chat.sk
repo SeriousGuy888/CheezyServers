@@ -1,3 +1,0 @@
-on chat:
-  set the chat format to "%player's prefix%%player%§8: §f%coloured message%" if {%player%.nick} is not set
-  set the chat format to "%player's prefix%%player% (%{%player%.nick}%)§8: §f%coloured message%" if {%player%.nick} is set

@@ -1,6 +1,0 @@
-on portal enter:
-  block at player is nether portal
-  if difference between {nether_warning.%player%} and now is less than 2 seconds:
-    stop
-  send action bar "§4§lWARNING: §cThe nether will be reset. Evacuate the nether of all valuables before then." to player
-  set {nether_warning.%player%} to now

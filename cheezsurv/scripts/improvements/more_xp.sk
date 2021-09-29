@@ -1,4 +1,0 @@
-on break:
-  event-block is ripe wheat plant or ripe carrot plant or ripe potato plant or ripe beetroot plant
-  if chance of 25%:
-    spawn 1 of xp at event-block

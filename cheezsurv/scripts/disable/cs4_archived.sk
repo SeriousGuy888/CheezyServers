@@ -1,7 +1,0 @@
-on join:
-  send "CheezSurv4 has been archived. You can look at anything you want, but you cannot touch. | Use /dim to go to different dimensions"
-
-every second:
-  loop all players:
-    send action bar "CheezSurv4 has been archived. | /dim to change dimensions" to loop-player
-    set gamemode of loop-player to spectator

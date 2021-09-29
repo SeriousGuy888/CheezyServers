@@ -1,3 +1,0 @@
-on inventory click:
-  player's gamemode is spectator
-  cancel event

@@ -1,8 +1,0 @@
-on death of player:
-  make console execute command "/execute at %victim% run particle minecraft:block minecraft:redstone_block ~ ~-0.2 ~ 0.75 1.5 0.75 1 150"
-  make console execute command "/execute at %victim% run particle minecraft:flash ~ ~ ~ 1 1 1 2 1"
-  attacker is player
-  create lightning effect at victim
-
-on damage of player:
-  make console execute command "/execute at %victim% run particle minecraft:block minecraft:redstone_block ~ ~ ~ 0.25 0.75 0.25 1 %floor((final damage / 2) * 50)%"

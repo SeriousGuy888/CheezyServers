@@ -1,8 +1,0 @@
-on damage:
-    victim is cow
-    loop all entities in radius 15 around victim:
-        loop-entity is cow
-        loop blocks in radius 5 around loop-entity:
-            add loop-block to {_blocks::*}
-        set {_block} to random element of {_blocks::*}
-        make loop-entity walk to location of {_block}

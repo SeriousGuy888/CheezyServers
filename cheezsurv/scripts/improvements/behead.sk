@@ -1,5 +1,0 @@
-on death of player:
-  victim's gamemode is not spectator
-  victim is online
-  set {_head} to ("%victim%" parsed as offline player)'s skull
-  drop {_head} at victim's location

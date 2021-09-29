@@ -1,6 +1,0 @@
-options:
-  discordChannelId: %{config.discord_chat}%
-
-on quit:
-  ping of player > 750
-  send ":hourglass: **%player% may have timed out with a ping of %player's ping%ms**" to channel with id "{@discordChannelId}" with "Cheezy"

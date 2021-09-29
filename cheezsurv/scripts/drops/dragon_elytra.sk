@@ -1,3 +1,0 @@
-on death of ender dragon:
-  set {_l2} to "§bDragon killed by %attacker%" if attacker is set
-  drop 1 elytra with lore "§bObtained from Ender Dragon" and "%{_l2} otherwise """"%" at location of victim

@@ -1,6 +1,0 @@
-on portal create:
-    cancel event
-
-on portal:
-    cancel event
-    send "The nether is off-limits until the release of 1.16."

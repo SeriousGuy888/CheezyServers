@@ -1,4 +1,0 @@
-command /aggro <player>:
-  trigger:
-    player is op
-    make arg-1 damage player's target entity by 0

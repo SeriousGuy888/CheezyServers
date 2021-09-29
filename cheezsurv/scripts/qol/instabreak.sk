@@ -1,6 +1,0 @@
-options:
-  instabreakBlocks: player head, player wall head
-
-on block damage:
-  {@instabreakBlocks} contains event-block
-  break event-block naturally using player's tool

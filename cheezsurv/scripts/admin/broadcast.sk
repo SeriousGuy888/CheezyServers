@@ -1,8 +1,0 @@
-command /broadcast <text>:
-  aliases: /bc
-  trigger:
-    if player is not op:
-      send "§cInsufficient permission!"
-      stop
-    broadcast "§3[Broadcast] §r%coloured arg-1%"
-    make console execute command "/sendtodiscordchat **Broadcast** ||From %executor%|| %uncoloured arg-1%"
